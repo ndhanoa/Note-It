@@ -10,13 +10,11 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.shape.Line;
 
-/**
- *
- * @author ndhanoa
- */
 public class CompositionController implements Initializable {
     
     @FXML
@@ -37,9 +35,12 @@ public class CompositionController implements Initializable {
     @FXML
     private Line lineE;
     
+    @FXML
+    private Button quarternote;
     
-    
-    
+    @FXML
+    private ImageView quarternoteImage;
+
     @FXML
     private void handleButtonAction(ActionEvent event) {
         System.out.println("You clicked me!");
@@ -52,3 +53,4 @@ public class CompositionController implements Initializable {
     }    
     
 }
+
