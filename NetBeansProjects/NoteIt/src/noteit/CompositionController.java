@@ -11,15 +11,34 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.shape.Line;
 
 /**
  *
  * @author ndhanoa
  */
-public class FXMLDocumentController implements Initializable {
+public class CompositionController implements Initializable {
     
     @FXML
     private Label label;
+    
+    @FXML
+    private Line lineF;
+    
+    @FXML
+    private Line lineD;
+    
+    @FXML
+    private Line lineB;
+    
+    @FXML
+    private Line lineG;
+    
+    @FXML
+    private Line lineE;
+    
+    
+    
     
     @FXML
     private void handleButtonAction(ActionEvent event) {
