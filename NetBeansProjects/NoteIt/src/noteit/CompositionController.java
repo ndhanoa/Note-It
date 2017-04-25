@@ -38,6 +38,9 @@ public class CompositionController implements Initializable {
     @FXML
     private Button quarternote;
     
+    @FXML 
+    private Button save;
+    
     @FXML
     private ImageView quarternoteImage;
 
