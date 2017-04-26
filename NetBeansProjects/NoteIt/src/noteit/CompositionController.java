@@ -15,8 +15,6 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Line;
-import javax.media.j3d.View;
-import static javax.media.j3d.View.VISIBILITY_DRAW_VISIBLE;
 
 public class CompositionController implements Initializable {
     
