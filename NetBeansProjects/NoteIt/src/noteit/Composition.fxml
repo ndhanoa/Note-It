@@ -19,11 +19,11 @@
             <Image url="@quarternote.png" />
          </image>
       </ImageView>
-      <Button fx:id="save" focusTraversable="false" layoutX="492.0" layoutY="256.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="68.0" text="Save" />
       <ImageView fx:id="quarterNoteForStaff" fitHeight="79.0" fitWidth="41.0" layoutX="170.0" layoutY="141.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@quarternote.png" />
          </image>
       </ImageView>
+      <Button fx:id="save" layoutX="403.0" layoutY="201.0" mnemonicParsing="false" onMouseClicked="#save" prefHeight="38.0" prefWidth="98.0" text="Save" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0" />
    </children>
 </AnchorPane>

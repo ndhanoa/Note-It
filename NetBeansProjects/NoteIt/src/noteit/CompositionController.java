@@ -42,7 +42,7 @@ public class CompositionController implements Initializable {
     @FXML
     private Button quarternote;
     
-    @FXML 
+    @FXML
     private Button save;
     
     @FXML
@@ -53,16 +53,16 @@ public class CompositionController implements Initializable {
 
     ImageView details;
     @FXML
+    private ListView fileList;
+    @FXML
+    private FileChooser fc;
+    @FXML
     private void handleClickQuarterNote(MouseEvent me) {
-        
-        save.setText("clicked!");
         quarterNoteForStaff.setVisible(true);
     }
-     @FXML
-    private ListView fileList;
-    private FileChooser fileChooser;
-    private void handleButtonAction(ActionEvent event) {
-        FileChooser fc = new FileChooser();
+   @FXML
+    private void save(MouseEvent change){
+         fc = new FileChooser();
         File selectedFile = fc.showOpenDialog(null);
         if(selectedFile != null){
             fileList.getItems().add(selectedFile.getName());

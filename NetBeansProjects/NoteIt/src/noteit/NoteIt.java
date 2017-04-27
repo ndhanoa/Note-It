@@ -35,24 +35,7 @@ public class NoteIt extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("Composition.fxml"));
         
         Scene scene = new Scene(root);
-        fileChooser = new FileChooser();
-        fileChooser.getExtensionFilters().addAll(
-                new ExtensionFilter("Text Files", "*txt"),
-                new ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif"),
-                new ExtensionFilter("Audio Files", "*wav", "*.mp3", "*.aac"),
-                new ExtensionFilter("All Files", "*.*")
-        );
-        save = new Button("Save");
-        save.setOnAction(e ->{
-            file = fileChooser.showOpenDialog(stage);
-            if(file != null){
-                try {
-                    desktop.open(file);
-                } catch (IOException ex) {
-                    Logger.getLogger(NoteIt.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        });
+
         stage.setScene(scene);
         stage.show();
     }
