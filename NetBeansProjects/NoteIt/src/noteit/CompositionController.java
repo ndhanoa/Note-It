@@ -60,7 +60,7 @@ public class CompositionController implements Initializable {
     private void handleClickQuarterNote(MouseEvent me) {
         quarterNoteForStaff.setVisible(true);
     }
-   @FXML
+    @FXML
     private void save(MouseEvent change){
          fc = new FileChooser();
         File selectedFile = fc.showOpenDialog(null);
