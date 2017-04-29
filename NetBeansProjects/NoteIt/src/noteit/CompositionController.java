@@ -69,7 +69,7 @@ public class CompositionController implements Initializable {
     @FXML
     private void save(MouseEvent change){
          fc = new FileChooser();
-        File selectedFile = fc.showOpenDialog(null);
+        File selectedFile = fc.showSaveDialog(stage);
         if(selectedFile != null){
             fileList.getItems().add(selectedFile.getName());
         } else {
