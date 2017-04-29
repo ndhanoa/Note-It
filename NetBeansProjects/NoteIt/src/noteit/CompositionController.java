@@ -18,6 +18,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Line;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 public class CompositionController implements Initializable {
     
@@ -46,6 +47,9 @@ public class CompositionController implements Initializable {
     private Button save;
     
     @FXML
+    private Button load;
+    
+    @FXML
     private ImageView quarternoteImage;
     
     @FXML 
@@ -56,6 +60,8 @@ public class CompositionController implements Initializable {
     private ListView fileList;
     @FXML
     private FileChooser fc;
+    
+    private Stage stage;
     @FXML
     private void handleClickQuarterNote(MouseEvent me) {
         quarterNoteForStaff.setVisible(true);
@@ -70,6 +76,24 @@ public class CompositionController implements Initializable {
             System.out.println("Error: File is not valid.");
         }
     }
+    @FXML
+    private void load(MouseEvent change){
+        fc = new FileChooser();
+        fc.setTitle("Open text file");
+        fc.setInitialDirectory(new File(System.getProperty("user.home")));
+        File selectedFile = fc.showOpenDialog(stage);
+        if(selectedFile != null){
+            System.out.println("Chosen file: " + selectedFile);
+            fileList.getItems().add(selectedFile.getName());
+        } else {
+            System.out.println("Error: File is not valid.");
+        }
+    }
+    
+    public void init(Stage stage){
+        this.stage = stage;
+    }   
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO

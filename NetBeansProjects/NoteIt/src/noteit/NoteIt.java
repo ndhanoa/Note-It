@@ -32,10 +32,11 @@ public class NoteIt extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("Composition.fxml"));
-        
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("Composition.fxml"));
+        Parent root = loader.load();
+        CompositionController controller = (CompositionController)loader.getController();
         Scene scene = new Scene(root);
-
+        controller.init(stage);
         stage.setScene(scene);
         stage.show();
     }
