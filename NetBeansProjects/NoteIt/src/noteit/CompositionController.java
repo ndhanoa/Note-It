@@ -66,6 +66,27 @@ public class CompositionController implements Initializable {
     private void handleClickQuarterNote(MouseEvent me) {
         quarterNoteForStaff.setVisible(true);
     }
+    
+    @FXML
+    private void handleClickStaffLine(MouseEvent me){
+     /*  
+       //Point mousePosition = MouseInfo.getPointerInfo().getLocation();
+       double mouseX = me.getX();
+       double mouseY = me.getY();
+       
+       //ImageView newNote;
+        //try {
+            //newNote = new ImageView(new File("quarternote.png").toURI().toURL().toExternalForm());
+             newNote = new ImageView(getClass().getResource("quarternote.png").toString());
+             newNote.setX(mouseX);
+             newNote.setY(mouseY);
+             
+       // } catch (MalformedURLException ex) {
+          //  Logger.getLogger(CompositionController.class.getName()).log(Level.SEVERE, null, ex);
+       // }
+       
+     */ 
+    }
     @FXML
     private void save(MouseEvent change){
          fc = new FileChooser();
