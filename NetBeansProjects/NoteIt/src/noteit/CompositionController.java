@@ -16,11 +16,14 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Line;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class CompositionController implements Initializable {
+    
+    @FXML AnchorPane screen;
     
     @FXML
     private Label label;
@@ -69,15 +72,18 @@ public class CompositionController implements Initializable {
     
     @FXML
     private void handleClickStaffLine(MouseEvent me){
-     /*  
+      
        //Point mousePosition = MouseInfo.getPointerInfo().getLocation();
        double mouseX = me.getX();
        double mouseY = me.getY();
        
-       //ImageView newNote;
+       ImageView newNote;
         //try {
             //newNote = new ImageView(new File("quarternote.png").toURI().toURL().toExternalForm());
              newNote = new ImageView(getClass().getResource("quarternote.png").toString());
+             screen.getChildren().add(newNote);
+             newNote.setFitWidth(41);
+             newNote.setFitHeight(57);
              newNote.setX(mouseX);
              newNote.setY(mouseY);
              
@@ -85,7 +91,7 @@ public class CompositionController implements Initializable {
           //  Logger.getLogger(CompositionController.class.getName()).log(Level.SEVERE, null, ex);
        // }
        
-     */ 
+     
     }
     @FXML
     private void save(MouseEvent change){

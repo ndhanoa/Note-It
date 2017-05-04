@@ -8,7 +8,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="313.0" prefWidth="586.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="noteit.CompositionController">
    <children>
-      <Line endX="530.0" layoutX="51.0" layoutY="46.0" startX="-50.0" strokeWidth="3.0" AnchorPane.leftAnchor="-0.5" />
+      <Line endX="530.0" layoutX="51.0" layoutY="46.0" onMouseClicked="#handleClickStaffLine" startX="-50.0" strokeWidth="3.0" AnchorPane.leftAnchor="-0.5" />
       <Line fx:id="lineD" endX="530.0" layoutX="51.0" layoutY="64.0" startX="-50.0" strokeWidth="3.0" />
       <Line endX="530.0" layoutX="51.0" layoutY="82.0" startX="-50.0" strokeWidth="3.0" />
       <Line endX="530.0" layoutX="51.0" layoutY="101.0" startX="-50.0" strokeWidth="3.0" />
