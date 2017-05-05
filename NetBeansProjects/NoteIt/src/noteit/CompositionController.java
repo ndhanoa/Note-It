@@ -5,9 +5,13 @@
  */
 package noteit;
 
+import java.awt.Desktop;
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -57,7 +61,9 @@ public class CompositionController implements Initializable {
     
     @FXML 
     private ImageView quarterNoteForStaff;
-
+    private Desktop desktop = Desktop.getDesktop();
+    
+    
     ImageView details;
     @FXML
     private ListView fileList;
@@ -110,10 +116,20 @@ public class CompositionController implements Initializable {
         fc.setInitialDirectory(new File(System.getProperty("user.home")));
         File selectedFile = fc.showOpenDialog(stage);
         if(selectedFile != null){
+            openFile(selectedFile);
             System.out.println("Chosen file: " + selectedFile);
-            fileList.getItems().add(selectedFile.getName());
         } else {
             System.out.println("Error: File is not valid.");
+        }
+    }
+     private void openFile(File file) {
+        try {
+            desktop.open(file);
+        } catch (IOException ex) {
+            Logger.getLogger(
+                CompositionController.class.getName()).log(
+                    Level.SEVERE, null, ex
+                );
         }
     }
     
