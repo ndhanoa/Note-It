@@ -23,11 +23,15 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Line;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class CompositionController implements Initializable {
+    
+    @FXML 
+    private AnchorPane screen;
     
     @FXML
     private Label label;
@@ -58,9 +62,6 @@ public class CompositionController implements Initializable {
     
     @FXML
     private ImageView quarternoteImage;
-    
-    @FXML 
-    private ImageView quarterNoteForStaff;
 
     ImageView details;
     
@@ -70,31 +71,49 @@ public class CompositionController implements Initializable {
     private Desktop desktop = Desktop.getDesktop();
     
     private Stage stage;
+    
+    private Boolean hasQuarterNote;
+    
     @FXML
     private void handleClickQuarterNote(MouseEvent me) {
-        quarterNoteForStaff.setVisible(true);
+        hasQuarterNote=true;
     }
     
     @FXML
     private void handleClickStaffLine(MouseEvent me){
-     /*  
-       //Point mousePosition = MouseInfo.getPointerInfo().getLocation();
-       double mouseX = me.getX();
-       double mouseY = me.getY();
-       
-       //ImageView newNote;
-        //try {
-            //newNote = new ImageView(new File("quarternote.png").toURI().toURL().toExternalForm());
-             newNote = new ImageView(getClass().getResource("quarternote.png").toString());
-             newNote.setX(mouseX);
-             newNote.setY(mouseY);
+      
+      
+       double mouseX = me.getSceneX();
+       double mouseY = me.getSceneY();
+       if(hasQuarterNote==true){
+             ImageView newNote = new ImageView(getClass().getResource("quarternote.png").toString());
+             screen.getChildren().add(newNote);
+             newNote.setFitWidth(41);
+             newNote.setFitHeight(57);
+             newNote.setX(mouseX-17);
+             newNote.setY(mouseY-45);
+       }
              
-       // } catch (MalformedURLException ex) {
-          //  Logger.getLogger(CompositionController.class.getName()).log(Level.SEVERE, null, ex);
-       // }
        
-     */ 
+     
     }
+    
+    @FXML
+    private void handleClickStaffSpace(MouseEvent me){
+        double mouseX = me.getX();
+        double mouseY = me.getY();
+        if(hasQuarterNote == true && ((mouseY>52 && mouseY<60)||(mouseY>70 && mouseY<78)||(mouseY>88&& mouseY<96)||(mouseY>107&&mouseY<115))){
+            ImageView newNote = new ImageView(getClass().getResource("quarternote.png").toString());
+            screen.getChildren().add(newNote);
+            newNote.setFitWidth(41);
+            newNote.setFitHeight(57);
+            newNote.setX(mouseX);
+            newNote.setY(mouseY-43);
+        }
+    }
+    
+    
+    
     @FXML
     private void save(MouseEvent change) throws FileNotFoundException, IOException{
          fc = new FileChooser();
@@ -140,7 +159,7 @@ public class CompositionController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        quarterNoteForStaff.setVisible(false);
+        hasQuarterNote=false;
     }    
     
 }
