@@ -8,7 +8,6 @@ package noteit;
 import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -16,11 +15,14 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Line;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class CompositionController implements Initializable {
+    @FXML 
+    private AnchorPane screen;
     
     @FXML
     private Label label;
@@ -49,11 +51,12 @@ public class CompositionController implements Initializable {
     @FXML
     private Button load;
     
-    @FXML
-    private ImageView quarternoteImage;
     
     @FXML 
     private ImageView quarterNoteForStaff;
+    
+    //@FXML
+    //private ImageView newNote;
 
     ImageView details;
     @FXML
@@ -69,23 +72,20 @@ public class CompositionController implements Initializable {
     
     @FXML
     private void handleClickStaffLine(MouseEvent me){
-     /*  
-       //Point mousePosition = MouseInfo.getPointerInfo().getLocation();
+     
        double mouseX = me.getX();
        double mouseY = me.getY();
        
-       //ImageView newNote;
-        //try {
-            //newNote = new ImageView(new File("quarternote.png").toURI().toURL().toExternalForm());
-             newNote = new ImageView(getClass().getResource("quarternote.png").toString());
-             newNote.setX(mouseX);
-             newNote.setY(mouseY);
+       ImageView newNote;
+      
+       newNote = new ImageView(getClass().getResource("quarternote.png").toString());
              
-       // } catch (MalformedURLException ex) {
-          //  Logger.getLogger(CompositionController.class.getName()).log(Level.SEVERE, null, ex);
-       // }
-       
-     */ 
+       screen.getChildren().add(newNote);
+       newNote.setFitWidth(41);
+       newNote.setFitHeight(57);
+       newNote.setX(mouseX + 20);
+       newNote.setY(mouseY);
+             
     }
     @FXML
     private void save(MouseEvent change){
