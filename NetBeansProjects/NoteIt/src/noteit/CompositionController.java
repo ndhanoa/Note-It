@@ -61,8 +61,10 @@ public class CompositionController implements Initializable {
     
     @FXML 
     private ImageView quarterNoteForStaff;
+    
     private Desktop desktop = Desktop.getDesktop();
     
+    private ImageView[] arr = new ImageView[7];
     
     ImageView details;
     @FXML
