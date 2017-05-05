@@ -16,9 +16,6 @@ import java.io.ObjectOutputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -32,7 +29,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class CompositionController implements Initializable {
-    
     @FXML 
     private AnchorPane screen;
     
@@ -64,7 +60,7 @@ public class CompositionController implements Initializable {
     private Button load;
     
     @FXML
-    private ImageView quarternoteImage;
+    private ImageView newNote;
     
     @FXML 
     private ImageView quarterNoteForStaff;
@@ -88,6 +84,14 @@ public class CompositionController implements Initializable {
     }
     
     @FXML
+    private Button bob;
+    private double bobX;
+    private double bobY;
+    private double imageX;
+    private double imageY;
+    private boolean deleteFunction;
+    
+    @FXML
     private void handleClickStaffLine(MouseEvent me){
       
       
@@ -105,10 +109,24 @@ public class CompositionController implements Initializable {
             y.setY(mouseY-43);
             array.add(y);  
        }
-         
        
-     
     }
+    
+    @FXML
+    private void handleSelectNote(MouseEvent me){
+        if(me.equals(true)){
+            
+        }
+    }
+    @FXML
+    private void handleDeleteNote(MouseEvent me){
+     
+       System.out.println("clicked");
+       newNote.setVisible(false);
+           
+       
+    }
+    
     
     @FXML
     private void handleClickStaffSpace(MouseEvent me){
@@ -182,7 +200,7 @@ public class CompositionController implements Initializable {
          
     }
         
-        
+       
 
       
       
