@@ -14,7 +14,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.application.HostServices;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -62,13 +61,18 @@ public class CompositionController implements Initializable {
     
     @FXML
     private ImageView quarternoteImage;
-
+    
+    @FXML 
+    private ImageView quarterNoteForStaff;
+    
+    private Desktop desktop = Desktop.getDesktop();
+    
+    private ImageView[] arr = new ImageView[7];
+    
     ImageView details;
     
     @FXML
     private FileChooser fc;
-    
-    private Desktop desktop = Desktop.getDesktop();
     
     private Stage stage;
     
@@ -133,6 +137,7 @@ public class CompositionController implements Initializable {
         fc.setInitialDirectory(new File(System.getProperty("user.home")));
         File selectedFile = fc.showOpenDialog(stage);
         if(selectedFile != null){
+            openFile(selectedFile);
             System.out.println("Chosen file: " + selectedFile);
             openFile(selectedFile);
         } else {
@@ -151,7 +156,6 @@ public class CompositionController implements Initializable {
                 );
         }
     }
-    
     public void init(Stage stage){
         this.stage = stage;
     }   
