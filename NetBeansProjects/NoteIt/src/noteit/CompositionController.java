@@ -5,9 +5,16 @@
  */
 package noteit;
 
+import java.awt.Desktop;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.application.HostServices;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -56,10 +63,11 @@ public class CompositionController implements Initializable {
     private ImageView quarterNoteForStaff;
 
     ImageView details;
-    @FXML
-    private ListView fileList;
+    
     @FXML
     private FileChooser fc;
+    
+    private Desktop desktop = Desktop.getDesktop();
     
     private Stage stage;
     @FXML
@@ -88,11 +96,13 @@ public class CompositionController implements Initializable {
      */ 
     }
     @FXML
-    private void save(MouseEvent change){
+    private void save(MouseEvent change) throws FileNotFoundException, IOException{
          fc = new FileChooser();
         File selectedFile = fc.showSaveDialog(stage);
         if(selectedFile != null){
-            fileList.getItems().add(selectedFile.getName());
+            try(FileOutputStream out = new FileOutputStream(selectedFile)){
+                
+            }
         } else {
             System.out.println("Error: File is not valid.");
         }
@@ -105,9 +115,21 @@ public class CompositionController implements Initializable {
         File selectedFile = fc.showOpenDialog(stage);
         if(selectedFile != null){
             System.out.println("Chosen file: " + selectedFile);
-            fileList.getItems().add(selectedFile.getName());
+            openFile(selectedFile);
         } else {
             System.out.println("Error: File is not valid.");
+        }
+        
+        
+    }
+    private void openFile(File file) {
+        try {
+            desktop.open(file);
+        } catch (IOException ex) {
+            Logger.getLogger(
+                CompositionController.class.getName()).log(
+                    Level.SEVERE, null, ex
+                );
         }
     }
     
