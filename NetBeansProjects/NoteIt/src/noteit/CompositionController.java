@@ -55,8 +55,8 @@ public class CompositionController implements Initializable {
     @FXML 
     private ImageView quarterNoteForStaff;
     
-    //@FXML
-    //private ImageView newNote;
+    @FXML
+    private ImageView newNote;
 
     ImageView details;
     @FXML
@@ -71,22 +71,51 @@ public class CompositionController implements Initializable {
     }
     
     @FXML
+    private Button bob;
+    private double bobX;
+    private double bobY;
+    private double imageX;
+    private double imageY;
+    private boolean deleteFunction;
+    
+    @FXML
     private void handleClickStaffLine(MouseEvent me){
-     
-       double mouseX = me.getX();
-       double mouseY = me.getY();
+       if(deleteFunction == true){
+           newNote.setVisible(false);
+       } else{
+            double mouseX = me.getSceneX();
+            double mouseY = me.getSceneY();
+            System.out.println("X: " + mouseX + " Y: " + mouseY);
+            //ImageView newNote;
+
+            newNote = new ImageView(getClass().getResource("quarternote.png").toString());
+            imageX = mouseX - 17;
+            imageY = mouseY - 45;
+            newNote.setX(imageX);
+            newNote.setY(imageY);
+            newNote.setFitWidth(41);
+            newNote.setFitHeight(57);            
+            screen.getChildren().add(newNote);
+       }
        
-       ImageView newNote;
-      
-       newNote = new ImageView(getClass().getResource("quarternote.png").toString());
-             
-       screen.getChildren().add(newNote);
-       newNote.setFitWidth(41);
-       newNote.setFitHeight(57);
-       newNote.setX(mouseX + 20);
-       newNote.setY(mouseY);
-             
     }
+    
+    @FXML
+    private void handleSelectNote(MouseEvent me){
+        if(me.equals(true)){
+            
+        }
+    }
+    @FXML
+    private void handleDeleteNote(MouseEvent me){
+     
+       System.out.println("clicked");
+       newNote.setVisible(false);
+           
+       
+    }
+    
+    
     @FXML
     private void save(MouseEvent change){
          fc = new FileChooser();
