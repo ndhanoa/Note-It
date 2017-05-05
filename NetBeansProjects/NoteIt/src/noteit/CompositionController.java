@@ -7,10 +7,14 @@ package noteit;
 
 import java.awt.Desktop;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -67,7 +71,7 @@ public class CompositionController implements Initializable {
     
     private Desktop desktop = Desktop.getDesktop();
     
-    private ImageView[] arr = new ImageView[7];
+    private ArrayList<ImageView> array = new ArrayList<ImageView>();
     
     ImageView details;
     
@@ -96,8 +100,9 @@ public class CompositionController implements Initializable {
              newNote.setFitHeight(57);
              newNote.setX(mouseX-17);
              newNote.setY(mouseY-45);
+             array.add(newNote);    
        }
-             
+         
        
      
     }
@@ -113,6 +118,7 @@ public class CompositionController implements Initializable {
             newNote.setFitHeight(57);
             newNote.setX(mouseX);
             newNote.setY(mouseY-43);
+            array.add(newNote);    
         }
     }
     
@@ -121,10 +127,17 @@ public class CompositionController implements Initializable {
     @FXML
     private void save(MouseEvent change) throws FileNotFoundException, IOException{
          fc = new FileChooser();
-        File selectedFile = fc.showSaveDialog(stage);
+         fc.setTitle("Open text file");
+         fc.setInitialDirectory(new File(System.getProperty("user.home")));
+         File selectedFile = fc.showSaveDialog(stage);
         if(selectedFile != null){
-            try(FileOutputStream out = new FileOutputStream(selectedFile)){
-                
+            try {
+                FileOutputStream fileOut = new FileOutputStream(selectedFile);
+                ObjectOutputStream out = new ObjectOutputStream(fileOut);
+                out.writeObject(array);
+                out.close();
+            } catch (IOException e){
+            
             }
         } else {
             System.out.println("Error: File is not valid.");
@@ -136,25 +149,38 @@ public class CompositionController implements Initializable {
         fc.setTitle("Open text file");
         fc.setInitialDirectory(new File(System.getProperty("user.home")));
         File selectedFile = fc.showOpenDialog(stage);
-        if(selectedFile != null){
-            openFile(selectedFile);
-            System.out.println("Chosen file: " + selectedFile);
-            openFile(selectedFile);
-        } else {
-            System.out.println("Error: File is not valid.");
-        }
-        
-        
+        ArrayList f = null;
+      try {
+         FileInputStream fileIn = new FileInputStream(selectedFile);
+         ObjectInputStream in = new ObjectInputStream(fileIn);
+         f = (ArrayList<ImageView>) in.readObject();
+         for(ImageView i: f){
+             ImageView newNote = new ImageView(getClass().getResource("quarternote.png").toString());
+             screen.getChildren().add(newNote);
+             newNote.setFitWidth(41);
+             newNote.setFitHeight(57);
+             newNote.setX(i.getX());
+             newNote.setY(i.getY());
+             
+      }
+         in.close();
+         fileIn.close();
+         
+         
+      }catch(IOException i) {
+         i.printStackTrace();
+         return;
+      }catch(ClassNotFoundException c) {
+         System.out.println("Composition not found");
+         c.printStackTrace();
+         return;
+         
     }
-    private void openFile(File file) {
-        try {
-            desktop.open(file);
-        } catch (IOException ex) {
-            Logger.getLogger(
-                CompositionController.class.getName()).log(
-                    Level.SEVERE, null, ex
-                );
-        }
+        
+        
+
+      
+      
     }
     public void init(Stage stage){
         this.stage = stage;
