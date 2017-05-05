@@ -71,7 +71,7 @@ public class CompositionController implements Initializable {
     
     private Desktop desktop = Desktop.getDesktop();
     
-    private ArrayList<ImageView> array = new ArrayList<ImageView>();
+    private ArrayList<NoteClass> array = new ArrayList<NoteClass>();
     
     ImageView details;
     
@@ -100,7 +100,10 @@ public class CompositionController implements Initializable {
              newNote.setFitHeight(57);
              newNote.setX(mouseX-17);
              newNote.setY(mouseY-45);
-             array.add(newNote);    
+            NoteClass y = new NoteClass();
+            y.setX(mouseX);
+            y.setY(mouseY-43);
+            array.add(y);  
        }
          
        
@@ -118,7 +121,10 @@ public class CompositionController implements Initializable {
             newNote.setFitHeight(57);
             newNote.setX(mouseX);
             newNote.setY(mouseY-43);
-            array.add(newNote);    
+            NoteClass y = new NoteClass();
+            y.setX(mouseX);
+            y.setY(mouseY-43);
+            array.add(y);
         }
     }
     
@@ -149,12 +155,11 @@ public class CompositionController implements Initializable {
         fc.setTitle("Open text file");
         fc.setInitialDirectory(new File(System.getProperty("user.home")));
         File selectedFile = fc.showOpenDialog(stage);
-        ArrayList f = null;
       try {
          FileInputStream fileIn = new FileInputStream(selectedFile);
          ObjectInputStream in = new ObjectInputStream(fileIn);
-         f = (ArrayList<ImageView>) in.readObject();
-         for(ImageView i: f){
+         array = (ArrayList<NoteClass>) in.readObject();
+         for(NoteClass i: array){
              ImageView newNote = new ImageView(getClass().getResource("quarternote.png").toString());
              screen.getChildren().add(newNote);
              newNote.setFitWidth(41);
