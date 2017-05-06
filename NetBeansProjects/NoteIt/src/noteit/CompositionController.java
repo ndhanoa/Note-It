@@ -13,6 +13,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import static java.lang.Math.abs;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -90,11 +91,26 @@ public class CompositionController implements Initializable {
     private double imageX;
     private double imageY;
     private boolean deleteFunction;
+   
+    private ArrayList<ImageView> images = new ArrayList<ImageView>();
     
     @FXML
     private void handleClickStaffLine(MouseEvent me){
       
-      
+       if(deleteFunction == true){
+           double mouseX = me.getSceneX() -17;
+           double mouseY = me.getSceneY() - 45;
+           for(ImageView i: images){
+               imageX = i.getX();
+               imageY = i.getY();
+               if(abs(mouseX - imageX) < 10 && abs(mouseY - imageY) < 10){
+                   i.setImage(null);
+                   screen.getChildren().remove(i);
+                   
+               }
+           }
+           
+       }else{
        double mouseX = me.getSceneX();
        double mouseY = me.getSceneY();
        if(hasQuarterNote==true){
@@ -109,22 +125,15 @@ public class CompositionController implements Initializable {
             y.setY(mouseY-43);
             array.add(y);  
        }
+       }
        
     }
     
-    @FXML
-    private void handleSelectNote(MouseEvent me){
-        if(me.equals(true)){
-            
-        }
-    }
+    
     @FXML
     private void handleDeleteNote(MouseEvent me){
      
-       System.out.println("clicked");
-       newNote.setVisible(false);
-           
-       
+       deleteFunction = true;
     }
     
     
@@ -213,6 +222,7 @@ public class CompositionController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         hasQuarterNote=false;
+        deleteFunction = false;
     }    
     
 }
