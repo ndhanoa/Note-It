@@ -17,6 +17,7 @@ import static java.lang.Math.abs;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -143,6 +144,20 @@ public class CompositionController implements Initializable {
         double mouseY = me.getY();
         if(hasQuarterNote == true && ((mouseY>52 && mouseY<60)||(mouseY>70 && mouseY<78)||(mouseY>88&& mouseY<96)||(mouseY>107&&mouseY<115))){
             ImageView newNote = new ImageView(getClass().getResource("quarternote.png").toString());
+            newNote.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent me) {
+                    ImageView clickedView = (ImageView) me.getTarget();
+                    for (NoteClass note: array) {
+                        ImageView thisImage = note.getImageView();
+                        if (thisImage == clickedView) {
+                            images.remove(thisImage);
+                            screen.getChildren().remove(thisImage);
+                            array.remove(note);
+                        }
+                    }
+                };
+            });
             screen.getChildren().add(newNote);
             newNote.setFitWidth(41);
             newNote.setFitHeight(57);
@@ -151,6 +166,7 @@ public class CompositionController implements Initializable {
             NoteClass y = new NoteClass();
             y.setX(mouseX);
             y.setY(mouseY-43);
+            y.setImageView(newNote);
             array.add(y);
         }
     }
