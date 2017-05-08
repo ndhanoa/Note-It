@@ -14,6 +14,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Line;
@@ -65,6 +66,11 @@ public class CompositionController implements Initializable {
     
     private Boolean hasQuarterNote;
     
+    private Boolean deletePressed;
+    
+    @FXML
+    private Button delete;
+    
     @FXML
     private void handleClickQuarterNote(MouseEvent me) {
         hasQuarterNote=true;
@@ -72,18 +78,20 @@ public class CompositionController implements Initializable {
     
     @FXML
     private void handleClickStaffLine(MouseEvent me){
-      
-      
        double mouseX = me.getSceneX();
        double mouseY = me.getSceneY();
+       ImageView newNote;
        if(hasQuarterNote==true){
-             ImageView newNote = new ImageView(getClass().getResource("quarternote.png").toString());
+             newNote = new ImageView(getClass().getResource("quarternote.png").toString());
              screen.getChildren().add(newNote);
              newNote.setFitWidth(41);
              newNote.setFitHeight(57);
              newNote.setX(mouseX-17);
              newNote.setY(mouseY-45);
        }
+       else if(deletePressed == true){
+        newNote.setVisible(false);
+      }
              
        
      
@@ -98,9 +106,15 @@ public class CompositionController implements Initializable {
             screen.getChildren().add(newNote);
             newNote.setFitWidth(41);
             newNote.setFitHeight(57);
-            newNote.setX(mouseX);
+            newNote.setX(mouseX-17);
             newNote.setY(mouseY-43);
         }
+    }
+    
+    @FXML
+    private void handleClickDelete(MouseEvent me){
+        hasQuarterNote=false;
+        deletePressed = true;
     }
     
     
@@ -128,6 +142,8 @@ public class CompositionController implements Initializable {
             System.out.println("Error: File is not valid.");
         }
     }
+    
+    
     
     public void init(Stage stage){
         this.stage = stage;
