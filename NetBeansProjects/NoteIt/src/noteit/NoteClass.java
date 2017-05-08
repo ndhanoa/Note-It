@@ -23,7 +23,7 @@ public class NoteClass implements Serializable{
     
     private double x;
     private double y;
-    private ImageView myView;
+    transient private ImageView myView;
     
     public double getX(){
         return x;

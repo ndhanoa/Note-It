@@ -98,8 +98,8 @@ public class CompositionController implements Initializable {
     @FXML
     private void handleClickStaffLine(MouseEvent me){
 
-        double mouseX = me.getX()+25;
-        double mouseY = me.getY()+45;
+        double mouseX = me.getSceneX();
+        double mouseY = me.getSceneY();
         if(hasQuarterNote == true){
             ImageView newNote = new ImageView(getClass().getResource("quarternote.png").toString());
             newNote.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
