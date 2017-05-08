@@ -17,6 +17,7 @@ import static java.lang.Math.abs;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -83,12 +84,11 @@ public class CompositionController implements Initializable {
     @FXML
     private void handleClickQuarterNote(MouseEvent me) {
         hasQuarterNote=true;
+        deleteFunction = false;
     }
     
     @FXML
-    private Button bob;
-    private double bobX;
-    private double bobY;
+
     private double imageX;
     private double imageY;
     private boolean deleteFunction;
@@ -97,8 +97,39 @@ public class CompositionController implements Initializable {
     
     @FXML
     private void handleClickStaffLine(MouseEvent me){
-      
-       if(deleteFunction == true){
+
+        double mouseX = me.getX()+25;
+        double mouseY = me.getY()+45;
+        if(hasQuarterNote == true){
+            ImageView newNote = new ImageView(getClass().getResource("quarternote.png").toString());
+            newNote.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent me) {
+                    if(deleteFunction ==true){
+                        ImageView clickedView = (ImageView) me.getTarget();
+                        for (NoteClass note: array) {
+                            ImageView thisImage = note.getImageView();
+                            if (thisImage == clickedView) {
+                                images.remove(thisImage);
+                                screen.getChildren().remove(thisImage);
+                                array.remove(note);
+                            }
+                        }
+                    }
+                };
+            });
+             screen.getChildren().add(newNote);
+             newNote.setFitWidth(41);
+             newNote.setFitHeight(57);
+             newNote.setX(mouseX-17);
+             newNote.setY(mouseY-45);
+            NoteClass y = new NoteClass();
+            y.setX(mouseX);
+            y.setY(mouseY-43);
+            array.add(y);
+        }
+    }
+/*       if(deleteFunction == true){
            double mouseX = me.getSceneX() -17;
            double mouseY = me.getSceneY() - 45;
            for(ImageView i: images){
@@ -127,14 +158,15 @@ public class CompositionController implements Initializable {
             array.add(y);  
        }
        }
-       
-    }
+    */   
+    
     
     
     @FXML
-    private void handleDeleteNote(MouseEvent me){
+    private void handleDeleteNote(ActionEvent me){
      
        deleteFunction = true;
+       hasQuarterNote=false;
     }
     
     
@@ -142,18 +174,20 @@ public class CompositionController implements Initializable {
     private void handleClickStaffSpace(MouseEvent me){
         double mouseX = me.getX();
         double mouseY = me.getY();
-        if(hasQuarterNote == true && ((mouseY>52 && mouseY<60)||(mouseY>70 && mouseY<78)||(mouseY>88&& mouseY<96)||(mouseY>107&&mouseY<115))){
+        if(hasQuarterNote == true &&((mouseY>52 && mouseY<60)||(mouseY>70 && mouseY<78)||(mouseY>88&& mouseY<96)||(mouseY>107&&mouseY<115))){
             ImageView newNote = new ImageView(getClass().getResource("quarternote.png").toString());
             newNote.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent me) {
-                    ImageView clickedView = (ImageView) me.getTarget();
-                    for (NoteClass note: array) {
-                        ImageView thisImage = note.getImageView();
-                        if (thisImage == clickedView) {
-                            images.remove(thisImage);
-                            screen.getChildren().remove(thisImage);
-                            array.remove(note);
+                    if(deleteFunction ==true){
+                        ImageView clickedView = (ImageView) me.getTarget();
+                        for (NoteClass note: array) {
+                            ImageView thisImage = note.getImageView();
+                            if (thisImage == clickedView) {
+                                images.remove(thisImage);
+                                screen.getChildren().remove(thisImage);
+                                array.remove(note);
+                            }
                         }
                     }
                 };
