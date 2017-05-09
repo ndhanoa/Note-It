@@ -98,8 +98,8 @@ public class CompositionController implements Initializable {
     @FXML
     private void handleClickStaffLine(MouseEvent me){
 
-        double mouseX = me.getX()+25;
-        double mouseY = me.getY()+45;
+        double mouseX = me.getSceneX();
+        double mouseY = me.getSceneY();
         if(hasQuarterNote == true){
             ImageView newNote = new ImageView(getClass().getResource("quarternote.png").toString());
             newNote.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
@@ -124,8 +124,8 @@ public class CompositionController implements Initializable {
              newNote.setX(mouseX-17);
              newNote.setY(mouseY-45);
             NoteClass y = new NoteClass();
-            y.setX(mouseX);
-            y.setY(mouseY-43);
+            y.setX(mouseX-17);
+            y.setY(mouseY-45);
             array.add(y);
         }
     }
@@ -195,10 +195,10 @@ public class CompositionController implements Initializable {
             screen.getChildren().add(newNote);
             newNote.setFitWidth(41);
             newNote.setFitHeight(57);
-            newNote.setX(mouseX);
+            newNote.setX(mouseX - 17);
             newNote.setY(mouseY-43);
             NoteClass y = new NoteClass();
-            y.setX(mouseX);
+            y.setX(mouseX-17);
             y.setY(mouseY-43);
             y.setImageView(newNote);
             array.add(y);
