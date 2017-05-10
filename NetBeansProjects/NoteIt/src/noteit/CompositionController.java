@@ -100,7 +100,8 @@ public class CompositionController implements Initializable {
 
         double mouseX = me.getSceneX();
         double mouseY = me.getSceneY();
-        if(hasQuarterNote == true){
+        Line clickedLine = (Line) me. getTarget();
+        if(hasQuarterNote == true && (lineF == clickedLine)){
             ImageView newNote = new ImageView(getClass().getResource("quarternote.png").toString());
             newNote.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
                 @Override
