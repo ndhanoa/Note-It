@@ -126,6 +126,7 @@ public class CompositionController implements Initializable {
             NoteClass y = new NoteClass();
             y.setX(mouseX);
             y.setY(mouseY-43);
+            y.setImageView(newNote);
             array.add(y);
         }
     }
