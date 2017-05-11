@@ -96,86 +96,37 @@ public class CompositionController implements Initializable {
     private ArrayList<ImageView> images = new ArrayList<ImageView>();
     
     @FXML
-    private void handleClickStaffLine(MouseEvent me){
-
-        double mouseX = me.getSceneX();
-        double mouseY = me.getSceneY();
-        Line clickedLine = (Line) me. getTarget();
-        if(hasQuarterNote == true && (lineF == clickedLine)){
-            ImageView newNote = new ImageView(getClass().getResource("quarternote.png").toString());
-            newNote.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent me) {
-                    if(deleteFunction ==true){
-                        ImageView clickedView = (ImageView) me.getTarget();
-                        for (NoteClass note: array) {
-                            ImageView thisImage = note.getImageView();
-                            if (thisImage == clickedView) {
-                                images.remove(thisImage);
-                                screen.getChildren().remove(thisImage);
-                                array.remove(note);
-                            }
-                        }
-                    }
-                };
-            });
-             screen.getChildren().add(newNote);
-             newNote.setFitWidth(41);
-             newNote.setFitHeight(57);
-             newNote.setX(mouseX-17);
-             newNote.setY(mouseY-45);
-            NoteClass y = new NoteClass();
-            y.setX(mouseX-17);
-            y.setY(mouseY-45);
-            array.add(y);
-        }
-    }
-/*       if(deleteFunction == true){
-           double mouseX = me.getSceneX() -17;
-           double mouseY = me.getSceneY() - 45;
-           for(ImageView i: images){
-               imageX = i.getX();
-               imageY = i.getY();
-               if(abs(mouseX - imageX) < 10 && abs(mouseY - imageY) < 10){
-                   i.setImage(null);
-                   screen.getChildren().remove(i);
-                   
-               }
-           }
-           
-       }else{
-       double mouseX = me.getSceneX();
-       double mouseY = me.getSceneY();
-       if(hasQuarterNote==true){
-             ImageView newNote = new ImageView(getClass().getResource("quarternote.png").toString());
-             screen.getChildren().add(newNote);
-             newNote.setFitWidth(41);
-             newNote.setFitHeight(57);
-             newNote.setX(mouseX-17);
-             newNote.setY(mouseY-45);
-            NoteClass y = new NoteClass();
-            y.setX(mouseX);
-            y.setY(mouseY-43);
-            array.add(y);  
-       }
-       }
-    */   
-    
-    
-    
-    @FXML
     private void handleDeleteNote(ActionEvent me){
      
        deleteFunction = true;
        hasQuarterNote=false;
+       spaceClicked = false;
+       lineClicked = false;
     }
     
+    @FXML private boolean spaceClicked;
+    private boolean lineClicked;
     
     @FXML
-    private void handleClickStaffSpace(MouseEvent me){
-        double mouseX = me.getX();
-        double mouseY = me.getY();
-        if(hasQuarterNote == true &&((mouseY>52 && mouseY<60)||(mouseY>70 && mouseY<78)||(mouseY>88&& mouseY<96)||(mouseY>107&&mouseY<115))){
+    private void handleClickStaff(MouseEvent me){
+        Line clickedLine = null;
+        AnchorPane staff = null;
+        double mouseX = me.getSceneX();
+        double mouseY = me.getSceneY();
+        if((me.getSource() == lineF) || (me.getSource() == lineD) || (me.getSource() == lineB) || (me.getSource() == lineG) || (me.getSource() == lineE)){
+            clickedLine = (Line) me. getTarget();
+        } else {
+            staff = (AnchorPane) me.getTarget();
+        }
+        
+        if(staff == screen && ((mouseY>52 && mouseY<60)||(mouseY>70 && mouseY<78)||(mouseY>88&& mouseY<96)||(mouseY>107&&mouseY<115))){
+            spaceClicked = true;
+        }
+        if((lineF == clickedLine) ||(lineD == clickedLine )|| (lineB == clickedLine )|| (lineG == clickedLine) || (lineE== clickedLine)){
+            lineClicked = true;
+        }
+        if(hasQuarterNote == true) {
+            if((spaceClicked == true) || (lineClicked == true)){
             ImageView newNote = new ImageView(getClass().getResource("quarternote.png").toString());
             newNote.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
                 @Override
@@ -193,20 +144,30 @@ public class CompositionController implements Initializable {
                     }
                 };
             });
-            screen.getChildren().add(newNote);
+         
+              
+            NoteClass y = new NoteClass();
+            if(spaceClicked == true){
+                newNote.setX(mouseX - 17);
+                newNote.setY(mouseY - 43);
+                y.setX(mouseX-17);
+                y.setY(mouseY-43);
+            } else if(lineClicked == true){
+                newNote.setX(mouseX-17);
+                newNote.setY(mouseY-45);  
+                y.setX(mouseX);
+                y.setY(mouseY-43);
+            }
             newNote.setFitWidth(41);
             newNote.setFitHeight(57);
-            newNote.setX(mouseX - 17);
-            newNote.setY(mouseY-43);
-            NoteClass y = new NoteClass();
-            y.setX(mouseX-17);
-            y.setY(mouseY-43);
+            screen.getChildren().add(newNote);
             y.setImageView(newNote);
             array.add(y);
         }
     }
+    }
     
-    
+  
     
     @FXML
     private void save(MouseEvent change) throws FileNotFoundException, IOException{
@@ -274,6 +235,8 @@ public class CompositionController implements Initializable {
         // TODO
         hasQuarterNote=false;
         deleteFunction = false;
+        spaceClicked = false;
+        lineClicked = false;
     }    
     
 }

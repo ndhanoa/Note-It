@@ -6,13 +6,13 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Line?>
 
-<AnchorPane id="AnchorPane" fx:id="screen" onMouseClicked="#handleClickStaffSpace" prefHeight="313.0" prefWidth="586.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="noteit.CompositionController">
+<AnchorPane id="AnchorPane" fx:id="screen" onMouseClicked="#handleClickStaff" prefHeight="313.0" prefWidth="586.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="noteit.CompositionController">
    <children>
-      <Line fx:id="lineF" endX="530.0" layoutX="51.0" layoutY="46.0" onMouseClicked="#handleClickStaffLine" startX="-50.0" strokeWidth="5.0" AnchorPane.leftAnchor="-0.5" />
-      <Line fx:id="lineD" endX="530.0" layoutX="51.0" layoutY="64.0" onMouseClicked="#handleClickStaffLine" startX="-50.0" strokeWidth="5.0" />
-      <Line endX="530.0" layoutX="51.0" layoutY="82.0" onMouseClicked="#handleClickStaffLine" startX="-50.0" strokeWidth="5.0" />
-      <Line endX="530.0" layoutX="51.0" layoutY="101.0" onMouseClicked="#handleClickStaffLine" startX="-50.0" strokeWidth="5.0" />
-      <Line endX="530.0" layoutX="51.0" layoutY="118.0" onMouseClicked="#handleClickStaffLine" startX="-50.0" strokeWidth="5.0" />
+      <Line fx:id="lineF" endX="530.0" layoutX="51.0" layoutY="46.0" onMouseClicked="#handleClickStaff" startX="-50.0" strokeWidth="5.0" AnchorPane.leftAnchor="-0.5" />
+      <Line fx:id="lineD" endX="530.0" layoutX="51.0" layoutY="64.0" onMouseClicked="#handleClickStaff" startX="-50.0" strokeWidth="5.0" />
+      <Line endX="530.0" layoutX="51.0" layoutY="82.0" onMouseClicked="#handleClickStaff" startX="-50.0" strokeWidth="5.0" />
+      <Line endX="530.0" layoutX="51.0" layoutY="101.0" onMouseClicked="#handleClickStaff" startX="-50.0" strokeWidth="5.0" />
+      <Line endX="530.0" layoutX="51.0" layoutY="118.0" onMouseClicked="#handleClickStaff" startX="-50.0" strokeWidth="5.0" />
       
       <Button fx:id="quarternote" focusTraversable="false" layoutX="39.0" layoutY="152.0" mnemonicParsing="false" onMouseReleased="#handleClickQuarterNote" prefHeight="57.0" prefWidth="41.0" />
       <ImageView fitHeight="57.0" fitWidth="41.0" layoutX="39.0" layoutY="152.0" pickOnBounds="true" preserveRatio="true">
