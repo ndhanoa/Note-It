@@ -17,10 +17,7 @@ import static java.lang.Math.abs;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-
-
 import javafx.event.ActionEvent;
-
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -61,13 +58,29 @@ public class CompositionController implements Initializable {
     private Button quarternote;
     
     @FXML
+    private String noteImage;
+    
+    @FXML
     private Button save;
     
     @FXML
     private Button load;
     
     @FXML
-    private ImageView newNote;
+    private ImageView newQuarterNote;
+    
+    @FXML 
+    private ImageView newHalfNote;
+    
+    @FXML
+    private Button halfNote;
+    
+    @FXML
+    private Button eighthNote;
+    
+    @FXML private ImageView newEighthNote;
+    
+    @FXML private Boolean hasEighthNote;
     
     @FXML 
     private ImageView quarterNoteForStaff;
@@ -90,19 +103,35 @@ public class CompositionController implements Initializable {
     @FXML
     private Button delete;
     
+    @FXML private Boolean hasHalfNote;
+    
     @FXML
     private void handleClickQuarterNote(MouseEvent me) {
         hasQuarterNote=true;
         deleteFunction = false;
+        hasHalfNote = false;
+        hasEighthNote = false;
+        noteImage = "quarternote.png";
     }
     
     @FXML
-
-    private Button bob;
-    private double bobX;
-    private double bobY;
-
-
+    private void handleClickHalfNote(MouseEvent me){
+        hasHalfNote = true;
+        hasQuarterNote = false;
+        deleteFunction = false;
+        hasEighthNote = false;
+        noteImage = "halfnote.png";
+    }
+    
+    @FXML private void handleClickEighthNote(MouseEvent me){
+        hasHalfNote = false;
+        hasEighthNote = true;
+        hasQuarterNote = false;
+        deleteFunction = false;
+        noteImage = "eighthnote.png";
+    }
+    
+    @FXML
 
     private double imageX;
     private double imageY;
@@ -111,14 +140,40 @@ public class CompositionController implements Initializable {
     private ArrayList<ImageView> images = new ArrayList<ImageView>();
     
     @FXML
-
-      
-       if(deleteFunction == true){
-
+    private void handleDeleteNote(ActionEvent me){
+     
+       deleteFunction = true;
+       hasEighthNote = false;
+       hasQuarterNote=false;
+       spaceClicked = false;
+       lineClicked = false;
+       hasHalfNote = false;
+    }
+    
+    @FXML private boolean spaceClicked;
+    private boolean lineClicked;
+    
+    @FXML
+    private void handleClickStaff(MouseEvent me){
+        Line clickedLine = null;
+        AnchorPane staff = null;
         double mouseX = me.getSceneX();
         double mouseY = me.getSceneY();
-        if(hasQuarterNote == true){
-            ImageView newNote = new ImageView(getClass().getResource("quarternote.png").toString());
+        if((me.getSource() == lineF) || (me.getSource() == lineD) || (me.getSource() == lineB) || (me.getSource() == lineG) || (me.getSource() == lineE)){
+            clickedLine = (Line) me. getTarget();
+        } else {
+            staff = (AnchorPane) me.getTarget();
+        }
+        
+        if(staff == screen && ((mouseY>52 && mouseY<60)||(mouseY>70 && mouseY<78)||(mouseY>88&& mouseY<96)||(mouseY>107&&mouseY<115))){
+            spaceClicked = true;
+        }
+        if((lineF == clickedLine) ||(lineD == clickedLine )|| (lineB == clickedLine )|| (lineG == clickedLine) || (lineE== clickedLine)){
+            lineClicked = true;
+        }
+        if(hasQuarterNote == true|| hasHalfNote == true||hasEighthNote == true) {
+            if((spaceClicked == true) || (lineClicked == true)){
+            ImageView newNote = new ImageView(getClass().getResource(noteImage).toString());
             newNote.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent me) {
@@ -135,36 +190,62 @@ public class CompositionController implements Initializable {
                     }
                 };
             });
-             screen.getChildren().add(newNote);
-             newNote.setFitWidth(41);
-             newNote.setFitHeight(57);
-             newNote.setX(mouseX-17);
-             newNote.setY(mouseY-45);
+         
+              
             NoteClass y = new NoteClass();
-            y.setX(mouseX);
-            y.setY(mouseY-43);
+            if(spaceClicked == true){
+                newNote.setX(mouseX - 17);
+                newNote.setY(mouseY - 43);
+                y.setX(mouseX-17);
+                y.setY(mouseY-43);
+            } else if(lineClicked == true){
+                newNote.setX(mouseX-17);
+                newNote.setY(mouseY-45);  
+                y.setX(mouseX);
+                y.setY(mouseY-43);
+            }
+            newNote.setFitWidth(41);
+            newNote.setFitHeight(57);
+            screen.getChildren().add(newNote);
             y.setImageView(newNote);
             array.add(y);
         }
     }
-/*       if(deleteFunction == true){
-       
-                    if(deleteFunction ==true){
-                        ImageView clickedView = (ImageView) me.getTarget();
-                        for (NoteClass note: array) {
-                            ImageView thisImage = note.getImageView();
-                            if (thisImage == clickedView) {
-                                images.remove(thisImage);
-                                screen.getChildren().remove(thisImage);
-                                array.remove(note);
-                            }
-                    ImageView clickedView = (ImageView) me.getTarget();
-                    for (NoteClass note: array) {
-                        ImageView thisImage = note.getImageView();
-                        if (thisImage == clickedView) {
-                            images.remove(thisImage);
-                            screen.getChildren().remove(thisImage);
-                            array.remove(note);
+    }
+    
+  
+    
+    @FXML
+    private void save(MouseEvent change) throws FileNotFoundException, IOException{
+         fc = new FileChooser();
+         fc.setTitle("Open text file");
+         fc.setInitialDirectory(new File(System.getProperty("user.home")));
+         File selectedFile = fc.showSaveDialog(stage);
+        if(selectedFile != null){
+            try {
+                FileOutputStream fileOut = new FileOutputStream(selectedFile);
+                ObjectOutputStream out = new ObjectOutputStream(fileOut);
+                out.writeObject(array);
+                out.close();
+            } catch (IOException e){
+            
+            }
+        } else {
+            System.out.println("Error: File is not valid.");
+        }
+    }
+    @FXML
+    private void load(MouseEvent change){
+        fc = new FileChooser();
+        fc.setTitle("Open text file");
+        fc.setInitialDirectory(new File(System.getProperty("user.home")));
+        File selectedFile = fc.showOpenDialog(stage);
+      try {
+         FileInputStream fileIn = new FileInputStream(selectedFile);
+         ObjectInputStream in = new ObjectInputStream(fileIn);
+         array = (ArrayList<NoteClass>) in.readObject();
+         for(NoteClass i: array){
+             ImageView newNote = new ImageView(getClass().getResource("quarternote.png").toString());
              screen.getChildren().add(newNote);
              newNote.setFitWidth(41);
              newNote.setFitHeight(57);
@@ -200,6 +281,8 @@ public class CompositionController implements Initializable {
         // TODO
         hasQuarterNote=false;
         deleteFunction = false;
+        spaceClicked = false;
+        lineClicked = false;
     }    
     
 }
