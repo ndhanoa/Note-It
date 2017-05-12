@@ -130,38 +130,6 @@ public class CompositionController implements Initializable {
             array.add(y);
         }
     }
-/*       if(deleteFunction == true){
-           double mouseX = me.getSceneX() -17;
-           double mouseY = me.getSceneY() - 45;
-           for(ImageView i: images){
-               imageX = i.getX();
-               imageY = i.getY();
-               if(abs(mouseX - imageX) < 10 && abs(mouseY - imageY) < 10){
-                   i.setImage(null);
-                   screen.getChildren().remove(i);
-                   
-               }
-           }
-           
-       }else{
-       double mouseX = me.getSceneX();
-       double mouseY = me.getSceneY();
-       if(hasQuarterNote==true){
-             ImageView newNote = new ImageView(getClass().getResource("quarternote.png").toString());
-             screen.getChildren().add(newNote);
-             newNote.setFitWidth(41);
-             newNote.setFitHeight(57);
-             newNote.setX(mouseX-17);
-             newNote.setY(mouseY-45);
-            NoteClass y = new NoteClass();
-            y.setX(mouseX);
-            y.setY(mouseY-43);
-            array.add(y);  
-       }
-       }
-    */   
-    
-    
     
     @FXML
     private void handleDeleteNote(ActionEvent me){
@@ -196,8 +164,8 @@ public class CompositionController implements Initializable {
             screen.getChildren().add(newNote);
             newNote.setFitWidth(41);
             newNote.setFitHeight(57);
-            newNote.setX(mouseX);
-            newNote.setY(mouseY-43);
+            newNote.setX(mouseX-17);
+             newNote.setY(mouseY-45);
             NoteClass y = new NoteClass();
             y.setX(mouseX);
             y.setY(mouseY-43);
