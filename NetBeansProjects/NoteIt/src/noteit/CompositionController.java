@@ -57,6 +57,12 @@ public class CompositionController implements Initializable {
     private Button quarternote;
     
     @FXML
+    private Button halfnote;
+    
+    @FXML
+    private Button eighthnote;
+    
+    @FXML
     private Button save;
     
     @FXML
@@ -70,7 +76,7 @@ public class CompositionController implements Initializable {
     
     private Desktop desktop = Desktop.getDesktop();
     
-    private ArrayList<NoteClass> array = new ArrayList<NoteClass>();
+    private ArrayList<Note> notes = new ArrayList<Note>();
     
     ImageView details;
     
@@ -81,9 +87,25 @@ public class CompositionController implements Initializable {
     
     private Boolean hasQuarterNote;
     
+    private Boolean hasHalfNote;
+    
+    private Boolean hasEighthNote;
+    
     @FXML
     private void handleClickQuarterNote(MouseEvent me) {
         hasQuarterNote=true;
+        deleteFunction = false;
+    }
+    
+    @FXML
+    private void handleClickHalfNote(MouseEvent me){
+        hasHalfNote = true;
+        deleteFunction = false;
+    }
+    
+    @FXML
+    private void handleClickEighthNote(MouseEvent me){
+        hasEighthNote = true;
         deleteFunction = false;
     }
     
@@ -100,6 +122,8 @@ public class CompositionController implements Initializable {
      
        deleteFunction = true;
        hasQuarterNote=false;
+       hasHalfNote = false;
+       hasEighthNote = false;
        spaceClicked = false;
        lineClicked = false;
     }
@@ -133,12 +157,12 @@ public class CompositionController implements Initializable {
                 public void handle(MouseEvent me) {
                     if(deleteFunction ==true){
                         ImageView clickedView = (ImageView) me.getTarget();
-                        for (NoteClass note: array) {
+                        for (Note note: notes) {
                             ImageView thisImage = note.getImageView();
                             if (thisImage == clickedView) {
                                 images.remove(thisImage);
                                 screen.getChildren().remove(thisImage);
-                                array.remove(note);
+                                notes.remove(note);
                             }
                         }
                     }
@@ -146,7 +170,7 @@ public class CompositionController implements Initializable {
             });
          
               
-            NoteClass y = new NoteClass();
+            Note y = new Note();
             if(spaceClicked == true){
                 newNote.setX(mouseX - 17);
                 newNote.setY(mouseY - 43);
@@ -160,12 +184,9 @@ public class CompositionController implements Initializable {
             }
             newNote.setFitWidth(41);
             newNote.setFitHeight(57);
-            newNote.setX(mouseX-17);
-             newNote.setY(mouseY-45);
-            y.setX(mouseX);
-            y.setY(mouseY-43);
+            screen.getChildren().add(newNote);
             y.setImageView(newNote);
-            array.add(y);
+            notes.add(y);
         }
     }
     }
@@ -182,7 +203,7 @@ public class CompositionController implements Initializable {
             try {
                 FileOutputStream fileOut = new FileOutputStream(selectedFile);
                 ObjectOutputStream out = new ObjectOutputStream(fileOut);
-                out.writeObject(array);
+                out.writeObject(notes);
                 out.close();
             } catch (IOException e){
             
@@ -200,16 +221,19 @@ public class CompositionController implements Initializable {
       try {
          FileInputStream fileIn = new FileInputStream(selectedFile);
          ObjectInputStream in = new ObjectInputStream(fileIn);
-         array = (ArrayList<NoteClass>) in.readObject();
-         for(NoteClass i: array){
+         notes = (ArrayList<Note>) in.readObject();
+        ArrayList<NoteClass> t = new ArrayList<NoteClass>();
+         for(Note i: notes){
              ImageView newNote = new ImageView(getClass().getResource("quarternote.png").toString());
              screen.getChildren().add(newNote);
              newNote.setFitWidth(41);
              newNote.setFitHeight(57);
              newNote.setX(i.getX());
              newNote.setY(i.getY());
+             t.add(i);
              
-      }
+     }
+         notes = t;
          in.close();
          fileIn.close();
          

@@ -17,10 +17,11 @@ import javafx.stage.Stage;
  *
  * @author ndhanoa
  */
-public class HalfCount extends Note {
+
+public class QuarterCount extends Note {
     
-    public HalfCount(double x, double y){
-        super(2, x, y);
+    public QuarterCount(double x, double y){
+        super(1, x, y);
     }
     
   

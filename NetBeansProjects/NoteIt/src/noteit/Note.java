@@ -11,6 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
@@ -21,16 +22,30 @@ import javafx.stage.Stage;
 public class Note implements Serializable {
     private double x;
     private double y;
+    transient private ImageView myView;
     private double count;
-    
     public Note(double count, double x, double y){
         this.x = x;
         this.y = y;
         this.count = count;
     }
-    
+
     public double getX(){
         return x;
+    }
+    public double getY(){
+        return y;
+    }
+    
+    public double getCount(){
+        return count;
+    }
+    
+    public void setImageView(ImageView iv){
+        this.myView = iv;
+    }
+    public ImageView getImageView(){
+        return myView;
     }
     
 }
