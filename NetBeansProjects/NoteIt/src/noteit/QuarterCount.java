@@ -23,6 +23,4 @@ public class QuarterCount extends Note {
     public QuarterCount(double x, double y){
         super(1, x, y);
     }
-    
-  
 }

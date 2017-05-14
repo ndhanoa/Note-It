@@ -22,6 +22,6 @@ public class HalfCount extends Note {
     public HalfCount(double x, double y){
         super(2, x, y);
     }
+
     
-  
 }

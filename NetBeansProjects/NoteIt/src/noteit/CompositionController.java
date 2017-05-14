@@ -25,6 +25,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Line;
@@ -57,10 +58,7 @@ public class CompositionController implements Initializable {
     private Button quarternote;
     
     @FXML
-    private Button halfnote;
-    
-    @FXML
-    private Button eighthnote;
+    private String noteImage;
     
     @FXML
     private Button save;
@@ -69,7 +67,20 @@ public class CompositionController implements Initializable {
     private Button load;
     
     @FXML
-    private ImageView newNote;
+    private ImageView newQuarterNote;
+    
+    @FXML 
+    private ImageView newHalfNote;
+    
+    @FXML
+    private Button halfNote;
+    
+    @FXML
+    private Button eighthNote;
+    
+    @FXML private ImageView newEighthNote;
+    
+    @FXML private Boolean hasEighthNote;
     
     @FXML 
     private ImageView quarterNoteForStaff;
@@ -87,26 +98,37 @@ public class CompositionController implements Initializable {
     
     private Boolean hasQuarterNote;
     
-    private Boolean hasHalfNote;
+    private Boolean deletePressed;
     
-    private Boolean hasEighthNote;
+    @FXML
+    private Button delete;
+    
+    @FXML private Boolean hasHalfNote;
     
     @FXML
     private void handleClickQuarterNote(MouseEvent me) {
         hasQuarterNote=true;
         deleteFunction = false;
+        hasEighthNote = false;
+        hasHalfNote = false;
+        noteImage = "quarternote.png";
     }
     
     @FXML
     private void handleClickHalfNote(MouseEvent me){
         hasHalfNote = true;
+        hasQuarterNote = false;
         deleteFunction = false;
+        hasEighthNote = false;
+        noteImage = "halfnote.png";
     }
     
-    @FXML
-    private void handleClickEighthNote(MouseEvent me){
+    @FXML private void handleClickEighthNote(MouseEvent me){
+        hasHalfNote = false;
         hasEighthNote = true;
+        hasQuarterNote = false;
         deleteFunction = false;
+        noteImage = "eighthnote.png";
     }
     
     @FXML
@@ -121,11 +143,13 @@ public class CompositionController implements Initializable {
     private void handleDeleteNote(ActionEvent me){
      
        deleteFunction = true;
+       hasEighthNote = false;
        hasQuarterNote=false;
        hasHalfNote = false;
        hasEighthNote = false;
        spaceClicked = false;
        lineClicked = false;
+       hasHalfNote = false;
     }
     
     @FXML private boolean spaceClicked;
@@ -149,9 +173,9 @@ public class CompositionController implements Initializable {
         if((lineF == clickedLine) ||(lineD == clickedLine )|| (lineB == clickedLine )|| (lineG == clickedLine) || (lineE== clickedLine)){
             lineClicked = true;
         }
-        if(hasQuarterNote == true) {
+        if(hasQuarterNote == true|| hasHalfNote == true||hasEighthNote == true) {
             if((spaceClicked == true) || (lineClicked == true)){
-            ImageView newNote = new ImageView(getClass().getResource("quarternote.png").toString());
+            ImageView newNote = new ImageView(getClass().getResource(noteImage).toString());
             newNote.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent me) {
@@ -168,29 +192,37 @@ public class CompositionController implements Initializable {
                     }
                 };
             });
-         
-              
-            Note y = new Note();
+            
+            
             if(spaceClicked == true){
                 newNote.setX(mouseX - 17);
                 newNote.setY(mouseY - 43);
-                y.setX(mouseX-17);
-                y.setY(mouseY-43);
             } else if(lineClicked == true){
                 newNote.setX(mouseX-17);
                 newNote.setY(mouseY-45);  
-                y.setX(mouseX);
-                y.setY(mouseY-43);
             }
             newNote.setFitWidth(41);
             newNote.setFitHeight(57);
             screen.getChildren().add(newNote);
-            y.setImageView(newNote);
-            notes.add(y);
+            if(hasQuarterNote == true){
+                QuarterCount q = new QuarterCount(newNote.getX(), newNote.getY());
+                q.setImageView(newNote);
+                notes.add(q);
+            } else if(hasHalfNote == true){
+                 HalfCount h = new HalfCount(newNote.getX(), newNote.getY());
+                h.setImageView(newNote);
+                notes.add(h);
+            } else if(hasEighthNote == true){
+                 EighthCount e = new EighthCount(newNote.getX(), newNote.getY());
+                e.setImageView(newNote);
+                notes.add(e);
+            }
+            
         }
+            
+            
     }
-    }
-    
+ }
   
     
     @FXML
@@ -222,18 +254,22 @@ public class CompositionController implements Initializable {
          FileInputStream fileIn = new FileInputStream(selectedFile);
          ObjectInputStream in = new ObjectInputStream(fileIn);
          notes = (ArrayList<Note>) in.readObject();
-        ArrayList<NoteClass> t = new ArrayList<NoteClass>();
          for(Note i: notes){
-             ImageView newNote = new ImageView(getClass().getResource("quarternote.png").toString());
+             ImageView newNote = null;
+             if(i.getClass() == QuarterCount.class){
+                newNote = new ImageView(getClass().getResource("quarternote.png").toString());
+             } else if(i.getClass() == HalfCount.class){
+                 newNote = new ImageView(getClass().getResource("halfnote.png").toString());
+             } else if(i.getClass() == EighthCount.class){
+                 newNote = new ImageView(getClass().getResource("eighthnote.png").toString());
+             }
              screen.getChildren().add(newNote);
              newNote.setFitWidth(41);
              newNote.setFitHeight(57);
              newNote.setX(i.getX());
              newNote.setY(i.getY());
-             t.add(i);
              
      }
-         notes = t;
          in.close();
          fileIn.close();
          
