@@ -98,6 +98,8 @@ public class CompositionController implements Initializable {
     
     private Boolean hasQuarterNote;
     
+    private Boolean hasMeasureBar;
+    
     private Boolean deletePressed;
     
     @FXML
@@ -130,6 +132,16 @@ public class CompositionController implements Initializable {
         deleteFunction = false;
         noteImage = "eighthnote.png";
     }
+    
+    @FXML private void handleClickBar(MouseEvent me){
+        hasHalfNote = false;
+        hasEighthNote = false;
+        hasQuarterNote = false;
+        deleteFunction = false;
+        hasMeasureBar = true;
+        noteImage = "measure bar.png";
+    }
+    
     
     @FXML
 
@@ -173,7 +185,7 @@ public class CompositionController implements Initializable {
         if((lineF == clickedLine) ||(lineD == clickedLine )|| (lineB == clickedLine )|| (lineG == clickedLine) || (lineE== clickedLine)){
             lineClicked = true;
         }
-        if(hasQuarterNote == true|| hasHalfNote == true||hasEighthNote == true) {
+        if(hasQuarterNote == true||  hasHalfNote == true||hasEighthNote == true) {
             if((spaceClicked == true) || (lineClicked == true)){
             ImageView newNote = new ImageView(getClass().getResource(noteImage).toString());
             newNote.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
@@ -216,6 +228,8 @@ public class CompositionController implements Initializable {
                  EighthCount e = new EighthCount(newNote.getX(), newNote.getY());
                 e.setImageView(newNote);
                 notes.add(e);
+            } else if(hasMeasureBar == true){
+                
             }
             
         }
