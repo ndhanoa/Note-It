@@ -10,9 +10,9 @@
    <children>
       <Line fx:id="lineF" endX="530.0" layoutX="51.0" layoutY="46.0" onMouseClicked="#handleClickStaff" startX="-50.0" strokeWidth="5.0" AnchorPane.leftAnchor="-0.5" />
       <Line fx:id="lineD" endX="530.0" layoutX="51.0" layoutY="64.0" onMouseClicked="#handleClickStaff" startX="-50.0" strokeWidth="5.0" />
-      <Line endX="530.0" layoutX="51.0" layoutY="82.0" onMouseClicked="#handleClickStaff" startX="-50.0" strokeWidth="5.0" />
-      <Line endX="530.0" layoutX="51.0" layoutY="101.0" onMouseClicked="#handleClickStaff" startX="-50.0" strokeWidth="5.0" />
-      <Line endX="530.0" layoutX="51.0" layoutY="118.0" onMouseClicked="#handleClickStaff" startX="-50.0" strokeWidth="5.0" />
+      <Line fx:id="lineB" endX="530.0" layoutX="51.0" layoutY="82.0" onMouseClicked="#handleClickStaff" startX="-50.0" strokeWidth="5.0" />
+      <Line fx:id="lineG" endX="530.0" layoutX="51.0" layoutY="101.0" onMouseClicked="#handleClickStaff" startX="-50.0" strokeWidth="5.0" />
+      <Line fx:id="lineE" endX="530.0" layoutX="51.0" layoutY="118.0" onMouseClicked="#handleClickStaff" startX="-50.0" strokeWidth="5.0" />
       
       <Button fx:id="quarternote" focusTraversable="false" layoutX="39.0" layoutY="152.0" mnemonicParsing="false" onMouseReleased="#handleClickQuarterNote" prefHeight="57.0" prefWidth="41.0" />
       <ImageView fitHeight="57.0" fitWidth="41.0" layoutX="39.0" layoutY="152.0" pickOnBounds="true" preserveRatio="true">
@@ -22,6 +22,12 @@
       </ImageView>
       <Button fx:id="save" layoutX="403.0" layoutY="201.0" mnemonicParsing="false" onMouseClicked="#save" prefHeight="38.0" prefWidth="98.0" text="Save" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0" />
       <Button fx:id="load" layoutX="468.0" layoutY="209.0" mnemonicParsing="false" onMouseClicked="#load" prefHeight="38.0" prefWidth="98.0" text="Load" />
-      <Button fx:id="delete" layoutX="38.0" layoutY="234.0" mnemonicParsing="false" onAction="#handleDeleteNote" prefHeight="38.0" prefWidth="70.0" text="Delete" /> 
+      <Button fx:id="delete" layoutX="38.0" layoutY="234.0" mnemonicParsing="false" onAction="#handleDeleteNote" prefHeight="38.0" prefWidth="70.0" text="Delete" />
+      <Button layoutX="99.0" layoutY="152.0" mnemonicParsing="false" onMouseClicked="#handleRestButton" prefHeight="57.0" prefWidth="41.0" />
+      <ImageView fitHeight="45.0" fitWidth="41.0" layoutX="111.0" layoutY="158.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@quarter-rest-hi.png" />
+         </image>
+      </ImageView> 
    </children>
 </AnchorPane>

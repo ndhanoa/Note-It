@@ -68,9 +68,14 @@ public class CompositionController implements Initializable {
     @FXML 
     private ImageView quarterNoteForStaff;
     
+    @FXML
+    private Button quarterRestButton;
+    
     private Desktop desktop = Desktop.getDesktop();
     
     private ArrayList<NoteClass> array = new ArrayList<NoteClass>();
+    
+    private ArrayList<RestClass> restsArray = new ArrayList<RestClass>();
     
     ImageView details;
     
@@ -81,10 +86,13 @@ public class CompositionController implements Initializable {
     
     private Boolean hasQuarterNote;
     
+    private Boolean hasQuarterRest;
+    
     @FXML
     private void handleClickQuarterNote(MouseEvent me) {
         hasQuarterNote=true;
         deleteFunction = false;
+        hasQuarterRest = false;
     }
     
     @FXML
@@ -94,6 +102,7 @@ public class CompositionController implements Initializable {
     private boolean deleteFunction;
    
     private ArrayList<ImageView> images = new ArrayList<ImageView>();
+    private ArrayList<ImageView> images2 = new ArrayList<ImageView>();
     
     @FXML
     private void handleDeleteNote(ActionEvent me){
@@ -102,13 +111,28 @@ public class CompositionController implements Initializable {
        hasQuarterNote=false;
        spaceClicked = false;
        lineClicked = false;
+       hasQuarterRest = false;
     }
+    
+     @FXML
+    private void handleRestButton(MouseEvent me){
+     
+       deleteFunction = false;
+       hasQuarterNote=false;
+       spaceClicked = false;
+       lineClicked = false;
+       hasQuarterRest = true;
+    }
+    
     
     @FXML private boolean spaceClicked;
     private boolean lineClicked;
-    
+   
     @FXML
     private void handleClickStaff(MouseEvent me){
+        if(hasQuarterRest == true ){
+            handleClickStaffForRests(me);
+        } else{
         Line clickedLine = null;
         AnchorPane staff = null;
         double mouseX = me.getSceneX();
@@ -125,7 +149,7 @@ public class CompositionController implements Initializable {
         if((lineF == clickedLine) ||(lineD == clickedLine )|| (lineB == clickedLine )|| (lineG == clickedLine) || (lineE== clickedLine)){
             lineClicked = true;
         }
-        if(hasQuarterNote == true) {
+        if(hasQuarterNote == true && hasQuarterRest == false) {
             if((spaceClicked == true) || (lineClicked == true)){
             ImageView newNote = new ImageView(getClass().getResource("quarternote.png").toString());
             newNote.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
@@ -166,7 +190,59 @@ public class CompositionController implements Initializable {
         }
     }
     }
+    }
+   
+    @FXML
+    private ImageView newRest;
+    @FXML
+    private void handleClickStaffForRests(MouseEvent me){
+            Line clickedLine = null;
+            double mouseX = me.getSceneX();
+            double mouseY = me.getSceneY();
+            
+                
+                
+            
+            if(me.getSource() == lineB){
+                 clickedLine = (Line) me. getTarget();
+            }
+            if(hasQuarterRest = true){
+            ImageView newRest = new ImageView(getClass().getResource("quarter-rest-hi.png").toString());
+            newRest.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent me) {
+                    if(deleteFunction ==true){
+                        ImageView clickedView = (ImageView) me.getTarget();
+                        for (RestClass rest: restsArray) {
+                            ImageView thisImage = rest.getImageView();
+                            if (thisImage == clickedView) {
+                                images2.remove(thisImage);
+                                screen.getChildren().remove(thisImage);
+                                restsArray.remove(rest);
+                            }
+                        }
+                    }
+                };
+            });
+           
+                RestClass quarterRest = new RestClass();
+
+                newRest.setX(mouseX - 17);
+                newRest.setY(mouseY - 30);
+                quarterRest.setX(mouseX-17);
+                quarterRest.setY(mouseY-30);
+                newRest.setFitWidth(20);
+                newRest.setFitHeight(55);
+                screen.getChildren().add(newRest);
+                quarterRest.setImageView(newRest);
+                restsArray.add(quarterRest);
+            
+            
+        }
+    }
+        
     
+                    
   
     
     @FXML
@@ -237,6 +313,7 @@ public class CompositionController implements Initializable {
         deleteFunction = false;
         spaceClicked = false;
         lineClicked = false;
+        hasQuarterRest = false;
     }    
     
 }
