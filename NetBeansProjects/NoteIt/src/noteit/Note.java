@@ -19,22 +19,26 @@ import javafx.stage.Stage;
  *
  * @author ndhanoa
  */
-public class NoteClass implements Serializable{
+public class Note implements Serializable {
     private double x;
     private double y;
     transient private ImageView myView;
-
-    public void setX(double x){
+    private double count;
+    public Note(double count, double x, double y){
         this.x = x;
+        this.y = y;
+        this.count = count;
     }
+
     public double getX(){
         return x;
     }
-    public void setY(double y){
-        this.y = y;
-    }
     public double getY(){
         return y;
+    }
+    
+    public double getCount(){
+        return count;
     }
     
     public void setImageView(ImageView iv){
