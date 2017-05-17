@@ -119,6 +119,7 @@ public class CompositionController implements Initializable {
         hasEighthNote = false;
         hasHalfNote = false;
         noteImage = "quarternote.png";
+        hasQuarterRest = false;
     }
     
     @FXML
@@ -128,6 +129,7 @@ public class CompositionController implements Initializable {
         deleteFunction = false;
         hasEighthNote = false;
         noteImage = "halfnote.png";
+        hasQuarterRest = false;
     }
     
     @FXML private void handleClickEighthNote(MouseEvent me){
@@ -136,6 +138,7 @@ public class CompositionController implements Initializable {
         hasQuarterNote = false;
         deleteFunction = false;
         noteImage = "eighthnote.png";
+        hasQuarterRest = false;
     }
     
     @FXML
@@ -158,6 +161,7 @@ public class CompositionController implements Initializable {
        spaceClicked = false;
        lineClicked = false;
        hasHalfNote = false;
+       hasQuarterRest = false;
     }
     
      @FXML
@@ -196,8 +200,7 @@ public class CompositionController implements Initializable {
         if((lineF == clickedLine) ||(lineD == clickedLine )|| (lineB == clickedLine )|| (lineG == clickedLine) || (lineE== clickedLine)){
             lineClicked = true;
         }
-        if(hasQuarterNote == true|| hasHalfNote == true||hasEighthNote == true) {
-            if((spaceClicked == true) || (lineClicked == true)){
+        if((hasQuarterNote == true|| hasHalfNote == true||hasEighthNote == true) && (spaceClicked == true) || (lineClicked == true)) {
             ImageView newNote = new ImageView(getClass().getResource(noteImage).toString());
             newNote.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
                 @Override
@@ -216,10 +219,10 @@ public class CompositionController implements Initializable {
                 };
             });
             
-            
-            if(spaceClicked == true){
-                newNote.setX(mouseX - 17);
-                newNote.setY(mouseY - 43);
+            if(mouseY < 120 && mouseY > 44){
+                if(spaceClicked == true){
+                    newNote.setX(mouseX - 17);
+                    newNote.setY(mouseY - 43);
             } else if(lineClicked == true){
                 newNote.setX(mouseX-17);
                 newNote.setY(mouseY-45);  
@@ -244,9 +247,10 @@ public class CompositionController implements Initializable {
         }
             
             
+        }
     }
     }
-    }
+    
    
     @FXML
     private ImageView newRest;
@@ -256,13 +260,7 @@ public class CompositionController implements Initializable {
             double mouseX = me.getSceneX();
             double mouseY = me.getSceneY();
             
-                
-                
-            
-            if(me.getSource() == lineB){
-                 clickedLine = (Line) me. getTarget();
-            }
-            if(hasQuarterRest = true){
+            if(hasQuarterRest == true && me.getSource()==lineB){
             ImageView newRest = new ImageView(getClass().getResource("quarter-rest-hi.png").toString());
             newRest.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
                 @Override
