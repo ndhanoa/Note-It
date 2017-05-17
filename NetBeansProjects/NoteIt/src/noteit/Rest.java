@@ -19,11 +19,18 @@ import javafx.stage.Stage;
  *
  * @author ndhanoa
  */
-public class RestClass implements Serializable{
+public class Rest implements Serializable{
     
     private double x;
     private double y;
     transient private ImageView myView;
+    private double count;
+    
+     public Rest(double count, double x, double y){
+        this.x = x;
+        this.y = y;
+        this.count = count;
+    }
     
     public double getX(){
         return x;
@@ -32,15 +39,9 @@ public class RestClass implements Serializable{
     public double getY(){
         return y;
     }
-    
-    public double setX(double x){
-        this.x = x;
-        return x;
-    }
-    
-    public double setY(double y){
-        this.y = y;
-        return y;
+   
+    public double getCount(){
+        return count;
     }
     
     public void setImageView(ImageView iv) {

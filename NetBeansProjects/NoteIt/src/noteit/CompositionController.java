@@ -59,6 +59,7 @@ public class CompositionController implements Initializable {
     
     @FXML
     private String noteImage;
+    private String restImage;
     
     @FXML
     private Button save;
@@ -94,7 +95,7 @@ public class CompositionController implements Initializable {
     
     private ArrayList<Note> notes = new ArrayList<Note>();
     
-    private ArrayList<RestClass> restsArray = new ArrayList<RestClass>();
+    private ArrayList<Rest> restsArray = new ArrayList<Rest>();
     
     ImageView details;
     
@@ -111,6 +112,7 @@ public class CompositionController implements Initializable {
     private Button delete;
     
     @FXML private Boolean hasHalfNote;
+    @FXML private boolean hasEighthRest;
     
     @FXML
     private void handleClickQuarterNote(MouseEvent me) {
@@ -120,6 +122,7 @@ public class CompositionController implements Initializable {
         hasHalfNote = false;
         noteImage = "quarternote.png";
         hasQuarterRest = false;
+        hasEighthRest = false;
     }
     
     @FXML
@@ -130,6 +133,7 @@ public class CompositionController implements Initializable {
         hasEighthNote = false;
         noteImage = "halfnote.png";
         hasQuarterRest = false;
+        hasEighthRest = false;
     }
     
     @FXML private void handleClickEighthNote(MouseEvent me){
@@ -139,6 +143,17 @@ public class CompositionController implements Initializable {
         deleteFunction = false;
         noteImage = "eighthnote.png";
         hasQuarterRest = false;
+        hasEighthRest = false;
+    }
+    
+    @FXML private void handleClickEighthRest(MouseEvent me){
+        hasHalfNote = false;
+        hasEighthNote = false;
+        hasQuarterNote = false;
+        deleteFunction = false;
+        restImage = "eighthRest.png";
+        hasQuarterRest = false;
+        hasEighthRest = true;
     }
     
     @FXML
@@ -162,6 +177,7 @@ public class CompositionController implements Initializable {
        lineClicked = false;
        hasHalfNote = false;
        hasQuarterRest = false;
+       hasEighthRest = false;
     }
     
      @FXML
@@ -172,7 +188,8 @@ public class CompositionController implements Initializable {
        spaceClicked = false;
        lineClicked = false;
        hasQuarterRest = true;
-       noteImage = "quarter-rest-hi.png";
+       restImage = "quarter-rest-hi.png";
+       hasEighthRest = false;
     }
     
     
@@ -181,7 +198,7 @@ public class CompositionController implements Initializable {
    
     @FXML
     private void handleClickStaff(MouseEvent me){
-        if(hasQuarterRest == true ){
+        if(hasQuarterRest == true || hasEighthRest == true){
             handleClickStaffForRests(me);
         } else{
         Line clickedLine = null;
@@ -260,14 +277,14 @@ public class CompositionController implements Initializable {
             double mouseX = me.getSceneX();
             double mouseY = me.getSceneY();
             
-            if(hasQuarterRest == true && me.getSource()==lineB){
-            ImageView newRest = new ImageView(getClass().getResource("quarter-rest-hi.png").toString());
+            if((hasQuarterRest == true || hasEighthRest == true) && me.getSource()==lineB){
+            ImageView newRest = new ImageView(getClass().getResource(restImage).toString());
             newRest.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent me) {
                     if(deleteFunction ==true){
                         ImageView clickedView = (ImageView) me.getTarget();
-                        for (RestClass rest: restsArray) {
+                        for (Rest rest: restsArray) {
                             ImageView thisImage = rest.getImageView();
                             if (thisImage == clickedView) {
                                 images2.remove(thisImage);
@@ -279,17 +296,24 @@ public class CompositionController implements Initializable {
                 };
             });
            
-                RestClass quarterRest = new RestClass();
 
                 newRest.setX(mouseX - 17);
                 newRest.setY(mouseY - 30);
-                quarterRest.setX(mouseX-17);
-                quarterRest.setY(mouseY-30);
+                
                 newRest.setFitWidth(20);
                 newRest.setFitHeight(55);
                 screen.getChildren().add(newRest);
-                quarterRest.setImageView(newRest);
-                restsArray.add(quarterRest);
+                if(hasEighthRest == true){
+                    newRest.setY(mouseY - 15);
+                    newRest.setFitHeight(29);
+                    EighthRestCount erc = new EighthRestCount(newRest.getX(), newRest.getY());
+                    erc.setImageView(newRest);
+                    restsArray.add(erc);
+                } else if(hasQuarterRest == true){
+                    QuarterRestCount qrc = new QuarterRestCount(newRest.getX(), newRest.getY());
+                    qrc.setImageView(newRest);
+                    restsArray.add(qrc);
+                }
             
             
         }
@@ -375,6 +399,7 @@ public class CompositionController implements Initializable {
         spaceClicked = false;
         lineClicked = false;
         hasQuarterRest = false;
+        hasEighthRest = false;
     }    
     
 }

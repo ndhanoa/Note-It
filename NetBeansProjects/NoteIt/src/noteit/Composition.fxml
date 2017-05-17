@@ -24,8 +24,8 @@
       <Button fx:id="load" layoutX="468.0" layoutY="209.0" mnemonicParsing="false" onMouseClicked="#load" prefHeight="38.0" prefWidth="98.0" text="Load" />
       <Button fx:id="delete" layoutX="38.0" layoutY="234.0" mnemonicParsing="false" onAction="#handleDeleteNote" prefHeight="38.0" prefWidth="70.0" text="Delete" />
 
-      <Button layoutX="200.0" layoutY="152.0" mnemonicParsing="false" onMouseClicked="#handleRestButton" prefHeight="57.0" prefWidth="41.0" />
-      <ImageView fitHeight="45.0" fitWidth="41.0" layoutX="212.0" layoutY="158.0" pickOnBounds="true" preserveRatio="true">
+      <Button layoutX="192.0" layoutY="152.0" mnemonicParsing="false" onMouseClicked="#handleRestButton" prefHeight="57.0" prefWidth="41.0" />
+      <ImageView fitHeight="45.0" fitWidth="41.0" layoutX="204.0" layoutY="158.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@quarter-rest-hi.png" />
          </image>
@@ -38,10 +38,16 @@
          </image>
       </ImageView>
       <Button layoutX="142.0" layoutY="152.0" mnemonicParsing="false" onMouseClicked="#handleClickEighthNote" prefHeight="57.0" prefWidth="41.0" />
-      <ImageView fitHeight="49.0" fitWidth="29.0" layoutX="149.0" layoutY="156.0" onMouseClicked="#handleClickEighthNote" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="46.0" fitWidth="29.0" layoutX="149.0" layoutY="156.0" onMouseClicked="#handleClickEighthNote" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@eighthnote.png" />
-         </image></ImageView> 
+         </image></ImageView>
+      <Button layoutX="241.0" layoutY="152.0" mnemonicParsing="false" onMouseClicked="#handleClickEighthRest" prefHeight="57.0" prefWidth="41.0" />
+      <ImageView fitHeight="40.0" fitWidth="35.0" layoutX="250.0" layoutY="161.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@eighthRest.png" />
+         </image>
+      </ImageView> 
 
    </children>
 </AnchorPane>
