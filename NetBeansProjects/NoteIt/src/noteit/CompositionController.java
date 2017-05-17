@@ -31,6 +31,12 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Line;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javax.sound.midi.InvalidMidiDataException;
+import javax.sound.midi.MidiSystem;
+import javax.sound.midi.MidiUnavailableException;
+import javax.sound.midi.Receiver;
+import javax.sound.midi.ShortMessage;
+import javax.sound.midi.Synthesizer;
 
 public class CompositionController implements Initializable {
     @FXML 
@@ -197,7 +203,17 @@ public class CompositionController implements Initializable {
     private boolean lineClicked;
    
     @FXML
-    private void handleClickStaff(MouseEvent me){
+    private void handleClickStaff(MouseEvent me) throws InvalidMidiDataException, MidiUnavailableException{
+        
+        ShortMessage myMsg = new ShortMessage();
+        // Play the note Middle C (60) moderately loud
+        // (velocity = 93)on channel 4 (zero-based).
+        myMsg.setMessage(ShortMessage.NOTE_ON, 4, 60, 93); 
+        Synthesizer synth = MidiSystem.getSynthesizer();
+        synth.open(); // dwheadon: need to close this when the application finishes
+        Receiver synthRcvr = synth.getReceiver();
+        synthRcvr.send(myMsg, -1); // -1 means no time stamp
+        
         if(hasQuarterRest == true || hasEighthRest == true){
             handleClickStaffForRests(me);
         } else{
