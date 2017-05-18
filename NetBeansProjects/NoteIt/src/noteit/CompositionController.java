@@ -58,6 +58,9 @@ public class CompositionController implements Initializable {
     private Button quarternote;
     
     @FXML
+    private Button measureBarButton;
+    
+    @FXML
     private String noteImage;
     private String restImage;
     
@@ -79,6 +82,9 @@ public class CompositionController implements Initializable {
     @FXML
     private Button eighthNote;
     
+    @FXML
+    private Button measureButton;
+    
     @FXML private ImageView newEighthNote;
     
     @FXML private Boolean hasEighthNote;
@@ -96,6 +102,8 @@ public class CompositionController implements Initializable {
     private ArrayList<Note> notes = new ArrayList<Note>();
     
     private ArrayList<Rest> restsArray = new ArrayList<Rest>();
+    private ArrayList<MeasureBar> measureBarArray = new ArrayList<MeasureBar>();
+    private ArrayList<Object> charactersonStaff = new ArrayList<Object>();
     
     ImageView details;
     
@@ -229,7 +237,7 @@ public class CompositionController implements Initializable {
         if((lineF == clickedLine) ||(lineD == clickedLine )|| (lineB == clickedLine )|| (lineG == clickedLine) || (lineE== clickedLine)){
             lineClicked = true;
         }
-        if(hasQuarterNote == true||  hasHalfNote == true||hasEighthNote == true) {
+        if(hasQuarterNote == true||  hasHalfNote == true||hasEighthNote == true || hasMeasureBar == true) {
             if((spaceClicked == true) || (lineClicked == true)){
             ImageView newNote = new ImageView(getClass().getResource(noteImage).toString());
             newNote.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
@@ -263,17 +271,23 @@ public class CompositionController implements Initializable {
             if(hasQuarterNote == true){
                 QuarterCount q = new QuarterCount(newNote.getX(), newNote.getY());
                 q.setImageView(newNote);
-                notes.add(q);
+                charactersonStaff.add(q);
             } else if(hasHalfNote == true){
                  HalfCount h = new HalfCount(newNote.getX(), newNote.getY());
                 h.setImageView(newNote);
-                notes.add(h);
+                charactersonStaff.add(h);
             } else if(hasEighthNote == true){
                  EighthCount e = new EighthCount(newNote.getX(), newNote.getY());
                 e.setImageView(newNote);
-                notes.add(e);
+                charactersonStaff.add(e);
             } else if(hasMeasureBar == true){
-                
+                newNote.setX(mouseX-175);
+                newNote.setY(-80); 
+                newNote.setFitWidth(350);
+                newNote.setFitHeight(320);
+                MeasureBar m = new MeasureBar(newNote.getX(), newNote.getY());
+                m.setImageView(newNote);
+                charactersonStaff.add(m);
             }
             
         }
@@ -324,11 +338,11 @@ public class CompositionController implements Initializable {
                     newRest.setFitHeight(29);
                     EighthRestCount erc = new EighthRestCount(newRest.getX(), newRest.getY());
                     erc.setImageView(newRest);
-                    restsArray.add(erc);
+                    charactersonStaff.add(erc);
                 } else if(hasQuarterRest == true){
                     QuarterRestCount qrc = new QuarterRestCount(newRest.getX(), newRest.getY());
                     qrc.setImageView(newRest);
-                    restsArray.add(qrc);
+                    charactersonStaff.add(qrc);
                 }
             
             
@@ -339,8 +353,39 @@ public class CompositionController implements Initializable {
                     
     }
     
+    private void handleClickMeasureBar(MouseEvent me){
+            Line clickedLine = null;
+            double mouseX = me.getSceneX();
+            double mouseY = me.getSceneY();
+            if((hasMeasureBar == true) && me.getSource()==lineB){
+            ImageView newBar = new ImageView(getClass().getResource("measure bar.png").toString());
+            newRest.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent me) {
+                    if(deleteFunction ==true){
+                        ImageView clickedView = (ImageView) me.getTarget();
+                        for (MeasureBar bar: measureBarArray) {
+                            ImageView thisImage = bar.getImageView();
+                            if (thisImage == clickedView) {
+                                images2.remove(thisImage);
+                                screen.getChildren().remove(thisImage);
+                                measureBarArray.remove(bar);
+                            }
+                        }
+                    }
+                };
+                
+            });
+                newBar.setX(mouseX - 17);
+                newBar.setY(mouseY - 30);
+                newBar.setFitWidth(50);
+                newBar.setFitHeight(120);
+                screen.getChildren().add(newBar);
+            }
+    }
     @FXML
     private void save(MouseEvent change) throws FileNotFoundException, IOException{
+        
          fc = new FileChooser();
          fc.setTitle("Open text file");
          fc.setInitialDirectory(new File(System.getProperty("user.home")));
@@ -349,7 +394,7 @@ public class CompositionController implements Initializable {
             try {
                 FileOutputStream fileOut = new FileOutputStream(selectedFile);
                 ObjectOutputStream out = new ObjectOutputStream(fileOut);
-                out.writeObject(notes);
+                out.writeObject(charactersonStaff);
                 out.close();
             } catch (IOException e){
             
@@ -368,8 +413,8 @@ public class CompositionController implements Initializable {
       try {
          FileInputStream fileIn = new FileInputStream(selectedFile);
          ObjectInputStream in = new ObjectInputStream(fileIn);
-         notes = (ArrayList<Note>) in.readObject();
-         for(Note i: notes){
+         charactersonStaff = (ArrayList<Object>) in.readObject();
+         for(Object i: charactersonStaff){
              ImageView newNote = null;
              if(i.getClass() == QuarterCount.class){
                 newNote = new ImageView(getClass().getResource("quarternote.png").toString());
@@ -377,6 +422,10 @@ public class CompositionController implements Initializable {
                  newNote = new ImageView(getClass().getResource("halfnote.png").toString());
              } else if(i.getClass() == EighthCount.class){
                  newNote = new ImageView(getClass().getResource("eighthnote.png").toString());
+             } if(i.getClass() == EighthRestCount.class){
+                 newNote = new ImageView(getClass().getResource("eighthrest.png").toString());
+             } if(i.getClass() == QuarterRestCount.class){
+                 newNote = new ImageView(getClass().getResource("quarterrest.png").toString());
              }
              screen.getChildren().add(newNote);
              newNote.setFitWidth(41);
