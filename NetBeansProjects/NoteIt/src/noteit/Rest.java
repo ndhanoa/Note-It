@@ -19,25 +19,21 @@ import javafx.stage.Stage;
  *
  * @author ndhanoa
  */
-public class Rest implements Serializable{
-    private double y;
+public class Rest extends MusicalCharacter implements Serializable {
+    private double count;
     private double x;
     transient private ImageView myView;
-    private double count;
     
-     public Rest(double count, double x, double y){
-        this.x = x;
-        this.count = count;
-        this.y = y;
+    public Rest(double count, double x, double y){
+        super(count, x, y);
     }
     
     public double getX(){
         return x;
     }
     
-    
-    public double getCount(){
-        return count;
+    public double getY(){
+        return 82;
     }
     
     public void setImageView(ImageView iv) {

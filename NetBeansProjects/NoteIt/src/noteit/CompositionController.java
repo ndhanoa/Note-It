@@ -103,7 +103,7 @@ public class CompositionController implements Initializable {
     
     private ArrayList<Rest> restsArray = new ArrayList<Rest>();
     private ArrayList<MeasureBar> measureBarArray = new ArrayList<MeasureBar>();
-    private ArrayList<Object> charactersonStaff = new ArrayList<Object>();
+    private ArrayList<MusicalCharacter> charactersonStaff = new ArrayList<MusicalCharacter>();
     
     ImageView details;
     
@@ -413,26 +413,48 @@ public class CompositionController implements Initializable {
       try {
          FileInputStream fileIn = new FileInputStream(selectedFile);
          ObjectInputStream in = new ObjectInputStream(fileIn);
-         charactersonStaff = (ArrayList<Object>) in.readObject();
-         for(Object i: charactersonStaff){
+         charactersonStaff = (ArrayList<MusicalCharacter>) in.readObject();
+         for(MusicalCharacter i: charactersonStaff){
              ImageView newNote = null;
              if(i.getClass() == QuarterCount.class){
                 newNote = new ImageView(getClass().getResource("quarternote.png").toString());
-             } else if(i.getClass() == HalfCount.class){
-                 newNote = new ImageView(getClass().getResource("halfnote.png").toString());
-             } else if(i.getClass() == EighthCount.class){
-                 newNote = new ImageView(getClass().getResource("eighthnote.png").toString());
-             } if(i.getClass() == EighthRestCount.class){
-                 newNote = new ImageView(getClass().getResource("eighthrest.png").toString());
-             } if(i.getClass() == QuarterRestCount.class){
-                 newNote = new ImageView(getClass().getResource("quarterrest.png").toString());
-             }
-             screen.getChildren().add(newNote);
-             newNote.setFitWidth(41);
+                screen.getChildren().add(newNote);
+                newNote.setFitWidth(41);
              newNote.setFitHeight(57);
              newNote.setX(i.getX());
              newNote.setY(i.getY());
+             } else if(i.getClass() == HalfCount.class){
+                 newNote = new ImageView(getClass().getResource("halfnote.png").toString());
+                 screen.getChildren().add(newNote);
+                 newNote.setFitWidth(41);
+             newNote.setFitHeight(57);
+             newNote.setX(i.getX());
+             newNote.setY(i.getY());
+             } else if(i.getClass() == EighthCount.class){
+                 newNote = new ImageView(getClass().getResource("eighthnote.png").toString());
+                 screen.getChildren().add(newNote);
+                 newNote.setFitWidth(41);
+             newNote.setFitHeight(57);
+             newNote.setX(i.getX());
+             newNote.setY(i.getY());
+             } if(i.getClass() == EighthRestCount.class){
+                 newNote = new ImageView(getClass().getResource("eighthrest.png").toString());
+                 screen.getChildren().add(newNote);
+                 newNote.setFitWidth(41);
+             newNote.setFitHeight(57);
+             newNote.setX(i.getX());
+             newNote.setY(i.getY());
+             } if(i.getClass() == QuarterRestCount.class){
+                 newNote = new ImageView(getClass().getResource("quarterrest.png").toString());
+                 screen.getChildren().add(newNote);
+                 newNote.setFitWidth(41);
+             newNote.setFitHeight(57);
+             newNote.setX(i.getX());
+             newNote.setY(i.getY());
+             }
+              
              
+            
      }
          in.close();
          fileIn.close();

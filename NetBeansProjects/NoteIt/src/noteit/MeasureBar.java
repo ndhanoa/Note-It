@@ -20,28 +20,14 @@ import javafx.stage.Stage;
  *
  * @author ndhanoa
  */
-public class MeasureBar implements Serializable {
+public class MeasureBar extends MusicalCharacter implements Serializable {
     
      private double y;
     private double x;
     transient private ImageView myView;
-    
+   
      public MeasureBar(double x, double y){
-        this.x = x;
-        this.y = y;
-    }
-    
-    public double getX(){
-        return x;
-    }
-    
-    
-    public void setImageView(ImageView iv) {
-        this.myView = iv;
-    }
-    
-    public ImageView getImageView() {
-        return myView;
+        super(-1, x, y);
     }
     
     /**
