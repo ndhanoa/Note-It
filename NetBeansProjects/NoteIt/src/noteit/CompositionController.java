@@ -312,7 +312,7 @@ public class CompositionController implements Initializable {
             newRest.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent me) {
-                    if(deleteFunction ==true){
+                    if(deleteFunction == true){
                         ImageView clickedView = (ImageView) me.getTarget();
                         for (Rest rest: restsArray) {
                             ImageView thisImage = rest.getImageView();
@@ -414,44 +414,44 @@ public class CompositionController implements Initializable {
          FileInputStream fileIn = new FileInputStream(selectedFile);
          ObjectInputStream in = new ObjectInputStream(fileIn);
          charactersonStaff = (ArrayList<MusicalCharacter>) in.readObject();
-         for(MusicalCharacter i: charactersonStaff){
+          for(MusicalCharacter i: charactersonStaff){
              ImageView newNote = null;
+if(i.getClass() == QuarterCount.class || i.getClass() == HalfCount.class || i.getClass() == EighthCount.class){
              if(i.getClass() == QuarterCount.class){
                 newNote = new ImageView(getClass().getResource("quarternote.png").toString());
-                screen.getChildren().add(newNote);
-                newNote.setFitWidth(41);
-             newNote.setFitHeight(57);
-             newNote.setX(i.getX());
-             newNote.setY(i.getY());
+                
              } else if(i.getClass() == HalfCount.class){
                  newNote = new ImageView(getClass().getResource("halfnote.png").toString());
-                 screen.getChildren().add(newNote);
-                 newNote.setFitWidth(41);
-             newNote.setFitHeight(57);
-             newNote.setX(i.getX());
-             newNote.setY(i.getY());
              } else if(i.getClass() == EighthCount.class){
                  newNote = new ImageView(getClass().getResource("eighthnote.png").toString());
+             } 
+              screen.getChildren().add(newNote);
+                newNote.setFitWidth(41);
+                newNote.setFitHeight(57);
+                newNote.setX(i.getX());
+                newNote.setY(i.getY());
+} else if (i.getClass() == EighthRestCount.class || i.getClass() == QuarterRestCount.class){
+    if(i.getClass() == EighthRestCount.class){
+    newNote = new ImageView(getClass().getResource("eighthRest.png").toString());
+    } else if (i.getClass() == QuarterRestCount.class){
+        newNote = new ImageView(getClass().getResource("quarter-rest-hi.png").toString());
+    }
+    screen.getChildren().add(newNote);
+    newNote.setFitWidth(20);
+    newNote.setFitHeight(50);
+    newNote.setX(i.getX());
+    newNote.setY(i.getY());
+} else if (i.getClass() == MeasureBar.class){
+    newNote = new ImageView(getClass().getResource("measure bar.png").toString());
                  screen.getChildren().add(newNote);
-                 newNote.setFitWidth(41);
-             newNote.setFitHeight(57);
-             newNote.setX(i.getX());
-             newNote.setY(i.getY());
-             } if(i.getClass() == EighthRestCount.class){
-                 newNote = new ImageView(getClass().getResource("eighthrest.png").toString());
-                 screen.getChildren().add(newNote);
-                 newNote.setFitWidth(41);
-             newNote.setFitHeight(57);
-             newNote.setX(i.getX());
-             newNote.setY(i.getY());
-             } if(i.getClass() == QuarterRestCount.class){
-                 newNote = new ImageView(getClass().getResource("quarterrest.png").toString());
-                 screen.getChildren().add(newNote);
-                 newNote.setFitWidth(41);
-             newNote.setFitHeight(57);
-             newNote.setX(i.getX());
-             newNote.setY(i.getY());
-             }
+                 
+                newNote.setFitWidth(350);
+                newNote.setFitHeight(320);
+                newNote.setX(i.getX());
+                newNote.setY(i.getY()); 
+    }
+
+
               
              
             
@@ -467,8 +467,11 @@ public class CompositionController implements Initializable {
          System.out.println("Composition not found");
          c.printStackTrace();
          return;
-         
-    }
+              
+             
+            
+      }
+    
         
        
 
