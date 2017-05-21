@@ -12,6 +12,6 @@ package noteit;
 public class EighthRestCount extends Rest {
     
     public EighthRestCount(double x, double y){
-        super(1, x, y);
+        super(0.5, x, y);
     }
 }

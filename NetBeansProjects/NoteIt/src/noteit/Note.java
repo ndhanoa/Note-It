@@ -19,33 +19,11 @@ import javafx.stage.Stage;
  *
  * @author ndhanoa
  */
-public class Note implements Serializable {
+public class Note extends MusicalCharacter{
     private double x;
     private double y;
-    transient private ImageView myView;
     private double count;
     public Note(double count, double x, double y){
-        this.x = x;
-        this.y = y;
-        this.count = count;
+        super(count, x, y);
     }
-
-    public double getX(){
-        return x;
-    }
-    public double getY(){
-        return y;
-    }
-    
-    public double getCount(){
-        return count;
-    }
-    
-    public void setImageView(ImageView iv){
-        this.myView = iv;
-    }
-    public ImageView getImageView(){
-        return myView;
-    }
-    
 }

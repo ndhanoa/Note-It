@@ -19,23 +19,31 @@ import javafx.stage.Stage;
  *
  * @author ndhanoa
  */
-public class NoteClass implements Serializable{
+public class MusicalCharacter implements Serializable {
     private double x;
     private double y;
+    private double count;
     transient private ImageView myView;
-
-    public void setX(double x){
+    
+    public MusicalCharacter(double count, double x, double y){
+        this.count = count;
         this.x = x;
+        this.y = y;
     }
+    
+    
     public double getX(){
         return x;
     }
-    public void setY(double y){
-        this.y = y;
-    }
+    
     public double getY(){
         return y;
     }
+    
+    public double getCount(){
+        return count;
+    }
+    
     
     public void setImageView(ImageView iv){
         this.myView = iv;
@@ -43,5 +51,6 @@ public class NoteClass implements Serializable{
     public ImageView getImageView(){
         return myView;
     }
+    
     
 }
