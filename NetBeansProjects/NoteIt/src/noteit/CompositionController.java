@@ -31,6 +31,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Line;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 
 public class CompositionController implements Initializable {
     @FXML 
@@ -181,7 +182,7 @@ public class CompositionController implements Initializable {
     }
     
      @FXML
-    private void handleRestButton(MouseEvent me){
+    private void handleQuarterRestButton(MouseEvent me){
      
        deleteFunction = false;
        hasQuarterNote=false;
@@ -195,6 +196,19 @@ public class CompositionController implements Initializable {
     
     @FXML private boolean spaceClicked;
     private boolean lineClicked;
+    
+    @FXML
+    private double s1StartY;
+    
+    private double s2StartY;
+   
+    private double s3StartY;
+    
+    private double s4StartY;
+    
+    private double s5StartY;
+    
+    
    
     @FXML
     private void handleClickStaff(MouseEvent me){
@@ -207,16 +221,23 @@ public class CompositionController implements Initializable {
         AnchorPane staff = null;
         double mouseX = me.getSceneX();
         double mouseY = me.getSceneY();
-        if((me.getSource() == lineF) || (me.getSource() == lineD) || (me.getSource() == lineB) || (me.getSource() == lineG) || (me.getSource() == lineE)){
+        if((me.getSource() == lineF) || (me.getSource() == lineD) || (me.getSource() == lineB) || (me.getSource() == lineG) || (me.getSource() == lineE) || (me.getSource() == l1) || (me.getSource() == l2) || (me.getSource() == l3) || (me.getSource() == l4) || (me.getSource() == l5)){
             clickedLine = (Line) me. getTarget();
         } else {
             staff = (AnchorPane) me.getTarget();
         }
+        s1StartY = 46;
+        s2StartY = s1StartY + 18;
+        s3StartY = s2StartY + 18;
+        s4StartY = s3StartY + 18;
+        s5StartY = s4StartY + 18;
         
-        if(staff == screen && ((mouseY>51 && mouseY<58)||(mouseY>68 && mouseY<76)||(mouseY>87&& mouseY<94)||(mouseY>106&&mouseY<113))){
+        
+        
+        if(staff == screen && ((mouseY>s1StartY && mouseY<s2StartY)||(mouseY>s2StartY && mouseY<s3StartY)||(mouseY>s3StartY && mouseY<s4StartY)||(mouseY>s4StartY &&mouseY< s5StartY)||(mouseY>s1StartY + 106 && mouseY<s2StartY + 106)||(mouseY>s2StartY + 106 && mouseY<s3StartY + 106)||(mouseY>s3StartY + 106 && mouseY<s4StartY + 106)||(mouseY>s4StartY + 106 && mouseY< s5StartY + 106))){
             spaceClicked = true;
         }
-        if((lineF == clickedLine) ||(lineD == clickedLine )|| (lineB == clickedLine )|| (lineG == clickedLine) || (lineE== clickedLine)){
+        if((lineF == clickedLine) ||(lineD == clickedLine )|| (lineB == clickedLine )|| (lineG == clickedLine) || (lineE== clickedLine) || (l1 == clickedLine) || (l2 == clickedLine) || (l3 == clickedLine) || (l4 == clickedLine) || (l5 == clickedLine)){
             lineClicked = true;
         }
         if((hasQuarterNote == true|| hasHalfNote == true||hasEighthNote == true) && (spaceClicked == true) || (lineClicked == true)) {
@@ -277,7 +298,7 @@ public class CompositionController implements Initializable {
             double mouseX = me.getSceneX();
             double mouseY = me.getSceneY();
             
-            if((hasQuarterRest == true || hasEighthRest == true) && me.getSource()==lineB){
+            if((hasQuarterRest == true || hasEighthRest == true) && (me.getSource()==lineB || me.getSource() == l3)){
             ImageView newRest = new ImageView(getClass().getResource(restImage).toString());
             newRest.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
                 @Override
@@ -318,8 +339,69 @@ public class CompositionController implements Initializable {
             
         }
     }
-        
+    @FXML
+    private double screenHeight;
+    private Window window;
+    private double lineStartX;
+    private double lineEndX;
+    private double lineStartY;
+    private double lineEndY;
+    private Line l1;
+    private Line l2;
+    private Line l3;
+    private Line l4;
+    private Line l5;
     
+    
+    
+    
+    @FXML
+    private void handleAddNewStaff(MouseEvent me){
+        ((Stage)screen.getScene().getWindow()).setHeight(450);
+        l1 = new Line(lineStartX + 50, lineStartY + 150, lineEndX + 50, lineEndY + 150);
+        l2 = new Line(lineStartX + 50, lineStartY + 168, lineEndX + 50, lineEndY + 168);
+        l3 = new Line(lineStartX + 50, lineStartY + 186, lineEndX + 50, lineEndY + 186);
+        l4 = new Line(lineStartX + 50, lineStartY + 204, lineEndX + 50, lineEndY + 204);
+        l5 = new Line(lineStartX + 50, lineStartY + 222, lineEndX + 50, lineEndY + 222);
+        l1.setStrokeWidth(5);
+        l2.setStrokeWidth(5);
+        l3.setStrokeWidth(5);
+        l4.setStrokeWidth(5);
+        l5.setStrokeWidth(5);
+        screen.getChildren().add(l1);
+        screen.getChildren().add(l2);
+        screen.getChildren().add(l3);
+        screen.getChildren().add(l4);  
+        screen.getChildren().add(l5);
+        handleNewNotesOnNewStaff(l1);
+        handleNewNotesOnNewStaff(l2);
+        handleNewNotesOnNewStaff(l3); 
+        handleNewNotesOnNewStaff(l4);
+        handleNewNotesOnNewStaff(l5);
+        
+    }
+    
+    @FXML 
+    private void handleNewNotesOnNewStaff(Line l){
+        l.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent me) {
+                    Line clickedLine = (Line) me.getTarget();
+                    if(clickedLine == l && (hasQuarterNote == true|| hasHalfNote == true||hasEighthNote == true || hasQuarterRest == true || hasEighthRest == true)){
+                        handleClickStaff(me);
+                    }
+                };
+            });
+        l.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>(){
+            @Override
+            public void handle(MouseEvent me){
+                AnchorPane clickedScreen = (AnchorPane) me.getTarget();
+                if(clickedScreen == screen && (hasQuarterNote == true|| hasHalfNote == true||hasEighthNote == true || hasQuarterRest == true || hasEighthRest == true)){
+                        handleClickStaff(me);
+                }
+            };
+        });
+    }
                     
   
     
@@ -400,6 +482,10 @@ public class CompositionController implements Initializable {
         lineClicked = false;
         hasQuarterRest = false;
         hasEighthRest = false;
+        lineStartX = lineF.getStartX();
+        lineStartY = lineF.getStartY();
+        lineEndX = lineF.getEndX();
+        lineEndY = lineF.getEndY();
     }    
     
 }
