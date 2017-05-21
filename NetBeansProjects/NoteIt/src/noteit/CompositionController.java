@@ -218,6 +218,8 @@ public class CompositionController implements Initializable {
    
     @FXML
     private void handleClickStaff(MouseEvent me){
+        spaceClicked = false;
+       lineClicked = false;
         if(hasQuarterRest == true || hasEighthRest == true){
             handleClickStaffForRests(me);
         } else{
@@ -231,7 +233,7 @@ public class CompositionController implements Initializable {
             staff = (AnchorPane) me.getTarget();
         }
         
-        if(staff == screen && ((mouseY>52 && mouseY<60)||(mouseY>70 && mouseY<78)||(mouseY>88&& mouseY<96)||(mouseY>107&&mouseY<115))){
+        if(staff == screen && ((mouseY>51 && mouseY<58)||(mouseY>68 && mouseY<76)||(mouseY>87&& mouseY<94)||(mouseY>106&&mouseY<113))){
             spaceClicked = true;
         }
         if((lineF == clickedLine) ||(lineD == clickedLine )|| (lineB == clickedLine )|| (lineG == clickedLine) || (lineE== clickedLine)){
@@ -257,14 +259,11 @@ public class CompositionController implements Initializable {
                 };
             });
             
-            if(mouseY < 120 && mouseY > 44){
-                if(spaceClicked == true){
+           
+                if(spaceClicked == true||lineClicked == true){
                     newNote.setX(mouseX - 17);
-                    newNote.setY(mouseY - 43);
-            } else if(lineClicked == true){
-                newNote.setX(mouseX-17);
-                newNote.setY(mouseY-45);  
-            }
+                    newNote.setY(mouseY - 44);
+           } 
             newNote.setFitWidth(41);
             newNote.setFitHeight(57);
             screen.getChildren().add(newNote);
@@ -277,6 +276,7 @@ public class CompositionController implements Initializable {
                 h.setImageView(newNote);
                 charactersonStaff.add(h);
             } else if(hasEighthNote == true){
+                newNote.setY(mouseY-48);
                  EighthCount e = new EighthCount(newNote.getX(), newNote.getY());
                 e.setImageView(newNote);
                 charactersonStaff.add(e);
@@ -296,7 +296,6 @@ public class CompositionController implements Initializable {
         }
     }
         }
-    }
     
    
     @FXML
@@ -402,7 +401,7 @@ public class CompositionController implements Initializable {
         } else {
             System.out.println("Error: File is not valid.");
         }
-    
+
     }
     @FXML
     private void load(MouseEvent change){
@@ -450,6 +449,7 @@ if(i.getClass() == QuarterCount.class || i.getClass() == HalfCount.class || i.ge
                 newNote.setX(i.getX());
                 newNote.setY(i.getY()); 
     }
+
 
 
               
