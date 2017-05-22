@@ -51,7 +51,7 @@
       <Button layoutX="120.0" layoutY="234.0" mnemonicParsing="false" onMouseClicked="#handleAddNewStaff" prefHeight="38.0" text="Add New Staff" AnchorPane.bottomAnchor="41.0" AnchorPane.leftAnchor="130.0" /> 
        <Button fx:id="measureButton" layoutX="301.0" layoutY="148.0" mnemonicParsing="false" onMouseClicked="#handleClickBar" prefHeight="57.0" prefWidth="41.0" AnchorPane.bottomAnchor="104.0" AnchorPane.leftAnchor="301.0">
          <graphic> 
-            <ImageView fitHeight="57.0" fitWidth="41.0" pickOnBounds="true">
+            <ImageView fitHeight="40.0" fitWidth="26.0" pickOnBounds="true">
                <image>
                   <Image url="@measure%20bar.png" />
                </image>
