@@ -145,7 +145,10 @@ public class CompositionController implements Initializable {
         noteImage = "halfnote.png";
         hasQuarterRest = false;
         hasEighthRest = false;
+        hasMeasureBar = false;
     }
+    
+   
     
     @FXML private void handleClickEighthNote(MouseEvent me){
         hasHalfNote = false;
@@ -155,6 +158,7 @@ public class CompositionController implements Initializable {
         noteImage = "eighthnote.png";
         hasQuarterRest = false;
         hasEighthRest = false;
+        hasMeasureBar = false;
     }
     
     @FXML private void handleClickEighthRest(MouseEvent me){
@@ -165,6 +169,7 @@ public class CompositionController implements Initializable {
         restImage = "eighthRest.png";
         hasQuarterRest = false;
         hasEighthRest = true;
+        hasMeasureBar = false;
     }
     
     @FXML private void handleClickBar(MouseEvent me){
@@ -173,6 +178,8 @@ public class CompositionController implements Initializable {
         hasQuarterNote = false;
         deleteFunction = false;
         hasMeasureBar = true;
+        hasQuarterRest = false;
+        hasEighthRest = false;
         noteImage = "measure bar.png";
     }
     
@@ -193,24 +200,27 @@ public class CompositionController implements Initializable {
        hasEighthNote = false;
        hasQuarterNote=false;
        hasHalfNote = false;
-       hasEighthNote = false;
        spaceClicked = false;
        lineClicked = false;
        hasHalfNote = false;
        hasQuarterRest = false;
        hasEighthRest = false;
+       hasMeasureBar = false;
     }
     
      @FXML
     private void handleQuarterRestButton(MouseEvent me){
-     
+        restImage = "quarter-rest-hi.png";
        deleteFunction = false;
        hasQuarterNote=false;
+       hasHalfNote = false;
+       hasEighthNote = false;
        spaceClicked = false;
        lineClicked = false;
        hasQuarterRest = true;
-       restImage = "quarter-rest-hi.png";
        hasEighthRest = false;
+       hasMeasureBar = false;
+       
     }
     
     
