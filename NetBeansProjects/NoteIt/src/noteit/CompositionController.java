@@ -247,12 +247,12 @@ public class CompositionController implements Initializable {
                 public void handle(MouseEvent me) {
                     if(deleteFunction ==true){
                         ImageView clickedView = (ImageView) me.getTarget();
-                        for (Note note: notes) {
-                            ImageView thisImage = note.getImageView();
+                        for (MusicalCharacter m: charactersonStaff) {
+                            ImageView thisImage = m.getImageView();
                             if (thisImage == clickedView) {
-                                images.remove(thisImage);
+     //                           images.remove(thisImage);
                                 screen.getChildren().remove(thisImage);
-                                notes.remove(note);
+                                charactersonStaff.remove(m);
                             }
                         }
                     }
@@ -316,7 +316,7 @@ public class CompositionController implements Initializable {
                         for (Rest rest: restsArray) {
                             ImageView thisImage = rest.getImageView();
                             if (thisImage == clickedView) {
-                                images2.remove(thisImage);
+   //                             images2.remove(thisImage);
                                 screen.getChildren().remove(thisImage);
                                 restsArray.remove(rest);
                             }
