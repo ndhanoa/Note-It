@@ -448,39 +448,7 @@ public class CompositionController implements Initializable {
             };
         });
     }
-                    
-    
-    
-    private void handleClickMeasureBar(MouseEvent me){
-            Line clickedLine = null;
-            double mouseX = me.getSceneX();
-            double mouseY = me.getSceneY();
-            if((hasMeasureBar == true) && me.getSource()==lineB){
-            ImageView newBar = new ImageView(getClass().getResource("measure bar.png").toString());
-            newRest.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent me) {
-                    if(deleteFunction ==true){
-                        ImageView clickedView = (ImageView) me.getTarget();
-                        for (MeasureBar bar: measureBarArray) {
-                            ImageView thisImage = bar.getImageView();
-                            if (thisImage == clickedView) {
-                                images2.remove(thisImage);
-                                screen.getChildren().remove(thisImage);
-                                measureBarArray.remove(bar);
-                            }
-                        }
-                    }
-                };
-                
-            });
-                newBar.setX(mouseX - 17);
-                newBar.setY(mouseY - 30);
-                newBar.setFitWidth(50);
-                newBar.setFitHeight(120);
-                screen.getChildren().add(newBar);
-            }
-    }
+             
     @FXML
     private void save(MouseEvent change) throws FileNotFoundException, IOException{
         
