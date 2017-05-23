@@ -472,11 +472,13 @@ public class CompositionController implements Initializable {
     }
     @FXML
     private void load(MouseEvent change){
+        
         fc = new FileChooser();
         fc.setTitle("Open text file");
         fc.setInitialDirectory(new File(System.getProperty("user.home")));
         File selectedFile = fc.showOpenDialog(stage);
       try {
+         clear();
          FileInputStream fileIn = new FileInputStream(selectedFile);
          ObjectInputStream in = new ObjectInputStream(fileIn);
          charactersonStaff = (ArrayList<MusicalCharacter>) in.readObject();
@@ -545,6 +547,14 @@ public class CompositionController implements Initializable {
 
       
       
+    }
+    
+    private void clear(){
+        charactersonStaff.clear();
+        for(MusicalCharacter m : charactersonStaff){
+            screen.getChildren().remove(m.getImageView());
+        }
+        
     }
     public void init(Stage stage){
         this.stage = stage;
