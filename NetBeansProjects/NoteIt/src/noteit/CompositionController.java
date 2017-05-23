@@ -395,20 +395,30 @@ public class CompositionController implements Initializable {
     private Line l3;
     private Line l4;
     private Line l5;
-    
-        
-    
+    private double newStaffCount;
+    private double lineCount;
+    private double firstLineY;
     
     
     
     @FXML
     private void handleAddNewStaff(MouseEvent me){
-        ((Stage)screen.getScene().getWindow()).setHeight(450);
-        l1 = new Line(lineStartX + 50, lineStartY + 150, lineEndX + 50, lineEndY + 150);
-        l2 = new Line(lineStartX + 50, lineStartY + 168, lineEndX + 50, lineEndY + 168);
-        l3 = new Line(lineStartX + 50, lineStartY + 186, lineEndX + 50, lineEndY + 186);
-        l4 = new Line(lineStartX + 50, lineStartY + 204, lineEndX + 50, lineEndY + 204);
-        l5 = new Line(lineStartX + 50, lineStartY + 222, lineEndX + 50, lineEndY + 222);
+        newStaffCount++;
+        lineCount = 0;
+        double height = ((Stage)screen.getScene().getWindow()).getHeight();
+
+
+        ((Stage)screen.getScene().getWindow()).setHeight(height + 120);
+        l1 = new Line(lineStartX + 50, 43.5 + (newStaffCount * 120), lineEndX + 50, 43.5 + (newStaffCount * 120));
+        firstLineY = 43.5 + (newStaffCount * 120);
+        lineCount ++;
+        l2 = new Line(lineStartX + 50, firstLineY + (18 * lineCount), lineEndX + 50, firstLineY + (18 * lineCount));
+        lineCount ++;
+        l3 = new Line(lineStartX + 50, firstLineY + (18 * lineCount), lineEndX + 50, firstLineY + (18 * lineCount));
+        lineCount ++;
+        l4 = new Line(lineStartX + 50, firstLineY + (18 * lineCount), lineEndX + 50, firstLineY + (18 * lineCount));
+        lineCount ++;
+        l5 = new Line(lineStartX + 50, firstLineY + (18 * lineCount), lineEndX + 50, firstLineY + (18 * lineCount));
         l1.setStrokeWidth(5);
         l2.setStrokeWidth(5);
         l3.setStrokeWidth(5);
@@ -573,6 +583,7 @@ public class CompositionController implements Initializable {
         lineStartY = lineF.getStartY();
         lineEndX = lineF.getEndX();
         lineEndY = lineF.getEndY();
+        newStaffCount = 0;
     }    
     
 }
