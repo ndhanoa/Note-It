@@ -357,19 +357,24 @@ public class CompositionController implements Initializable {
             });
            
 
-                newRest.setX(mouseX - 17);
-                newRest.setY(mouseY - 30);
+               
                 
-                newRest.setFitWidth(20);
-                newRest.setFitHeight(55);
-                screen.getChildren().add(newRest);
+                
                 if(hasEighthRest == true){
-                    newRest.setY(mouseY - 15);
-                    newRest.setFitHeight(29);
+                    newRest.setFitWidth(20);
+                    newRest.setFitHeight(25);
+                    screen.getChildren().add(newRest);
+                     newRest.setX(mouseX - 17);
+                     newRest.setY(70);
                     EighthRestCount erc = new EighthRestCount(newRest.getX(), newRest.getY());
                     erc.setImageView(newRest);
                     charactersonStaff.add(erc);
                 } else if(hasQuarterRest == true){
+                    newRest.setFitWidth(20);
+                    newRest.setFitHeight(55);
+                     screen.getChildren().add(newRest);
+                    newRest.setX(mouseX - 17);
+                    newRest.setY(50);
                     QuarterRestCount qrc = new QuarterRestCount(newRest.getX(), newRest.getY());
                     qrc.setImageView(newRest);
                     charactersonStaff.add(qrc);
@@ -453,39 +458,7 @@ public class CompositionController implements Initializable {
             };
         });
     }
-                    
-    
-    
-    private void handleClickMeasureBar(MouseEvent me){
-            Line clickedLine = null;
-            double mouseX = me.getSceneX();
-            double mouseY = me.getSceneY();
-            if((hasMeasureBar == true) && me.getSource()==lineB){
-            ImageView newBar = new ImageView(getClass().getResource("measure bar.png").toString());
-            newRest.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent me) {
-                    if(deleteFunction ==true){
-                        ImageView clickedView = (ImageView) me.getTarget();
-                        for (MeasureBar bar: measureBarArray) {
-                            ImageView thisImage = bar.getImageView();
-                            if (thisImage == clickedView) {
-                                images2.remove(thisImage);
-                                screen.getChildren().remove(thisImage);
-                                measureBarArray.remove(bar);
-                            }
-                        }
-                    }
-                };
-                
-            });
-                newBar.setX(mouseX - 17);
-                newBar.setY(mouseY - 30);
-                newBar.setFitWidth(50);
-                newBar.setFitHeight(120);
-                screen.getChildren().add(newBar);
-            }
-    }
+             
     @FXML
     private void save(MouseEvent change) throws FileNotFoundException, IOException{
         
@@ -519,7 +492,7 @@ public class CompositionController implements Initializable {
          charactersonStaff = (ArrayList<MusicalCharacter>) in.readObject();
           for(MusicalCharacter i: charactersonStaff){
              ImageView newNote = null;
-             if(i.getClass() == QuarterCount.class || i.getClass() == HalfCount.class || i.getClass() == EighthCount.class){
+             if(i.getClass() == QuarterCount.class || i.getClass() == HalfCount.class || i.getClass() == EighthCount.class || i.getClass() == MeasureBar.class){
                     if(i.getClass() == QuarterCount.class){
                         newNote = new ImageView(getClass().getResource("quarternote.png").toString());
                         newNote.setFitWidth(41);
@@ -532,26 +505,33 @@ public class CompositionController implements Initializable {
                         newNote = new ImageView(getClass().getResource("eighthnote.png").toString());
                         newNote.setFitWidth(41);
                         newNote.setFitHeight(57);
+                    } else if (i.getClass() == MeasureBar.class){
+                    newNote = new ImageView(getClass().getResource("measure bar.png").toString());
+                    newNote.setFitWidth(350);
+                    newNote.setFitHeight(320);
                     } 
-             } else if (i.getClass() == EighthRestCount.class || i.getClass() == QuarterRestCount.class){
+                    screen.getChildren().add(newNote);
+                newNote.setX(i.getX());
+                newNote.setY(i.getY());
+            }else if (i.getClass() == EighthRestCount.class || i.getClass() == QuarterRestCount.class){
                     if(i.getClass() == EighthRestCount.class){
                         newNote = new ImageView(getClass().getResource("eighthRest.png").toString());
                         newNote.setFitWidth(20);
-                        newNote.setFitHeight(50);
+                        newNote.setFitHeight(25);
+                        screen.getChildren().add(newNote);
+                        newNote.setX(i.getX());
+                        newNote.setY(70);
                     } else if (i.getClass() == QuarterRestCount.class){
                         newNote = new ImageView(getClass().getResource("quarter-rest-hi.png").toString());
                         newNote.setFitWidth(20);
                         newNote.setFitHeight(50);
+                        screen.getChildren().add(newNote);
+                        newNote.setX(i.getX());
+                        newNote.setY(55);
                     }
-             } else if (i.getClass() == MeasureBar.class){
-                    newNote = new ImageView(getClass().getResource("measure bar.png").toString());
-                    newNote.setFitWidth(350);
-                    newNote.setFitHeight(320);
-             }
+             } 
 
-            screen.getChildren().add(newNote);
-            newNote.setX(i.getX());
-            newNote.setY(i.getY());
+            
           }
 
          in.close();
