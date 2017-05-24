@@ -344,7 +344,7 @@ public class CompositionController implements Initializable {
                 charactersonStaff.add(e);
             } else if(hasMeasureBar == true){
                 newNote.setX(mouseX-175);
-                newNote.setY(-80); 
+                newNote.setY(mouseY-160); 
                 newNote.setFitWidth(350);
                 newNote.setFitHeight(320);
                 MeasureBar m = new MeasureBar(newNote.getX(), newNote.getY());
@@ -353,9 +353,12 @@ public class CompositionController implements Initializable {
             }
             else if (hasDoubleBarLine == true){
                 newNote.setX(mouseX-40);
-                newNote.setY(0);
+                newNote.setY(mouseY-75);
                 newNote.setFitWidth(100);
                 newNote.setFitHeight(160);
+                DoubleBarLine d = new DoubleBarLine(newNote.getX(), newNote.getY());
+                d.setImageView(newNote);
+                charactersonStaff.add(d);
                 
             }
             
@@ -395,19 +398,24 @@ public class CompositionController implements Initializable {
             });
            
 
-                newRest.setX(mouseX - 17);
-                newRest.setY(mouseY - 30);
+               
                 
-                newRest.setFitWidth(20);
-                newRest.setFitHeight(55);
-                screen.getChildren().add(newRest);
+                
                 if(hasEighthRest == true){
-                    newRest.setY(mouseY - 15);
-                    newRest.setFitHeight(29);
+                    newRest.setFitWidth(20);
+                    newRest.setFitHeight(25);
+                    screen.getChildren().add(newRest);
+                     newRest.setX(mouseX - 17);
+                     newRest.setY(70);
                     EighthRestCount erc = new EighthRestCount(newRest.getX(), newRest.getY());
                     erc.setImageView(newRest);
                     charactersonStaff.add(erc);
                 } else if(hasQuarterRest == true){
+                    newRest.setFitWidth(20);
+                    newRest.setFitHeight(55);
+                     screen.getChildren().add(newRest);
+                    newRest.setX(mouseX - 17);
+                    newRest.setY(50);
                     QuarterRestCount qrc = new QuarterRestCount(newRest.getX(), newRest.getY());
                     qrc.setImageView(newRest);
                     charactersonStaff.add(qrc);
@@ -428,21 +436,30 @@ public class CompositionController implements Initializable {
     private Line l3;
     private Line l4;
     private Line l5;
-    
-        
-    
+    private double newStaffCount;
+    private double lineCount;
+    private double firstLineY;
     
     
     
     @FXML
     private void handleAddNewStaff(MouseEvent me){
-        
-        ((Stage)screen.getScene().getWindow()).setHeight(450);
-        l1 = new Line(lineStartX + 50, lineStartY + 150, lineEndX + 50, lineEndY + 150);
-        l2 = new Line(lineStartX + 50, lineStartY + 168, lineEndX + 50, lineEndY + 168);
-        l3 = new Line(lineStartX + 50, lineStartY + 186, lineEndX + 50, lineEndY + 186);
-        l4 = new Line(lineStartX + 50, lineStartY + 204, lineEndX + 50, lineEndY + 204);
-        l5 = new Line(lineStartX + 50, lineStartY + 222, lineEndX + 50, lineEndY + 222);
+        newStaffCount++;
+        lineCount = 0;
+        double height = ((Stage)screen.getScene().getWindow()).getHeight();
+
+
+        ((Stage)screen.getScene().getWindow()).setHeight(height + 120);
+        l1 = new Line(lineStartX + 50, 43.5 + (newStaffCount * 120), lineEndX + 50, 43.5 + (newStaffCount * 120));
+        firstLineY = 43.5 + (newStaffCount * 120);
+        lineCount ++;
+        l2 = new Line(lineStartX + 50, firstLineY + (18 * lineCount), lineEndX + 50, firstLineY + (18 * lineCount));
+        lineCount ++;
+        l3 = new Line(lineStartX + 50, firstLineY + (18 * lineCount), lineEndX + 50, firstLineY + (18 * lineCount));
+        lineCount ++;
+        l4 = new Line(lineStartX + 50, firstLineY + (18 * lineCount), lineEndX + 50, firstLineY + (18 * lineCount));
+        lineCount ++;
+        l5 = new Line(lineStartX + 50, firstLineY + (18 * lineCount), lineEndX + 50, firstLineY + (18 * lineCount));
         l1.setStrokeWidth(5);
         l2.setStrokeWidth(5);
         l3.setStrokeWidth(5);
@@ -482,40 +499,7 @@ public class CompositionController implements Initializable {
             };
         });
     }
-                    
-    
-    
-/*    private void handleClickMeasureBar(MouseEvent me){
-            Line clickedLine = null;
-            double mouseX = me.getSceneX();
-            double mouseY = me.getSceneY();
-            if((hasMeasureBar == true) && me.getSource()==lineB){
-            ImageView newBar = new ImageView(getClass().getResource("measure bar.png").toString());
-            newRest.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent me) {
-                    if(deleteFunction ==true){
-                        ImageView clickedView = (ImageView) me.getTarget();
-                        for (MeasureBar bar: measureBarArray) {
-                            ImageView thisImage = bar.getImageView();
-                            if (thisImage == clickedView) {
-                                images2.remove(thisImage);
-                                screen.getChildren().remove(thisImage);
-                                measureBarArray.remove(bar);
-                            }
-                        }
-                    }
-                };
-                
-            });
-                newBar.setX(mouseX - 17);
-                newBar.setY(mouseY - 30);
-                newBar.setFitWidth(50);
-                newBar.setFitHeight(120);
-                screen.getChildren().add(newBar);
-            }
-    }
-*/
+             
     @FXML
     private void save(MouseEvent change) throws FileNotFoundException, IOException{
         
@@ -539,6 +523,8 @@ public class CompositionController implements Initializable {
     }
     @FXML
     private void load(MouseEvent change){
+        int extraStaffs = 0;
+        ArrayList<MusicalCharacter> charactersonStaff2 = new ArrayList<MusicalCharacter>();
         fc = new FileChooser();
         fc.setTitle("Open text file");
         fc.setInitialDirectory(new File(System.getProperty("user.home")));
@@ -549,44 +535,107 @@ public class CompositionController implements Initializable {
          charactersonStaff = (ArrayList<MusicalCharacter>) in.readObject();
           for(MusicalCharacter i: charactersonStaff){
              ImageView newNote = null;
-             if(i.getClass() == QuarterCount.class || i.getClass() == HalfCount.class || i.getClass() == EighthCount.class){
+             if(i.getClass() == QuarterCount.class || i.getClass() == HalfCount.class || i.getClass() == EighthCount.class || i.getClass() == MeasureBar.class){
                     if(i.getClass() == QuarterCount.class){
                         newNote = new ImageView(getClass().getResource("quarternote.png").toString());
                         newNote.setFitWidth(41);
                         newNote.setFitHeight(57);
+                        QuarterCount quc = new QuarterCount(newNote.getX(), newNote.getY());
+                        charactersonStaff2.add(quc);
                     } else if(i.getClass() == HalfCount.class){
                         newNote = new ImageView(getClass().getResource("halfnote.png").toString());
                         newNote.setFitWidth(41);
                         newNote.setFitHeight(57);
+                        HalfCount hfc = new HalfCount(newNote.getX(), newNote.getY());
+                        charactersonStaff2.add(hfc);
                     } else if(i.getClass() == EighthCount.class){
                         newNote = new ImageView(getClass().getResource("eighthnote.png").toString());
                         newNote.setFitWidth(41);
                         newNote.setFitHeight(57);
+                        EighthCount etc = new EighthCount(newNote.getX(), newNote.getY());
+                        charactersonStaff2.add(etc);
+                    } else if (i.getClass() == MeasureBar.class){
+                    newNote = new ImageView(getClass().getResource("measure bar.png").toString());
+                    newNote.setFitWidth(350);
+                    newNote.setFitHeight(320);
+                    MeasureBar mb = new MeasureBar(newNote.getX(), newNote.getY());
+                        charactersonStaff2.add(mb);
                     } 
-             } else if (i.getClass() == EighthRestCount.class || i.getClass() == QuarterRestCount.class){
+                    else if(i.getClass() == DoubleBarLine.class){
+                        newNote = new ImageView(getClass().getResource("doubleBarLine.png").toString());
+                        newNote.setFitWidth(100);
+                        newNote.setFitHeight(160);
+                        DoubleBarLine d = new DoubleBarLine(newNote.getX(), newNote.getY());
+                        charactersonStaff2.add(d);
+                    }
+                    screen.getChildren().add(newNote);
+                newNote.setX(i.getX());
+                newNote.setY(i.getY());
+            }else if (i.getClass() == EighthRestCount.class || i.getClass() == QuarterRestCount.class){
                     if(i.getClass() == EighthRestCount.class){
                         newNote = new ImageView(getClass().getResource("eighthRest.png").toString());
                         newNote.setFitWidth(20);
-                        newNote.setFitHeight(50);
+                        newNote.setFitHeight(25);
+                        screen.getChildren().add(newNote);
+                        newNote.setX(i.getX());
+                        newNote.setY(i.getY() - 5);
+                        EighthRestCount erc = new EighthRestCount(newNote.getX(), newNote.getY());
+                        charactersonStaff2.add(erc);
+                        
                     } else if (i.getClass() == QuarterRestCount.class){
                         newNote = new ImageView(getClass().getResource("quarter-rest-hi.png").toString());
                         newNote.setFitWidth(20);
                         newNote.setFitHeight(50);
+                        screen.getChildren().add(newNote);
+                        newNote.setX(i.getX());
+                        newNote.setY(i.getY() - 30);
+                        QuarterRestCount qrc = new QuarterRestCount(newNote.getX(), newNote.getY());
+                        charactersonStaff2.add(qrc);
                     }
-             } else if (i.getClass() == MeasureBar.class){
-                    newNote = new ImageView(getClass().getResource("measure bar.png").toString());
-                    newNote.setFitWidth(350);
-                    newNote.setFitHeight(320);
              }
-
-            screen.getChildren().add(newNote);
-            newNote.setX(i.getX());
-            newNote.setY(i.getY());
+             if(i.getY() > 142){
+             int staffNumber = ((int) ((i.getY() - 142)/120) + 1);
+            if(staffNumber > extraStaffs){
+                extraStaffs = staffNumber;
+                }
+             }
+          
+            for(int v = 0; v < extraStaffs; v++){
+                    newStaffCount++;
+                    lineCount = 0;
+                    double height = ((Stage)screen.getScene().getWindow()).getHeight();
+                    ((Stage)screen.getScene().getWindow()).setHeight(height + 120);
+                    l1 = new Line(lineStartX + 50, 43.5 + (newStaffCount * 120), lineEndX + 50, 43.5 + (newStaffCount * 120));
+                    firstLineY = 43.5 + (newStaffCount * 120);
+                    lineCount ++;
+                    l2 = new Line(lineStartX + 50, firstLineY + (18 * lineCount), lineEndX + 50, firstLineY + (18 * lineCount));
+                    lineCount ++;
+                    l3 = new Line(lineStartX + 50, firstLineY + (18 * lineCount), lineEndX + 50, firstLineY + (18 * lineCount));
+                    lineCount ++;
+                    l4 = new Line(lineStartX + 50, firstLineY + (18 * lineCount), lineEndX + 50, firstLineY + (18 * lineCount));
+                    lineCount ++;
+                    l5 = new Line(lineStartX + 50, firstLineY + (18 * lineCount), lineEndX + 50, firstLineY + (18 * lineCount));
+                    l1.setStrokeWidth(5);
+                    l2.setStrokeWidth(5);
+                    l3.setStrokeWidth(5);
+                    l4.setStrokeWidth(5);
+                    l5.setStrokeWidth(5);
+                    screen.getChildren().add(l1);
+                    screen.getChildren().add(l2);
+                    screen.getChildren().add(l3);
+                    screen.getChildren().add(l4);  
+                    screen.getChildren().add(l5);
+                    handleNewNotesOnNewStaff(l1);
+                    handleNewNotesOnNewStaff(l2);
+                    handleNewNotesOnNewStaff(l3); 
+                    handleNewNotesOnNewStaff(l4);
+                    handleNewNotesOnNewStaff(l5);
+              }
           }
 
          in.close();
          fileIn.close();
-         
+         charactersonStaff = charactersonStaff2;
          
       }catch(IOException i) {
          i.printStackTrace();
@@ -623,6 +672,7 @@ public class CompositionController implements Initializable {
         lineStartY = lineF.getStartY();
         lineEndX = lineF.getEndX();
         lineEndY = lineF.getEndY();
+        newStaffCount = 0;
     }    
     
 }
