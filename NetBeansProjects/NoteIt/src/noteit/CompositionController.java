@@ -256,7 +256,14 @@ public class CompositionController implements Initializable {
         } else {
             staff = (AnchorPane) me.getTarget();
         }
-        s1StartY = 46;
+        
+        double staffNumber = 0;
+        if(mouseY < 118){
+            staffNumber = 1;
+        } else { 
+            staffNumber = Math.round(mouseY/72);
+        }
+        s1StartY = 43.5 + (120 * staffNumber);
         s2StartY = s1StartY + 18;
         s3StartY = s2StartY + 18;
         s4StartY = s3StartY + 18;
@@ -264,7 +271,7 @@ public class CompositionController implements Initializable {
         
         
         
-        if(staff == screen && ((mouseY>s1StartY && mouseY<s2StartY)||(mouseY>s2StartY && mouseY<s3StartY)||(mouseY>s3StartY && mouseY<s4StartY)||(mouseY>s4StartY &&mouseY< s5StartY)||(mouseY>s1StartY + 106 && mouseY<s2StartY + 106)||(mouseY>s2StartY + 106 && mouseY<s3StartY + 106)||(mouseY>s3StartY + 106 && mouseY<s4StartY + 106)||(mouseY>s4StartY + 106 && mouseY< s5StartY + 106))){
+        if(staff == screen && ((mouseY>s1StartY && mouseY<s2StartY)||(mouseY>s2StartY && mouseY<s3StartY)||(mouseY>s3StartY && mouseY<s4StartY)||(mouseY>s4StartY &&mouseY< s5StartY))){
             spaceClicked = true;
         }
         if((lineF == clickedLine) ||(lineD == clickedLine )|| (lineB == clickedLine )|| (lineG == clickedLine) || (lineE== clickedLine) || (l1 == clickedLine) || (l2 == clickedLine) || (l3 == clickedLine) || (l4 == clickedLine) || (l5 == clickedLine)){
@@ -434,6 +441,8 @@ public class CompositionController implements Initializable {
         handleNewNotesOnNewStaff(l3); 
         handleNewNotesOnNewStaff(l4);
         handleNewNotesOnNewStaff(l5);
+        handleNewSpaceNotes(screen);
+        
         
     }
     
@@ -447,16 +456,21 @@ public class CompositionController implements Initializable {
                         handleClickStaff(me);
                     }
                 };
-            });
-        l.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>(){
-            @Override
-            public void handle(MouseEvent me){
-                AnchorPane clickedScreen = (AnchorPane) me.getTarget();
+           });
+        
+    }
+    @FXML 
+    private void handleNewSpaceNotes(AnchorPane p){
+        p.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent me) {
+                    AnchorPane clickedScreen = (AnchorPane) me.getTarget();
                 if(clickedScreen == screen && (hasQuarterNote == true|| hasHalfNote == true||hasEighthNote == true || hasQuarterRest == true || hasEighthRest == true)){
                         handleClickStaff(me);
                 }
-            };
-        });
+                };
+           });
+        
     }
              
     @FXML
