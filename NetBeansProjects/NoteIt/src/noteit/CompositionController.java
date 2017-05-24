@@ -125,6 +125,29 @@ public class CompositionController implements Initializable {
     @FXML private Boolean hasHalfNote;
     @FXML private boolean hasEighthRest;
     
+    @FXML private Button doubleBarLine;
+    
+    @FXML private ImageView newDoubleBarLine;
+    
+    @FXML private Boolean hasDoubleBarLine;
+    
+    
+    
+    
+    @FXML
+    private void handleClickDoubleBarLine(MouseEvent me){
+        hasQuarterNote= false;
+        deleteFunction = false;
+        hasEighthNote = false;
+        hasMeasureBar = false;
+        noteImage = "doubleBarLine.png";
+        hasQuarterRest = false;
+        hasEighthRest = false;
+        hasHalfNote=false;
+        hasDoubleBarLine = true;
+        
+    }
+    
     @FXML
     private void handleClickQuarterNote(MouseEvent me) {
         hasQuarterNote=true;
@@ -134,6 +157,8 @@ public class CompositionController implements Initializable {
         noteImage = "quarternote.png";
         hasQuarterRest = false;
         hasEighthRest = false;
+        hasMeasureBar = false;
+        hasDoubleBarLine = false;
     }
     
     @FXML
@@ -146,6 +171,7 @@ public class CompositionController implements Initializable {
         hasQuarterRest = false;
         hasEighthRest = false;
         hasMeasureBar = false;
+        hasDoubleBarLine = false;
     }
     
    
@@ -159,6 +185,7 @@ public class CompositionController implements Initializable {
         hasQuarterRest = false;
         hasEighthRest = false;
         hasMeasureBar = false;
+        hasDoubleBarLine = false;
     }
     
     @FXML private void handleClickEighthRest(MouseEvent me){
@@ -170,6 +197,7 @@ public class CompositionController implements Initializable {
         hasQuarterRest = false;
         hasEighthRest = true;
         hasMeasureBar = false;
+        hasDoubleBarLine = false;
     }
     
     @FXML private void handleClickBar(MouseEvent me){
@@ -181,6 +209,7 @@ public class CompositionController implements Initializable {
         hasQuarterRest = false;
         hasEighthRest = false;
         noteImage = "measure bar.png";
+        hasDoubleBarLine = false;
     }
     
     
@@ -206,11 +235,12 @@ public class CompositionController implements Initializable {
        hasQuarterRest = false;
        hasEighthRest = false;
        hasMeasureBar = false;
+       hasDoubleBarLine = false;
     }
     
      @FXML
     private void handleQuarterRestButton(MouseEvent me){
-        restImage = "quarter-rest-hi.png";
+       restImage = "quarter-rest-hi.png";
        deleteFunction = false;
        hasQuarterNote=false;
        hasHalfNote = false;
@@ -220,6 +250,7 @@ public class CompositionController implements Initializable {
        hasQuarterRest = true;
        hasEighthRest = false;
        hasMeasureBar = false;
+       hasDoubleBarLine = false;
        
     }
     
@@ -270,7 +301,7 @@ public class CompositionController implements Initializable {
         if((lineF == clickedLine) ||(lineD == clickedLine )|| (lineB == clickedLine )|| (lineG == clickedLine) || (lineE== clickedLine) || (l1 == clickedLine) || (l2 == clickedLine) || (l3 == clickedLine) || (l4 == clickedLine) || (l5 == clickedLine)){
             lineClicked = true;
         }
-        if(hasQuarterNote == true||  hasHalfNote == true||hasEighthNote == true || hasMeasureBar == true) {
+        if(hasQuarterNote == true||  hasHalfNote == true||hasEighthNote == true || hasMeasureBar == true|| hasDoubleBarLine ==true) {
             if((spaceClicked == true) || (lineClicked == true)){
             ImageView newNote = new ImageView(getClass().getResource(noteImage).toString());
             newNote.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
@@ -319,6 +350,13 @@ public class CompositionController implements Initializable {
                 MeasureBar m = new MeasureBar(newNote.getX(), newNote.getY());
                 m.setImageView(newNote);
                 charactersonStaff.add(m);
+            }
+            else if (hasDoubleBarLine == true){
+                newNote.setX(mouseX-40);
+                newNote.setY(0);
+                newNote.setFitWidth(100);
+                newNote.setFitHeight(160);
+                
             }
             
         }
@@ -398,6 +436,7 @@ public class CompositionController implements Initializable {
     
     @FXML
     private void handleAddNewStaff(MouseEvent me){
+        
         ((Stage)screen.getScene().getWindow()).setHeight(450);
         l1 = new Line(lineStartX + 50, lineStartY + 150, lineEndX + 50, lineEndY + 150);
         l2 = new Line(lineStartX + 50, lineStartY + 168, lineEndX + 50, lineEndY + 168);
@@ -419,7 +458,7 @@ public class CompositionController implements Initializable {
         handleNewNotesOnNewStaff(l3); 
         handleNewNotesOnNewStaff(l4);
         handleNewNotesOnNewStaff(l5);
-        
+          
     }
     
     @FXML 
@@ -446,7 +485,7 @@ public class CompositionController implements Initializable {
                     
     
     
-    private void handleClickMeasureBar(MouseEvent me){
+/*    private void handleClickMeasureBar(MouseEvent me){
             Line clickedLine = null;
             double mouseX = me.getSceneX();
             double mouseY = me.getSceneY();
@@ -476,6 +515,7 @@ public class CompositionController implements Initializable {
                 screen.getChildren().add(newBar);
             }
     }
+*/
     @FXML
     private void save(MouseEvent change) throws FileNotFoundException, IOException{
         

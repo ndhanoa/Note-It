@@ -57,6 +57,12 @@
                </image>
             </ImageView>
          </graphic>
-         </Button> 
+         </Button>
+      <Button layoutX="352.0" layoutY="152.0" mnemonicParsing="false" prefHeight="57.0" prefWidth="44.0" />
+      <ImageView fitHeight="57.0" fitWidth="44.0" layoutX="352.0" layoutY="157.0" onMouseClicked="#handleClickDoubleBarLine" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@doubleBarLine.png" />
+         </image>
+      </ImageView> 
    </children>
 </AnchorPane>
