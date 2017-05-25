@@ -406,7 +406,7 @@ public class CompositionController implements Initializable {
                     newRest.setFitHeight(25);
                     screen.getChildren().add(newRest);
                      newRest.setX(mouseX - 17);
-                     newRest.setY(70);
+                     newRest.setY(mouseY-14);
                     EighthRestCount erc = new EighthRestCount(newRest.getX(), newRest.getY());
                     erc.setImageView(newRest);
                     charactersonStaff.add(erc);
@@ -415,7 +415,7 @@ public class CompositionController implements Initializable {
                     newRest.setFitHeight(55);
                      screen.getChildren().add(newRest);
                     newRest.setX(mouseX - 17);
-                    newRest.setY(50);
+                    newRest.setY(mouseY-30);
                     QuarterRestCount qrc = new QuarterRestCount(newRest.getX(), newRest.getY());
                     qrc.setImageView(newRest);
                     charactersonStaff.add(qrc);
@@ -535,7 +535,7 @@ public class CompositionController implements Initializable {
          charactersonStaff = (ArrayList<MusicalCharacter>) in.readObject();
           for(MusicalCharacter i: charactersonStaff){
              ImageView newNote = null;
-             if(i.getClass() == QuarterCount.class || i.getClass() == HalfCount.class || i.getClass() == EighthCount.class || i.getClass() == MeasureBar.class){
+             if(i.getClass() == QuarterCount.class || i.getClass() == HalfCount.class || i.getClass() == EighthCount.class || i.getClass() == MeasureBar.class || i.getClass() == DoubleBarLine.class){
                     if(i.getClass() == QuarterCount.class){
                         newNote = new ImageView(getClass().getResource("quarternote.png").toString());
                         newNote.setFitWidth(41);
@@ -600,6 +600,8 @@ public class CompositionController implements Initializable {
                 }
              }
           
+          }
+          
             for(int v = 0; v < extraStaffs; v++){
                     newStaffCount++;
                     lineCount = 0;
@@ -631,7 +633,6 @@ public class CompositionController implements Initializable {
                     handleNewNotesOnNewStaff(l4);
                     handleNewNotesOnNewStaff(l5);
               }
-          }
 
          in.close();
          fileIn.close();
