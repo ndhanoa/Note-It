@@ -290,9 +290,12 @@ public class CompositionController implements Initializable {
         
         double staffNumber = 0;
         if(mouseY < 118){
+            staffNumber = 0;
+        } else if(mouseY > 118 && mouseY < 240){ 
+            //staffNumber = Math.round(mouseY/72);
             staffNumber = 1;
-        } else { 
-            staffNumber = Math.round(mouseY/72);
+        } else if(mouseY > 240 && mouseY < 362){
+            staffNumber = 2;
         }
         s1StartY = 43.5 + (120 * staffNumber);
         s2StartY = s1StartY + 18;
@@ -482,8 +485,9 @@ public class CompositionController implements Initializable {
         handleNewNotesOnNewStaff(l3); 
         handleNewNotesOnNewStaff(l4);
         handleNewNotesOnNewStaff(l5);
+        //if((me.getY() > 43.5 + (newStaffCount * 120)) && (me.getY() < 174 + (newStaffCount * 120))){
         handleNewSpaceNotes(screen);
-        
+        //}
         
     }
     
