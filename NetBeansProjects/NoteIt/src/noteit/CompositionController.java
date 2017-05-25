@@ -549,7 +549,7 @@ public class CompositionController implements Initializable {
          charactersonStaff = (ArrayList<MusicalCharacter>) in.readObject();
           for(MusicalCharacter i: charactersonStaff){
              ImageView newNote = null;
-             if(i.getClass() == QuarterCount.class || i.getClass() == HalfCount.class || i.getClass() == EighthCount.class || i.getClass() == MeasureBar.class){
+             if(i.getClass() == QuarterCount.class || i.getClass() == HalfCount.class || i.getClass() == EighthCount.class || i.getClass() == MeasureBar.class|| i.getClass() ==DoubleBarLine.class){
                     if(i.getClass() == QuarterCount.class){
                         newNote = new ImageView(getClass().getResource("quarternote.png").toString());
                         newNote.setFitWidth(41);
