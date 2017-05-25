@@ -22,7 +22,7 @@ import javafx.stage.Stage;
 public class Rest extends MusicalCharacter implements Serializable {
     
     public Rest(double count, double x, double y){
-        super(count, x, 75);
+        super(count, x, y);
     }
     
     /**

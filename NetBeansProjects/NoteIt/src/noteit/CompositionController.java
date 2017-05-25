@@ -592,7 +592,7 @@ public class CompositionController implements Initializable {
                         newNote.setFitHeight(25);
                         screen.getChildren().add(newNote);
                         newNote.setX(i.getX());
-                        newNote.setY(i.getY() - 5);
+                        newNote.setY(i.getY());
                         EighthRestCount erc = new EighthRestCount(newNote.getX(), newNote.getY());
                         charactersonStaff2.add(erc);
                         
@@ -602,7 +602,7 @@ public class CompositionController implements Initializable {
                         newNote.setFitHeight(50);
                         screen.getChildren().add(newNote);
                         newNote.setX(i.getX());
-                        newNote.setY(i.getY() - 30);
+                        newNote.setY(i.getY());
                         QuarterRestCount qrc = new QuarterRestCount(newNote.getX(), newNote.getY());
                         charactersonStaff2.add(qrc);
                     }
