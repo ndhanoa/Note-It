@@ -282,7 +282,7 @@ public class CompositionController implements Initializable {
         AnchorPane staff = null;
         double mouseX = me.getSceneX();
         double mouseY = me.getSceneY();
-        if((me.getSource() == lineF) || (me.getSource() == lineD) || (me.getSource() == lineB) || (me.getSource() == lineG) || (me.getSource() == lineE) || (me.getSource() == l1) || (me.getSource() == l2) || (me.getSource() == l3) || (me.getSource() == l4) || (me.getSource() == l5)){
+        if(me.getSource().getClass() == Line.class){
             clickedLine = (Line) me. getTarget();
         } else {
             staff = (AnchorPane) me.getTarget();
@@ -308,7 +308,7 @@ public class CompositionController implements Initializable {
         if(staff == screen && ((mouseY>s1StartY && mouseY<s2StartY)||(mouseY>s2StartY && mouseY<s3StartY)||(mouseY>s3StartY && mouseY<s4StartY)||(mouseY>s4StartY &&mouseY< s5StartY))){
             spaceClicked = true;
         }
-        if((lineF == clickedLine) ||(lineD == clickedLine )|| (lineB == clickedLine )|| (lineG == clickedLine) || (lineE== clickedLine) || (l1 == clickedLine) || (l2 == clickedLine) || (l3 == clickedLine) || (l4 == clickedLine) || (l5 == clickedLine)){
+        if((me.getSource().getClass() == Line.class)){
             lineClicked = true;
         }
         if(hasQuarterNote == true||  hasHalfNote == true||hasEighthNote == true || hasMeasureBar == true|| hasDoubleBarLine ==true) {
@@ -388,7 +388,7 @@ public class CompositionController implements Initializable {
             double mouseX = me.getSceneX();
             double mouseY = me.getSceneY();
             
-            if((hasQuarterRest == true || hasEighthRest == true) && (me.getSource()==lineB || me.getSource() == l3)){
+            if((hasQuarterRest == true || hasEighthRest == true) && (me.getSource().getClass() == Line.class)){
             ImageView newRest = new ImageView(getClass().getResource(restImage).toString());
             newRest.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
                 @Override
@@ -486,7 +486,7 @@ public class CompositionController implements Initializable {
         handleNewNotesOnNewStaff(l4);
         handleNewNotesOnNewStaff(l5);
         //if((me.getY() > 43.5 + (newStaffCount * 120)) && (me.getY() < 174 + (newStaffCount * 120))){
-        handleNewSpaceNotes(screen);
+    //    handleNewSpaceNotes(screen);
         //}
         
     }
@@ -504,7 +504,7 @@ public class CompositionController implements Initializable {
            });
         
     }
-    @FXML 
+   /* @FXML 
     private void handleNewSpaceNotes(AnchorPane p){
         p.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
                 @Override
@@ -517,7 +517,7 @@ public class CompositionController implements Initializable {
            });
         
     }
-             
+*/             
     @FXML
     private void save(MouseEvent change) throws FileNotFoundException, IOException{
         
