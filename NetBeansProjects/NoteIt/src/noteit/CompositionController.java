@@ -610,6 +610,22 @@ public class CompositionController implements Initializable {
                         QuarterRestCount qrc = new QuarterRestCount(newNote.getX(), newNote.getY());
                         charactersonStaff2.add(qrc);
                     }
+                    newNote.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+                        @Override
+                        public void handle(MouseEvent me) {
+                            if(deleteFunction ==true){
+                                ImageView clickedView = (ImageView) me.getTarget();
+                                for (MusicalCharacter m: charactersonStaff2) {
+                                    ImageView thisImage = m.getImageView();
+                                    if (thisImage == clickedView) {
+             //                           images.remove(thisImage);
+                                        screen.getChildren().remove(thisImage);
+                                        charactersonStaff2.remove(m);
+                                    }
+                                }
+                            }
+                        };
+                    });
              }
              if(i.getY() > 142){
              int staffNumber = ((int) ((i.getY() - 142)/120) + 1);
