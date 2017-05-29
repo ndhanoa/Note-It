@@ -542,7 +542,7 @@ public class CompositionController implements Initializable {
     @FXML
     private void load(MouseEvent change){
         int extraStaffs = 0;
-        ArrayList<MusicalCharacter> charactersonStaff2 = new ArrayList<MusicalCharacter>();
+        ArrayList<MusicalCharacter> savedCharacters = new ArrayList<MusicalCharacter>();
         fc = new FileChooser();
         fc.setTitle("Open text file");
         fc.setInitialDirectory(new File(System.getProperty("user.home")));
@@ -550,45 +550,63 @@ public class CompositionController implements Initializable {
       try {
          FileInputStream fileIn = new FileInputStream(selectedFile);
          ObjectInputStream in = new ObjectInputStream(fileIn);
-         charactersonStaff = (ArrayList<MusicalCharacter>) in.readObject();
-          for(MusicalCharacter i: charactersonStaff){
+         savedCharacters = (ArrayList<MusicalCharacter>) in.readObject();
+          for(MusicalCharacter i: savedCharacters){
              ImageView newNote = null;
              if(i.getClass() == QuarterCount.class || i.getClass() == HalfCount.class || i.getClass() == EighthCount.class || i.getClass() == MeasureBar.class || i.getClass() == DoubleBarLine.class){
                     if(i.getClass() == QuarterCount.class){
                         newNote = new ImageView(getClass().getResource("quarternote.png").toString());
                         newNote.setFitWidth(41);
                         newNote.setFitHeight(57);
+                        screen.getChildren().add(newNote);
+                        newNote.setX(i.getX());
+                        newNote.setY(i.getY());
                         QuarterCount quc = new QuarterCount(newNote.getX(), newNote.getY());
-                        charactersonStaff2.add(quc);
+                        quc.setImageView(newNote);
+                        charactersonStaff.add(quc);
                     } else if(i.getClass() == HalfCount.class){
                         newNote = new ImageView(getClass().getResource("halfnote.png").toString());
                         newNote.setFitWidth(41);
                         newNote.setFitHeight(57);
+                        newNote.setX(i.getX());
+                        newNote.setY(i.getY());
+                        screen.getChildren().add(newNote);
                         HalfCount hfc = new HalfCount(newNote.getX(), newNote.getY());
-                        charactersonStaff2.add(hfc);
+                        hfc.setImageView(newNote);
+                        charactersonStaff.add(hfc);
                     } else if(i.getClass() == EighthCount.class){
                         newNote = new ImageView(getClass().getResource("eighthnote.png").toString());
+                        screen.getChildren().add(newNote);
+                        newNote.setX(i.getX());
+                        newNote.setY(i.getY());
                         newNote.setFitWidth(41);
                         newNote.setFitHeight(57);
                         EighthCount etc = new EighthCount(newNote.getX(), newNote.getY());
-                        charactersonStaff2.add(etc);
+                        etc.setImageView(newNote);
+                        charactersonStaff.add(etc);
                     } else if (i.getClass() == MeasureBar.class){
-                    newNote = new ImageView(getClass().getResource("measure bar.png").toString());
-                    newNote.setFitWidth(350);
-                    newNote.setFitHeight(320);
-                    MeasureBar mb = new MeasureBar(newNote.getX(), newNote.getY());
-                        charactersonStaff2.add(mb);
+                        newNote = new ImageView(getClass().getResource("measure bar.png").toString());
+                        screen.getChildren().add(newNote);
+                        newNote.setX(i.getX());
+                        newNote.setY(i.getY());
+                        newNote.setFitWidth(350);
+                        newNote.setFitHeight(320);
+                        MeasureBar mb = new MeasureBar(newNote.getX(), newNote.getY());
+                        mb.setImageView(newNote);
+                        charactersonStaff.add(mb);
                     } 
                     else if(i.getClass() == DoubleBarLine.class){
                         newNote = new ImageView(getClass().getResource("doubleBarLine.png").toString());
+                        screen.getChildren().add(newNote);
+                        newNote.setX(i.getX());
+                        newNote.setY(i.getY());
                         newNote.setFitWidth(100);
                         newNote.setFitHeight(160);
                         DoubleBarLine d = new DoubleBarLine(newNote.getX(), newNote.getY());
-                        charactersonStaff2.add(d);
+                        d.setImageView(newNote);
+                        charactersonStaff.add(d);
                     }
-                    screen.getChildren().add(newNote);
-                newNote.setX(i.getX());
-                newNote.setY(i.getY());
+                    
             }else if (i.getClass() == EighthRestCount.class || i.getClass() == QuarterRestCount.class){
                     if(i.getClass() == EighthRestCount.class){
                         newNote = new ImageView(getClass().getResource("eighthRest.png").toString());
@@ -598,7 +616,8 @@ public class CompositionController implements Initializable {
                         newNote.setX(i.getX());
                         newNote.setY(i.getY());
                         EighthRestCount erc = new EighthRestCount(newNote.getX(), newNote.getY());
-                        charactersonStaff2.add(erc);
+                        erc.setImageView(newNote);
+                        charactersonStaff.add(erc);
                         
                     } else if (i.getClass() == QuarterRestCount.class){
                         newNote = new ImageView(getClass().getResource("quarter-rest-hi.png").toString());
@@ -608,25 +627,27 @@ public class CompositionController implements Initializable {
                         newNote.setX(i.getX());
                         newNote.setY(i.getY());
                         QuarterRestCount qrc = new QuarterRestCount(newNote.getX(), newNote.getY());
-                        charactersonStaff2.add(qrc);
+                        qrc.setImageView(newNote);
+                        charactersonStaff.add(qrc);
                     }
-                    newNote.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+                    
+             }
+             newNote.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
                         @Override
                         public void handle(MouseEvent me) {
                             if(deleteFunction ==true){
                                 ImageView clickedView = (ImageView) me.getTarget();
-                                for (MusicalCharacter m: charactersonStaff2) {
+                                for (MusicalCharacter m: charactersonStaff) {
                                     ImageView thisImage = m.getImageView();
                                     if (thisImage == clickedView) {
              //                           images.remove(thisImage);
                                         screen.getChildren().remove(thisImage);
-                                        charactersonStaff2.remove(m);
+                                        charactersonStaff.remove(m);
                                     }
                                 }
                             }
                         };
                     });
-             }
              if(i.getY() > 142){
              int staffNumber = ((int) ((i.getY() - 142)/120) + 1);
             if(staffNumber > extraStaffs){
@@ -670,7 +691,6 @@ public class CompositionController implements Initializable {
 
          in.close();
          fileIn.close();
-         charactersonStaff = charactersonStaff2;
          
       }catch(IOException i) {
          i.printStackTrace();
