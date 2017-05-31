@@ -14,7 +14,14 @@
       <Line fx:id="lineG" endX="530.0" layoutX="51.0" layoutY="101.0" onMouseClicked="#handleClickStaff" startX="-50.0" strokeWidth="5.0" />
       <Line fx:id="lineE" endX="530.0" layoutX="51.0" layoutY="118.0" onMouseClicked="#handleClickStaff" startX="-50.0" strokeWidth="5.0" />
       
-      <Button fx:id="quarternote" focusTraversable="false" layoutX="39.0" layoutY="152.0" mnemonicParsing="false" onMouseReleased="#handleClickQuarterNote" prefHeight="57.0" prefWidth="41.0" AnchorPane.bottomAnchor="104.0" AnchorPane.leftAnchor="36.0" />
+      <Button fx:id="quarternote" focusTraversable="false" layoutX="403.0" layoutY="243.0" mnemonicParsing="false" onMouseReleased="#handleClickQuarterNote" prefHeight="50.0" prefWidth="50.0" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="133.0">
+         <graphic>
+            <ImageView fitHeight="39.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@playbutton.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
       <ImageView fitHeight="57.0" fitWidth="41.0" layoutX="39.0" layoutY="152.0" onMouseClicked="#handleClickQuarterNote" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="104.0" AnchorPane.leftAnchor="36.0">
          <image>
             <Image url="@quarternote.png" />
@@ -53,14 +60,14 @@
          <graphic> 
             <ImageView fitHeight="40.0" fitWidth="26.0" pickOnBounds="true">
                <image>
-                  <Image url="@measure%20bar.png" />
+                  <Image url="@verticalline.png" />
                </image>
             </ImageView>
          </graphic>
          </Button>
       <Button layoutX="352.0" layoutY="152.0" mnemonicParsing="false" onMouseClicked="#handleClickDoubleBarLine" prefHeight="57.0" prefWidth="44.0" AnchorPane.bottomAnchor="104.0" AnchorPane.leftAnchor="350.0">
          <graphic>
-            <ImageView fitHeight="35.0" fitWidth="26.0" onMouseClicked="#handleClickDoubleBarLine" pickOnBounds="true">
+            <ImageView fitHeight="37.0" fitWidth="19.0" onMouseClicked="#handleClickDoubleBarLine" pickOnBounds="true">
                <image>
                   <Image url="@doubleBarLine.png" />
                </image>
