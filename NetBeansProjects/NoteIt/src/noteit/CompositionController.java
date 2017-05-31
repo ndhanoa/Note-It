@@ -362,10 +362,11 @@ public class CompositionController implements Initializable {
                 charactersonStaff.add(m);
             }
             else if (hasDoubleBarLine == true){
+                double doubleBarY = 16 + (118 * staffNumber);
                 newNote.setX(mouseX-40);
-                newNote.setY(mouseY-75);
-                newNote.setFitWidth(100);
-                newNote.setFitHeight(160);
+                newNote.setY(doubleBarY);
+                newNote.setFitWidth(95);
+                newNote.setFitHeight(130);
                 DoubleBarLine d = new DoubleBarLine(newNote.getX(), newNote.getY());
                 d.setImageView(newNote);
                 charactersonStaff.add(d);
