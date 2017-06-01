@@ -28,10 +28,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import javax.media.j3d.Background;
 
 public class CompositionController implements Initializable {
     @FXML 
@@ -104,7 +106,7 @@ public class CompositionController implements Initializable {
     
     private ArrayList<Rest> restsArray = new ArrayList<Rest>();
     private ArrayList<MeasureBar> measureBarArray = new ArrayList<MeasureBar>();
-    private ArrayList<MusicalCharacter> charactersonStaff = new ArrayList<MusicalCharacter>();
+    private ArrayList<ArrayList<MusicalCharacter>> charactersonStaff = new ArrayList<ArrayList<MusicalCharacter>>();
     
     ImageView details;
     
@@ -269,6 +271,8 @@ public class CompositionController implements Initializable {
     
     private double s5StartY;
     
+    private double staffNumber;
+    
     
    
     @FXML
@@ -279,23 +283,22 @@ public class CompositionController implements Initializable {
             handleClickStaffForRests(me);
         } else{
         Line clickedLine = null;
-        AnchorPane staff = null;
+        Pane staff = null;
         double mouseX = me.getSceneX();
         double mouseY = me.getSceneY();
         if(me.getSource().getClass() == Line.class){
             clickedLine = (Line) me. getTarget();
-        } else {
-            staff = (AnchorPane) me.getTarget();
+        } else if(me.getSource().getClass() == Pane.class) {
+            staff = (Pane) me.getTarget();
         }
         
-        double staffNumber = 0;
+        //staffNumber = newStaffCount;
         if(mouseY < 118){
             staffNumber = 0;
-        } else if(mouseY > 118 && mouseY < 240){ 
-            //staffNumber = Math.round(mouseY/72);
-            staffNumber = 1;
-        } else if(mouseY > 240 && mouseY < 362){
+        } else { 
+            
             staffNumber = 2;
+            //staffNumber = Math.round(mouseY/72);
         }
         s1StartY = 43.5 + (120 * staffNumber);
         s2StartY = s1StartY + 18;
@@ -308,7 +311,9 @@ public class CompositionController implements Initializable {
         if(staff == screen && ((mouseY>s1StartY && mouseY<s2StartY)||(mouseY>s2StartY && mouseY<s3StartY)||(mouseY>s3StartY && mouseY<s4StartY)||(mouseY>s4StartY &&mouseY< s5StartY))){
             spaceClicked = true;
         }
-        if((me.getSource().getClass() == Line.class)){
+        if(me.getSource().getClass() == Pane.class){
+            spaceClicked = true;
+        } else if(me.getSource().getClass() == Line.class){
             lineClicked = true;
         }
         if(hasQuarterNote == true||  hasHalfNote == true||hasEighthNote == true || hasMeasureBar == true|| hasDoubleBarLine ==true) {
@@ -342,16 +347,19 @@ public class CompositionController implements Initializable {
             if(hasQuarterNote == true){
                 QuarterCount q = new QuarterCount(newNote.getX(), newNote.getY());
                 q.setImageView(newNote);
-                charactersonStaff.add(q);
+                int detectedStaff = (int) Math.floor((q.getX() -25)/127);
+                charactersonStaff.get(detectedStaff).add(q);
             } else if(hasHalfNote == true){
                  HalfCount h = new HalfCount(newNote.getX(), newNote.getY());
                 h.setImageView(newNote);
-                charactersonStaff.add(h);
+                int detectedStaff = (int) Math.floor((h.getX() -25)/127);
+                charactersonStaff.get(detectedStaff).add(h);
             } else if(hasEighthNote == true){
                 newNote.setY(mouseY-48);
                  EighthCount e = new EighthCount(newNote.getX(), newNote.getY());
                 e.setImageView(newNote);
-                charactersonStaff.add(e);
+                int detectedStaff = (int) Math.floor((e.getX() -25)/127);
+                charactersonStaff.get(detectedStaff).add(e);
             } else if(hasMeasureBar == true){
                 newNote.setX(mouseX-175);
                 newNote.setY(mouseY-160); 
@@ -359,7 +367,8 @@ public class CompositionController implements Initializable {
                 newNote.setFitHeight(320);
                 MeasureBar m = new MeasureBar(newNote.getX(), newNote.getY());
                 m.setImageView(newNote);
-                charactersonStaff.add(m);
+                int detectedStaff = (int) Math.floor((m.getX() -25)/127);
+                charactersonStaff.get(detectedStaff).add(m);
             }
             else if (hasDoubleBarLine == true){
                 double doubleBarY = 16 + (118 * staffNumber);
@@ -369,7 +378,8 @@ public class CompositionController implements Initializable {
                 newNote.setFitHeight(130);
                 DoubleBarLine d = new DoubleBarLine(newNote.getX(), newNote.getY());
                 d.setImageView(newNote);
-                charactersonStaff.add(d);
+                int detectedStaff = (int) Math.floor((d.getX() -25)/127);
+                charactersonStaff.get(detectedStaff).add(d);
                 
             }
             
@@ -486,9 +496,16 @@ public class CompositionController implements Initializable {
         handleNewNotesOnNewStaff(l3); 
         handleNewNotesOnNewStaff(l4);
         handleNewNotesOnNewStaff(l5);
-        //if((me.getY() > 43.5 + (newStaffCount * 120)) && (me.getY() < 174 + (newStaffCount * 120))){
-    //    handleNewSpaceNotes(screen);
-        //}
+        //Create a new pane on top of the new staff:
+        Pane p = new Pane();
+        charactersonStaff.add(new ArrayList<MusicalCharacter>());
+        p.setPrefSize(screen.getWidth(), 120);
+        p.setLayoutX(-1);
+        double yposition = 25 + (127 * newStaffCount); //152
+        p.setLayoutY(yposition);
+        screen.getChildren().add(p);
+        //staffNumber = newStaffCount;
+        
         
     }
     
@@ -729,6 +746,8 @@ public class CompositionController implements Initializable {
         lineEndX = lineF.getEndX();
         lineEndY = lineF.getEndY();
         newStaffCount = 0;
+        staffNumber = 0;
+        charactersonStaff.add(new ArrayList<MusicalCharacter>());
     }    
     
 }

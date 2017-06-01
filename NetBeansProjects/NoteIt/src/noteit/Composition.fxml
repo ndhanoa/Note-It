@@ -4,6 +4,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.shape.Line?>
 
 <AnchorPane id="AnchorPane" fx:id="screen" onMouseClicked="#handleClickStaff" prefHeight="313.0" prefWidth="586.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="noteit.CompositionController">
@@ -65,6 +66,7 @@
                   <Image url="@doubleBarLine.png" />
                </image>
             </ImageView>
-         </graphic></Button> 
+         </graphic></Button>
+      <Pane layoutX="-1.0" layoutY="34.0" onMouseClicked="#handleClickStaff" prefHeight="96.0" prefWidth="585.0" /> 
    </children>
 </AnchorPane>
