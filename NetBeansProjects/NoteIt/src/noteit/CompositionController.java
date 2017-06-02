@@ -348,18 +348,18 @@ public class CompositionController implements Initializable {
             if(hasQuarterNote == true){
                 QuarterCount q = new QuarterCount(newNote.getX(), newNote.getY());
                 q.setImageView(newNote);
-                int detectedStaff = (int) Math.floor((q.getX() -25)/127);
+                int detectedStaff = (int) Math.floor((q.getY() -25)/127);
                 charactersonStaff.get(detectedStaff).add(q);
             } else if(hasHalfNote == true){
                  HalfCount h = new HalfCount(newNote.getX(), newNote.getY());
                 h.setImageView(newNote);
-                int detectedStaff = (int) Math.floor((h.getX() -25)/127);
+                int detectedStaff = (int) Math.floor((h.getY() -25)/127);
                 charactersonStaff.get(detectedStaff).add(h);
             } else if(hasEighthNote == true){
                 newNote.setY(mouseY-48);
                  EighthCount e = new EighthCount(newNote.getX(), newNote.getY());
                 e.setImageView(newNote);
-                int detectedStaff = (int) ((e.getX()- 25)/127)-1;
+                int detectedStaff = (int) ((e.getY()- 25)/127);
                     (charactersonStaff.get(detectedStaff)).add(e);
             } else if(hasMeasureBar == true){
                 newNote.setX(mouseX-175);
@@ -368,7 +368,7 @@ public class CompositionController implements Initializable {
                 newNote.setFitHeight(320);
                 MeasureBar m = new MeasureBar(newNote.getX(), newNote.getY());
                 m.setImageView(newNote);
-                int detectedStaff = (int) Math.floor((m.getX() -25)/127);
+                int detectedStaff = (int) Math.floor((m.getY() -25)/127);
                 charactersonStaff.get(detectedStaff).add(m);
             }
             else if (hasDoubleBarLine == true){
@@ -379,7 +379,7 @@ public class CompositionController implements Initializable {
                 newNote.setFitHeight(130);
                 DoubleBarLine d = new DoubleBarLine(newNote.getX(), newNote.getY());
                 d.setImageView(newNote);
-                int detectedStaff = (int) Math.floor((d.getX() -25)/127);
+                int detectedStaff = (int) Math.floor((d.getY() -25)/127);
                 charactersonStaff.get(detectedStaff).add(d);
                 
             }
@@ -431,7 +431,7 @@ public class CompositionController implements Initializable {
                      newRest.setY(mouseY-14);
                     EighthRestCount erc = new EighthRestCount(newRest.getX(), newRest.getY());
                     erc.setImageView(newRest);
-                    int detectedStaff = (int) Math.floor((erc.getX() -25)/127);
+                    int detectedStaff = (int) Math.floor((erc.getY() -25)/127);
                     charactersonStaff.get(detectedStaff).add(erc);
                 } else if(hasQuarterRest == true){
                     newRest.setFitWidth(20);
@@ -441,7 +441,7 @@ public class CompositionController implements Initializable {
                     newRest.setY(mouseY-30);
                     QuarterRestCount qrc = new QuarterRestCount(newRest.getX(), newRest.getY());
                     qrc.setImageView(newRest);
-                    int detectedStaff = (int) Math.floor((qrc.getX() -25)/127);
+                    int detectedStaff = (int) Math.floor((qrc.getY() -25)/127);
                     charactersonStaff.get(detectedStaff).add(qrc);
                 }
             
@@ -584,7 +584,7 @@ public class CompositionController implements Initializable {
                         newNote.setY(i.getY());
                         QuarterCount quc = new QuarterCount(newNote.getX(), newNote.getY());
                         quc.setImageView(newNote);
-                        int detectedStaff = (int) Math.floor((quc.getX() -25)/127);
+                        int detectedStaff = (int) Math.floor((quc.getY() -25)/127);
                         charactersonStaff.get(detectedStaff).add(quc);
                     } else if(i.getClass() == HalfCount.class){
                         newNote = new ImageView(getClass().getResource("halfnote.png").toString());
@@ -595,7 +595,7 @@ public class CompositionController implements Initializable {
                         screen.getChildren().add(newNote);
                         HalfCount hfc = new HalfCount(newNote.getX(), newNote.getY());
                         hfc.setImageView(newNote);
-                        int detectedStaff = (int) Math.floor((hfc.getX() -25)/127);
+                        int detectedStaff = (int) Math.floor((hfc.getY() -25)/127);
                         charactersonStaff.get(detectedStaff).add(hfc);
                     } else if(i.getClass() == EighthCount.class){
                         newNote = new ImageView(getClass().getResource("eighthnote.png").toString());
@@ -606,7 +606,7 @@ public class CompositionController implements Initializable {
                         newNote.setFitHeight(57);
                         EighthCount etc = new EighthCount(newNote.getX(), newNote.getY());
                         etc.setImageView(newNote);
-                        int detectedStaff = (int) Math.floor((etc.getX() -25)/127);
+                        int detectedStaff = (int) Math.floor((etc.getY() -25)/127);
                     charactersonStaff.get(detectedStaff).add(etc);
                     } else if (i.getClass() == MeasureBar.class){
                         newNote = new ImageView(getClass().getResource("measure bar.png").toString());
@@ -617,7 +617,7 @@ public class CompositionController implements Initializable {
                         newNote.setFitHeight(320);
                         MeasureBar mb = new MeasureBar(newNote.getX(), newNote.getY());
                         mb.setImageView(newNote);
-                        int detectedStaff = (int) Math.floor((mb.getX() -25)/127);
+                        int detectedStaff = (int) Math.floor((mb.getY() -25)/127);
                         charactersonStaff.get(detectedStaff).add(mb);
                     } 
                     else if(i.getClass() == DoubleBarLine.class){
@@ -629,7 +629,7 @@ public class CompositionController implements Initializable {
                         newNote.setFitHeight(160);
                         DoubleBarLine d = new DoubleBarLine(newNote.getX(), newNote.getY());
                         d.setImageView(newNote);
-                        int detectedStaff = (int) Math.floor((d.getX() -25)/127);
+                        int detectedStaff = (int) Math.floor((d.getY() -25)/127);
                         charactersonStaff.get(detectedStaff).add(d);
                     }
                     
@@ -643,7 +643,7 @@ public class CompositionController implements Initializable {
                         newNote.setY(i.getY());
                         EighthRestCount erc = new EighthRestCount(newNote.getX(), newNote.getY());
                         erc.setImageView(newNote);
-                        int detectedStaff = (int) Math.floor((erc.getX() -25)/127);
+                        int detectedStaff = (int) Math.floor((erc.getY() -25)/127);
                          charactersonStaff.get(detectedStaff).add(erc);
                         
                     } else if (i.getClass() == QuarterRestCount.class){
@@ -655,7 +655,7 @@ public class CompositionController implements Initializable {
                         newNote.setY(i.getY());
                         QuarterRestCount qrc = new QuarterRestCount(newNote.getX(), newNote.getY());
                         qrc.setImageView(newNote);
-                        int detectedStaff = (int) Math.floor((qrc.getX() -25)/127);
+                        int detectedStaff = (int) Math.floor((qrc.getY() -25)/127);
                     charactersonStaff.get(detectedStaff).add(qrc);
                     }
                     

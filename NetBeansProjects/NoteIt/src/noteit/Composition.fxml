@@ -23,11 +23,15 @@
                </image>
             </ImageView>
          </graphic></Button>
-      <ImageView fitHeight="57.0" fitWidth="41.0" layoutX="39.0" layoutY="152.0" onMouseClicked="#handleClickQuarterNote" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="104.0" AnchorPane.leftAnchor="36.0">
-         <image>
-            <Image url="@quarternote.png" />
-         </image>
-      </ImageView>
+      <Button layoutX="28.0" layoutY="151.0" mnemonicParsing="false" onMouseClicked="#handleClickQuarterNote" prefHeight="57.0" prefWidth="41.0">
+         <graphic>
+            <ImageView fitHeight="47.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@quarternote.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
       <Button fx:id="save" layoutX="403.0" layoutY="201.0" mnemonicParsing="false" onMouseClicked="#save" prefHeight="38.0" prefWidth="98.0" text="Save" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0" />
       <Button fx:id="load" layoutX="468.0" layoutY="209.0" mnemonicParsing="false" onMouseClicked="#load" prefHeight="38.0" prefWidth="98.0" text="Load" AnchorPane.bottomAnchor="70.0" AnchorPane.rightAnchor="20.0" />
       <Button fx:id="delete" layoutX="38.0" layoutY="234.0" mnemonicParsing="false" onAction="#handleDeleteNote" prefHeight="38.0" prefWidth="70.0" text="Delete" AnchorPane.bottomAnchor="41.0" AnchorPane.leftAnchor="36.0" />
