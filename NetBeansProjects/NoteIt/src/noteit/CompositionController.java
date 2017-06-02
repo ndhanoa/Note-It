@@ -40,7 +40,7 @@ public class CompositionController implements Initializable {
     @FXML
     private Label label;
     
-    @FXML
+    /*@FXML
     private Line lineF;
     
     @FXML
@@ -55,6 +55,7 @@ public class CompositionController implements Initializable {
     @FXML
     private Line lineE;
     
+    */
     @FXML
     private Button quarternote;
     
@@ -118,6 +119,10 @@ public class CompositionController implements Initializable {
     private Boolean hasMeasureBar;
     
     private Boolean deletePressed;
+    
+    private Boolean lineClickedNewStaff;
+    
+    private Boolean spaceClickedNewStaff;
     
     @FXML
     private Button delete;
@@ -259,15 +264,27 @@ public class CompositionController implements Initializable {
     private boolean lineClicked;
     
     @FXML
-    private double s1StartY;
+    private Double lineFStartY;
     
-    private double s2StartY;
+    private Double lineDStartY;
    
-    private double s3StartY;
+    private Double lineBStartY;
     
-    private double s4StartY;
+    private Double lineGStartY;
     
-    private double s5StartY;
+    private Double lineEStartY;
+    
+    private Double lineFEndY;
+    
+    private Double lineDEndY;
+    
+    private Double lineBEndY;
+    
+    private Double lineGEndY;
+    
+    private Double lineEEndY;
+    
+    
     
     
    
@@ -275,6 +292,8 @@ public class CompositionController implements Initializable {
     private void handleClickStaff(MouseEvent me){
         spaceClicked = false;
        lineClicked = false;
+       lineClickedNewStaff = false;
+       spaceClickedNewStaff = false;
         if(hasQuarterRest == true || hasEighthRest == true){
             handleClickStaffForRests(me);
         } else{
@@ -282,9 +301,10 @@ public class CompositionController implements Initializable {
         AnchorPane staff = null;
         double mouseX = me.getSceneX();
         double mouseY = me.getSceneY();
-        if(me.getSource().getClass() == Line.class){
+        if(me.getTarget().getClass() == Line.class){
             clickedLine = (Line) me. getTarget();
-        } else {
+        }
+        else {
             staff = (AnchorPane) me.getTarget();
         }
         
@@ -297,20 +317,28 @@ public class CompositionController implements Initializable {
         } else if(mouseY > 240 && mouseY < 362){
             staffNumber = 2;
         }
-        s1StartY = 43.5 + (120 * staffNumber);
-        s2StartY = s1StartY + 18;
-        s3StartY = s2StartY + 18;
-        s4StartY = s3StartY + 18;
-        s5StartY = s4StartY + 18;
+       
+        lineFStartY= 51 + (120 * staffNumber); 
+        lineDStartY=lineFStartY + 18;
+        lineBStartY=lineDStartY + 18;
+        lineGStartY=lineBStartY + 18;
+        lineEStartY=lineGStartY + 18;
         
         
+        lineFEndY = 59 + (120*staffNumber);
+        lineDEndY = lineFEndY+18;
+        lineBEndY = lineDEndY+18;
+        lineGEndY = lineBEndY+18;
+        lineEEndY = lineGEndY+18;
         
-        if(staff == screen && ((mouseY>s1StartY && mouseY<s2StartY)||(mouseY>s2StartY && mouseY<s3StartY)||(mouseY>s3StartY && mouseY<s4StartY)||(mouseY>s4StartY &&mouseY< s5StartY))){
+        if(staff == screen && (mouseY>lineFStartY && mouseY<lineFEndY)||(mouseY>lineDStartY && mouseY<lineDEndY)||(mouseY>lineBStartY && mouseY<lineBEndY)||(mouseY>lineGStartY && mouseY<lineGEndY)||(mouseY>lineEStartY && mouseY<lineEEndY)){
             spaceClicked = true;
         }
-        if((me.getSource().getClass() == Line.class)){
+        if(((mouseY>=l1.getLayoutY()-5 && mouseY<=l1.getLayoutY()+5)||(mouseY>=l2.getLayoutY()-5 && mouseY<=l2.getLayoutY()+5)||(mouseY>=l3.getLayoutY()-5 && mouseY<=l3.getLayoutY()+5)||(mouseY>=l4.getLayoutY()-5 &&mouseY<=l4.getLayoutY()+5))||(mouseY>=l5.getLayoutY()-5&&mouseY<=l5.getLayoutY()+5)){
             lineClicked = true;
         }
+        
+        
         if(hasQuarterNote == true||  hasHalfNote == true||hasEighthNote == true || hasMeasureBar == true|| hasDoubleBarLine ==true) {
             if((spaceClicked == true) || (lineClicked == true)){
             ImageView newNote = new ImageView(getClass().getResource(noteImage).toString());
@@ -332,10 +360,54 @@ public class CompositionController implements Initializable {
             });
             
            
-                if(spaceClicked == true||lineClicked == true){
-                    newNote.setX(mouseX - 17);
-                    newNote.setY(mouseY - 44);
-           } 
+                //if(spaceClicked == true||lineClicked == true){
+                  //  newNote.setX(mouseX - 17);
+                    //newNote.setY(mouseY - 44);
+          // } 
+          
+                if(spaceClicked == true){
+                    newNote.setX(mouseX-17);
+                    for (double i = mouseY-4; i< mouseY+4; i++){
+                        if(((lineFStartY +lineFEndY)/2)==i){
+                            newNote.setY(((lineFStartY+lineFEndY)/2)-46);
+                        }
+                        else if(((lineDStartY +lineDEndY)/2)==i){
+                            newNote.setY(((lineDStartY+lineDEndY)/2)-46);
+                        }
+                        else if(((lineBStartY +lineBEndY)/2)==i){
+                            newNote.setY(((lineBStartY+lineBEndY)/2)-46);
+                        }
+                        else if(((lineGStartY +lineGEndY)/2)==i){
+                            newNote.setY(((lineGStartY+lineGEndY)/2)-46);
+                        }
+                        if(((lineEStartY +lineEEndY)/2)==i){
+                            newNote.setY(((lineEStartY+lineEEndY)/2)-46);
+                        }
+                        
+                    }
+                }
+          
+                if(lineClicked == true){
+                    newNote.setX(mouseX-17);
+                    for(double i = mouseY-5;i<mouseY+5;i++){
+                        if(l1.getLayoutY()==i){
+                            newNote.setY(l1.getLayoutY()-44);
+                        }
+                        else if(l2.getLayoutY()==i){
+                            newNote.setY(l2.getLayoutY()-44);
+                        }
+                        else if(l3.getLayoutY()==i){
+                            newNote.setY(l3.getLayoutY()-44);
+                        }
+                        else if(l4.getLayoutY()==i){
+                            newNote.setY(l4.getLayoutY()-44);
+                        }
+                        else if(l5.getLayoutY()==i){
+                            newNote.setY(l5.getLayoutY()-44);
+                        }
+                }
+                }
+                
             newNote.setFitWidth(41);
             newNote.setFitHeight(57);
             screen.getChildren().add(newNote);
@@ -687,11 +759,33 @@ public class CompositionController implements Initializable {
         lineClicked = false;
         hasQuarterRest = false;
         hasEighthRest = false;
-        lineStartX = lineF.getStartX();
-        lineStartY = lineF.getStartY();
-        lineEndX = lineF.getEndX();
-        lineEndY = lineF.getEndY();
+        lineStartX = -50;
+        lineStartY = 0;
+        lineEndX = 650;
+        lineEndY = 0;
         newStaffCount = 0;
+        l1 = new Line(lineStartX, 43.5 , lineEndX, 43.5 );
+        lineCount = 0;
+        firstLineY = 43.5;
+        lineCount ++;
+        l2 = new Line(lineStartX, firstLineY + (18 * lineCount), lineEndX, firstLineY + (18 * lineCount));
+        lineCount ++;
+        l3 = new Line(lineStartX, firstLineY + (18 * lineCount), lineEndX, firstLineY + (18 * lineCount));
+        lineCount ++;
+        l4 = new Line(lineStartX, firstLineY + (18 * lineCount), lineEndX, firstLineY + (18 * lineCount));
+        lineCount ++;
+        l5 = new Line(lineStartX, firstLineY + (18 * lineCount), lineEndX, firstLineY + (18 * lineCount));
+        screen.getChildren().add(l1);
+        screen.getChildren().add(l2);
+        screen.getChildren().add(l3);
+        screen.getChildren().add(l4);  
+        screen.getChildren().add(l5);
+        l1.setStrokeWidth(5);
+        l2.setStrokeWidth(5);
+        l3.setStrokeWidth(5);
+        l4.setStrokeWidth(5);
+        l5.setStrokeWidth(5);
+
     }    
     
 }
