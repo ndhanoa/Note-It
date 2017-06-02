@@ -313,14 +313,14 @@ public class CompositionController implements Initializable {
           //  staffNumber = 0;
         //} 
        
-        lineFStartY= 51 + (120 * staffNumber); 
+        lineFStartY= 49 + (120 * staffNumber); 
         lineDStartY=lineFStartY + 18;
         lineBStartY=lineDStartY + 18;
         lineGStartY=lineBStartY + 18;
         lineEStartY=lineGStartY + 18;
         
         
-        lineFEndY = 59 + (120*staffNumber);
+        lineFEndY = 57 + (120*staffNumber);
         lineDEndY = lineFEndY+18;
         lineBEndY = lineDEndY+18;
         lineGEndY = lineBEndY+18;
@@ -329,7 +329,7 @@ public class CompositionController implements Initializable {
         if(me.getSource().getClass()==Pane.class&& (mouseY>lineFStartY && mouseY<lineFEndY)||(mouseY>lineDStartY && mouseY<lineDEndY)||(mouseY>lineBStartY && mouseY<lineBEndY)||(mouseY>lineGStartY && mouseY<lineGEndY)||(mouseY>lineEStartY && mouseY<lineEEndY)){
             spaceClicked = true;
         }
-        if(((mouseY>=l1.getLayoutY()-5 && mouseY<=l1.getLayoutY()+5)||(mouseY>=l2.getLayoutY()-5 && mouseY<=l2.getLayoutY()+5)||(mouseY>=l3.getLayoutY()-5 && mouseY<=l3.getLayoutY()+5)||(mouseY>=l4.getLayoutY()-5 &&mouseY<=l4.getLayoutY()+5))||(mouseY>=l5.getLayoutY()-5&&mouseY<=l5.getLayoutY()+5)){
+        if(((mouseY>=l1.getStartY()-5 && mouseY<=l1.getStartY()+5)||(mouseY>=l2.getStartY()-5 && mouseY<=l2.getStartY()+5)||(mouseY>=l3.getStartY()-5 && mouseY<=l3.getStartY()+5)||(mouseY>=l4.getStartY()-5 &&mouseY<=l4.getStartY()+5))||(mouseY>=l5.getStartY()-5&&mouseY<=l5.getStartY()+5)){
             lineClicked = true;
         }
         
@@ -364,45 +364,43 @@ public class CompositionController implements Initializable {
           
                 if(spaceClicked == true){
                     newNote.setX(mouseX-17);
-                    for (double i = mouseY-4; i< mouseY+4; i++){
-                        if(((lineFStartY +lineFEndY)/2)==i){
-                            newNote.setY(((lineFStartY+lineFEndY)/2)-46);
-                        }
-                        else if(((lineDStartY +lineDEndY)/2)==i){
-                            newNote.setY(((lineDStartY+lineDEndY)/2)-46);
-                        }
-                        else if(((lineBStartY +lineBEndY)/2)==i){
-                            newNote.setY(((lineBStartY+lineBEndY)/2)-46);
-                        }
-                        else if(((lineGStartY +lineGEndY)/2)==i){
-                            newNote.setY(((lineGStartY+lineGEndY)/2)-46);
-                        }
-                        if(((lineEStartY +lineEEndY)/2)==i){
-                            newNote.setY(((lineEStartY+lineEEndY)/2)-46);
-                        }
-                        
+                    if(mouseY>lineFStartY && mouseY< lineFEndY){
+                        newNote.setY(((lineFStartY+lineFEndY)/2)-46);
                     }
+                    else if(mouseY>lineDStartY && mouseY<lineDEndY){
+                        newNote.setY(((lineDStartY+lineDEndY)/2)-46);
+                    }
+                    else if(mouseY> lineBStartY && mouseY<lineBEndY){
+                        newNote.setY(((lineBStartY+lineBEndY)/2)-46);
+                    }
+                    else if(mouseY>lineGStartY && mouseY<lineGEndY){
+                        newNote.setY(((lineGStartY+lineGEndY)/2)-46);
+                    }
+                    else if(mouseY>lineEStartY && mouseY<lineEEndY){
+                        newNote.setY(((lineEStartY+lineEEndY)/2)-46);
+                    }
+                        
+                    
                 }
           
                 if(lineClicked == true){
                     newNote.setX(mouseX-17);
-                    for(double i = mouseY-5;i<mouseY+5;i++){
-                        if(l1.getLayoutY()==i){
-                            newNote.setY(l1.getLayoutY()-44);
+                   
+                        if(mouseY>l1.getStartY()-5 && mouseY<l1.getStartY()+5){
+                            newNote.setY(l1.getStartY()-44);
                         }
-                        else if(l2.getLayoutY()==i){
-                            newNote.setY(l2.getLayoutY()-44);
+                        else if(mouseY>l2.getStartY()-5 && mouseY<l2.getStartY()+5){
+                            newNote.setY(l2.getStartY()-44);
                         }
-                        else if(l3.getLayoutY()==i){
-                            newNote.setY(l3.getLayoutY()-44);
+                         else if(mouseY>l3.getStartY()-5 && mouseY<l3.getStartY()+5){
+                            newNote.setY(l3.getStartY()-44);
                         }
-                        else if(l4.getLayoutY()==i){
-                            newNote.setY(l4.getLayoutY()-44);
+                        else if(mouseY>l4.getStartY()-5 && mouseY<l4.getStartY()+5){
+                            newNote.setY(l4.getStartY()-44);
                         }
-                        else if(l5.getLayoutY()==i){
-                            newNote.setY(l5.getLayoutY()-44);
+                         else if(mouseY>l5.getStartY()-5 && mouseY<l5.getStartY()+5){
+                            newNote.setY(l5.getStartY()-44);
                         }
-                }
                 }
                 
             newNote.setFitWidth(41);
