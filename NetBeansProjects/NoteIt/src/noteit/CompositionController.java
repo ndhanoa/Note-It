@@ -920,7 +920,7 @@ public class CompositionController implements Initializable {
        l3.setStrokeWidth(5);
        l4.setStrokeWidth(5);
        l5.setStrokeWidth(5);
-       
+       charactersonStaff.add(new ArrayList<MusicalCharacter>());
    }      
 
 }
