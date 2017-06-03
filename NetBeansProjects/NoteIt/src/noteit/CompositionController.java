@@ -841,33 +841,33 @@ public class CompositionController implements Initializable {
        					 synthRcvr.send(myMsg, -1);
 				 } else if(note.getY() == Dposition){
 					ShortMessage myMsg = new ShortMessage();
-					 myMsg.setMessage(ShortMessage.NOTE_ON, 4, 62, 93); 
+					 myMsg.setMessage(ShortMessage.NOTE_ON, 4, 61, 93); 
         					Synthesizer synth = MidiSystem.getSynthesizer();
        	 				synthRcvr.send(myMsg, -1);
 				 } else if(note.getY() == Eposition){
 					ShortMessage myMsg = new ShortMessage();
- 					myMsg.setMessage(ShortMessage.NOTE_ON, 4, 64, 93); 
+ 					myMsg.setMessage(ShortMessage.NOTE_ON, 4, 62, 93); 
         					Synthesizer synth = MidiSystem.getSynthesizer();
        	 					synthRcvr.send(myMsg, -1);
 				} else if(note.getY() == Fposition){
                                     
 					ShortMessage myMsg = new ShortMessage();
- 						myMsg.setMessage(ShortMessage.NOTE_ON, 4, 66, 93); 
+ 						myMsg.setMessage(ShortMessage.NOTE_ON, 4, 63, 93); 
        					 	Synthesizer synth = MidiSystem.getSynthesizer();
        	 					synthRcvr.send(myMsg, -1);
 				 } else if(note.getY() == Gposition){
 					ShortMessage myMsg = new ShortMessage();
- 						myMsg.setMessage(ShortMessage.NOTE_ON, 4, 66, 93); 
+ 						myMsg.setMessage(ShortMessage.NOTE_ON, 4, 64, 93); 
        	 					Synthesizer synth = MidiSystem.getSynthesizer();
        	 					synthRcvr.send(myMsg, -1);
 				 } else if(note.getY() == Aposition){
                                                 ShortMessage myMsg = new ShortMessage();
- 						myMsg.setMessage(ShortMessage.NOTE_ON, 4, 66, 93); 
+ 						myMsg.setMessage(ShortMessage.NOTE_ON, 4, 61, 93); 
        	 					Synthesizer synth = MidiSystem.getSynthesizer();
        	 					synthRcvr.send(myMsg, -1);
 				 }else if(note.getY() == Bposition){
 					ShortMessage myMsg = new ShortMessage();
- 						myMsg.setMessage(ShortMessage.NOTE_ON, 4, 66, 93); 
+ 						myMsg.setMessage(ShortMessage.NOTE_ON, 4, 61, 93); 
        					Synthesizer synth = MidiSystem.getSynthesizer();
        	 					synthRcvr.send(myMsg, -1);
 				 }
