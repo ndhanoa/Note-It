@@ -534,14 +534,7 @@ public class CompositionController implements Initializable {
         double height = ((Stage)screen.getScene().getWindow()).getHeight();
         ((Stage)screen.getScene().getWindow()).setHeight(height + 120);
         //Create a new pane on top of the new staff:
-        Pane p = new Pane();
-        charactersonStaff.add(new ArrayList<MusicalCharacter>());
-        p.setPrefSize(screen.getWidth(), 120);
-        p.setLayoutX(-1);
-        double yposition = (10 * newStaffCount); //152
-        p.setLayoutY(yposition);
-        screen.getChildren().add(p);
-        handleClickPane(p);
+      
         l1 = new Line(lineStartX + 50, 43.5 + (newStaffCount * 120), lineEndX + 50, 43.5 + (newStaffCount * 120));
         firstLineY = 43.5 + (newStaffCount * 120);
         lineCount ++;
@@ -557,16 +550,24 @@ public class CompositionController implements Initializable {
         l3.setStrokeWidth(5);
         l4.setStrokeWidth(5);
         l5.setStrokeWidth(5);
-        p.getChildren().add(l1);
-        p.getChildren().add(l2);
-        p.getChildren().add(l3);
-        p.getChildren().add(l4);  
-        p.getChildren().add(l5);
+        screen.getChildren().add(l1);
+        screen.getChildren().add(l2);
+        screen.getChildren().add(l3);
+        screen.getChildren().add(l4);  
+        screen.getChildren().add(l5);
         handleNewNotesOnNewStaff(l1);
         handleNewNotesOnNewStaff(l2);
         handleNewNotesOnNewStaff(l3); 
         handleNewNotesOnNewStaff(l4);
         handleNewNotesOnNewStaff(l5);
+        Pane p = new Pane();
+        charactersonStaff.add(new ArrayList<MusicalCharacter>());
+        p.setPrefSize(screen.getWidth(), 120);
+        p.setLayoutX(-1);
+        double yposition = (10 * newStaffCount); //152
+        p.setLayoutY(yposition);
+        screen.getChildren().add(p);
+        handleClickPane(p);
         
         
         
