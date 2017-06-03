@@ -484,14 +484,16 @@ public class CompositionController implements Initializable {
                public void handle(MouseEvent me) {
                    if(deleteFunction == true){
                        ImageView clickedView = (ImageView) me.getTarget();
-                       for (Rest rest: restsArray) {
-                           ImageView thisImage = rest.getImageView();
-                           int detectedStaff = (int) Math.floor((rest.getY() -25)/127);
+                       for (ArrayList<MusicalCharacter> musicList: charactersonStaff) {
+                           for(MusicalCharacter note: musicList){
+                           ImageView thisImage = note.getImageView();
+                           int detectedStaff = (int) Math.floor((note.getY() -25)/127);
                            if (thisImage == clickedView) {
   //                             images2.remove(thisImage);
                                screen.getChildren().remove(thisImage);
-                                charactersonStaff.get(detectedStaff).remove(rest);
+                                charactersonStaff.get(detectedStaff).remove(note);
                            }
+                       }
                        }
                    }
                };
