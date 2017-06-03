@@ -833,7 +833,7 @@ public class CompositionController implements Initializable {
 			double Gposition = ((lineGStartY+lineGEndY)/2)-46;
 			double Aposition =  ((lineBStartY+lineBEndY)/2)-46;
 			double Bposition = l3.getStartY()-44;
-			if(note.getClass() == Note.class){
+			if(note.getClass() == QuarterCount.class || note.getClass() == HalfCount.class || note.getClass() == EighthCount.class){
 				if(note.getY() == Cposition){
 					ShortMessage myMsg = new ShortMessage();
 					 myMsg.setMessage(ShortMessage.NOTE_ON, 4, 60, 93); 
