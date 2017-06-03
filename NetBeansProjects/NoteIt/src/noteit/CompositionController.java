@@ -466,7 +466,7 @@ public class CompositionController implements Initializable {
 
        }
    }
-       }
+}
 
 
    @FXML
@@ -486,10 +486,11 @@ public class CompositionController implements Initializable {
                        ImageView clickedView = (ImageView) me.getTarget();
                        for (Rest rest: restsArray) {
                            ImageView thisImage = rest.getImageView();
+                           int detectedStaff = (int) Math.floor((rest.getY() -25)/127);
                            if (thisImage == clickedView) {
   //                             images2.remove(thisImage);
                                screen.getChildren().remove(thisImage);
-                               restsArray.remove(rest);
+                                charactersonStaff.get(detectedStaff).remove(rest);
                            }
                        }
                    }
@@ -744,13 +745,15 @@ public class CompositionController implements Initializable {
                public void handle(MouseEvent me) {
                    if(deleteFunction == true){
                        ImageView clickedView = (ImageView) me.getTarget();
-                       for (Rest rest: restsArray) {
-                           ImageView thisImage = rest.getImageView();
+                       for(ArrayList<MusicalCharacter> musicList : charactersonStaff){
+                            for (MusicalCharacter musicNote : musicList) {
+                           ImageView thisImage = musicNote.getImageView();
                            if (thisImage == clickedView) {
   //                             images2.remove(thisImage);
                                screen.getChildren().remove(thisImage);
-                               restsArray.remove(rest);
+                               restsArray.remove(musicNote);
                            }
+                         }
                        }
                    }
                };
@@ -819,44 +822,48 @@ public class CompositionController implements Initializable {
 
    }
    public void play() throws InvalidMidiDataException, MidiUnavailableException{
-	for(ArrayList<MusicalCharacter> a: charactersonStaff){
-		for(MusicalCharacter m : a){
-			double Cposition = 10;
-			double Dposition = 20;
-			double Eposition = 30;
-			double Fposition = 40;
-			double Gposition = 50;
-			double Aposition = 60;
-			double Bposition = 70;
-			if(m.getClass() == Note.class){
-				if(m.getY() == Cposition){
+	for(ArrayList<MusicalCharacter> musicLine: charactersonStaff){
+		for(MusicalCharacter note : musicLine){
+			double Cposition = ((lineDStartY+lineDEndY)/2)-46;
+			double Dposition = l2.getStartY()-44;
+			double Eposition = ((lineFStartY+lineFEndY)/2) -46;
+			double Fposition = ((lineGStartY+lineGEndY)/2)-46;
+			double Gposition = ((lineGStartY+lineGEndY)/2)-46;
+			double Aposition =  ((lineBStartY+lineBEndY)/2)-46;
+			double Bposition = l3.getStartY()-44;
+			if(note.getClass() == Note.class){
+				if(note.getY() == Cposition){
 					ShortMessage myMsg = new ShortMessage();
 					 myMsg.setMessage(ShortMessage.NOTE_ON, 4, 60, 93); 
         				Synthesizer synth = MidiSystem.getSynthesizer();
        					 synthRcvr.send(myMsg, -1);
-				 } else if(m.getY() == Dposition){
+				 } else if(note.getY() == Dposition){
 					ShortMessage myMsg = new ShortMessage();
 					 myMsg.setMessage(ShortMessage.NOTE_ON, 4, 62, 93); 
         					Synthesizer synth = MidiSystem.getSynthesizer();
        	 				synthRcvr.send(myMsg, -1);
-				 } else if(m.getY() == Eposition){
+				 } else if(note.getY() == Eposition){
 					ShortMessage myMsg = new ShortMessage();
  					myMsg.setMessage(ShortMessage.NOTE_ON, 4, 64, 93); 
         					Synthesizer synth = MidiSystem.getSynthesizer();
        	 					synthRcvr.send(myMsg, -1);
-				} else if(m.getY() == Fposition){
+				} else if(note.getY() == Fposition){
+                                    
 					ShortMessage myMsg = new ShortMessage();
  						myMsg.setMessage(ShortMessage.NOTE_ON, 4, 66, 93); 
        					 	Synthesizer synth = MidiSystem.getSynthesizer();
        	 					synthRcvr.send(myMsg, -1);
-				 } else if(m.getY() == Gposition){
+				 } else if(note.getY() == Gposition){
 					ShortMessage myMsg = new ShortMessage();
  						myMsg.setMessage(ShortMessage.NOTE_ON, 4, 66, 93); 
        	 					Synthesizer synth = MidiSystem.getSynthesizer();
        	 					synthRcvr.send(myMsg, -1);
-				 } else if(m.getY() == Aposition){
-
-				 }else if(m.getY() == Bposition){
+				 } else if(note.getY() == Aposition){
+                                                ShortMessage myMsg = new ShortMessage();
+ 						myMsg.setMessage(ShortMessage.NOTE_ON, 4, 66, 93); 
+       	 					Synthesizer synth = MidiSystem.getSynthesizer();
+       	 					synthRcvr.send(myMsg, -1);
+				 }else if(note.getY() == Bposition){
 					ShortMessage myMsg = new ShortMessage();
  						myMsg.setMessage(ShortMessage.NOTE_ON, 4, 66, 93); 
        					Synthesizer synth = MidiSystem.getSynthesizer();
