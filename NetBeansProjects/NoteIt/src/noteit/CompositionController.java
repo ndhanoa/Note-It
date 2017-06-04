@@ -321,6 +321,11 @@ public class CompositionController implements Initializable {
        } else if(me.getSource().getClass() == Pane.class) {
            staff = (Pane) me.getTarget();
        }
+      /* for(double i = 0; i <=newStaffCount;i++){
+            if(118+ ((i-1)*90)<mouseY&& mouseY>(118+(i*90))){
+                staffNumber= i;
+       }
+      */ 
 
     
 
@@ -337,7 +342,7 @@ public class CompositionController implements Initializable {
        lineGEndY = lineBEndY+18;
        lineEEndY = lineGEndY+18;
 
-       if(me.getSource().getClass()==Pane.class&& (mouseY>lineFStartY && mouseY<lineFEndY)||(mouseY>lineDStartY && mouseY<lineDEndY)||(mouseY>lineBStartY && mouseY<lineBEndY)||(mouseY>lineGStartY && mouseY<lineGEndY)||(mouseY>lineEStartY && mouseY<lineEEndY)){
+       if((mouseY>lineFStartY && mouseY<lineFEndY)||(mouseY>lineDStartY && mouseY<lineDEndY)||(mouseY>lineBStartY && mouseY<lineBEndY)||(mouseY>lineGStartY && mouseY<lineGEndY)||(mouseY>lineEStartY && mouseY<lineEEndY)){
            spaceClicked = true;
        }
        if(((mouseY>=l1.getStartY()-5 && mouseY<=l1.getStartY()+5)||(mouseY>=l2.getStartY()-5 && mouseY<=l2.getStartY()+5)||(mouseY>=l3.getStartY()-5 && mouseY<=l3.getStartY()+5)||(mouseY>=l4.getStartY()-5 &&mouseY<=l4.getStartY()+5))||(mouseY>=l5.getStartY()-5&&mouseY<=l5.getStartY()+5)){
@@ -437,13 +442,14 @@ public class CompositionController implements Initializable {
                    (charactersonStaff.get(detectedStaff)).add(e);
            } else if(hasMeasureBar == true){
                newNote.setX(mouseX-175);
-               newNote.setY(mouseY-160); 
+               //newNote.setY(mouseY-160); 
                newNote.setFitWidth(350);
                newNote.setFitHeight(320);
                MeasureBar m = new MeasureBar(newNote.getX(), newNote.getY());
                m.setImageView(newNote);
-               int detectedStaff = (int) Math.floor((m.getY() -25)/127);
+               int detectedStaff = (int) Math.floor((m.getY())/127);
                charactersonStaff.get(detectedStaff).add(m);
+               newNote.setY((lineBStartY+lineBEndY)/2-170);
            }
            else if (hasDoubleBarLine == true){
                newNote.setX(mouseX-10);
@@ -986,6 +992,7 @@ public class CompositionController implements Initializable {
    public void initialize(URL url, ResourceBundle rb){
        // TODO
        staffNumber = 0;
+       newStaffCount=1;
        hasQuarterNote=false;
        deleteFunction = false;
        spaceClicked = false;
