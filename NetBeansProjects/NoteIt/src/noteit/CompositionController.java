@@ -124,12 +124,6 @@ public class CompositionController implements Initializable {
 
    private Stage stage;
 
-   private Boolean hasQuarterNote;
-
-   private Boolean hasMeasureBar;
-
-   private Boolean deletePressed;
-
    private Boolean lineClickedNewStaff;
 
    private Boolean spaceClickedNewStaff;
@@ -152,84 +146,44 @@ public class CompositionController implements Initializable {
    private Synthesizer synth;
    
    private Receiver synthRcvr;
-
+   private noteTypeClicked type;
 
    @FXML
    private void handleClickDoubleBarLine(MouseEvent me){
-       hasQuarterNote= false;
-       deleteFunction = false;
-       hasEighthNote = false;
-       hasMeasureBar = false;
+       type = noteTypeClicked.HASDOUBLEBARLINE;
        noteImage = "doubleBarLine.png";
-       hasQuarterRest = false;
-       hasEighthRest = false;
-       hasHalfNote=false;
-       hasDoubleBarLine = true;
+       
 
    }
 
    @FXML
    private void handleClickQuarterNote(MouseEvent me) {
-       hasQuarterNote=true;
-       deleteFunction = false;
-       hasEighthNote = false;
-       hasHalfNote = false;
+       type = noteTypeClicked.HASQUARTERNOTE;
        noteImage = "quarternote.png";
-       hasQuarterRest = false;
-       hasEighthRest = false;
-       hasMeasureBar = false;
-       hasDoubleBarLine = false;
+       
    }
 
    @FXML
    private void handleClickHalfNote(MouseEvent me){
-       hasHalfNote = true;
-       hasQuarterNote = false;
-       deleteFunction = false;
-       hasEighthNote = false;
+       type = noteTypeClicked.HASHALFNOTE;
        noteImage = "halfnote.png";
-       hasQuarterRest = false;
-       hasEighthRest = false;
-       hasMeasureBar = false;
-       hasDoubleBarLine = false;
    }
 
 
 
    @FXML private void handleClickEighthNote(MouseEvent me){
-       hasHalfNote = false;
-       hasEighthNote = true;
-       hasQuarterNote = false;
-       deleteFunction = false;
+       type = noteTypeClicked.HASEIGHTHNOTE;
        noteImage = "eighthnote.png";
-       hasQuarterRest = false;
-       hasEighthRest = false;
-       hasMeasureBar = false;
-       hasDoubleBarLine = false;
    }
 
    @FXML private void handleClickEighthRest(MouseEvent me){
-       hasHalfNote = false;
-       hasEighthNote = false;
-       hasQuarterNote = false;
-       deleteFunction = false;
+       type = noteTypeClicked.HASEIGHTHREST;
        restImage = "eighthRest.png";
-       hasQuarterRest = false;
-       hasEighthRest = true;
-       hasMeasureBar = false;
-       hasDoubleBarLine = false;
    }
 
    @FXML private void handleClickBar(MouseEvent me){
-       hasHalfNote = false;
-       hasEighthNote = false;
-       hasQuarterNote = false;
-       deleteFunction = false;
-       hasMeasureBar = true;
-       hasQuarterRest = false;
-       hasEighthRest = false;
+       type = noteTypeClicked.HASMEASUREBAR;
        noteImage = "measure bar.png";
-       hasDoubleBarLine = false;
    }
 
 
@@ -245,32 +199,13 @@ public class CompositionController implements Initializable {
    @FXML
    private void handleDeleteNote(ActionEvent me){
 
-      deleteFunction = true;
-      hasEighthNote = false;
-      hasQuarterNote=false;
-      hasHalfNote = false;
-      spaceClicked = false;
-      lineClicked = false;
-      hasHalfNote = false;
-      hasQuarterRest = false;
-      hasEighthRest = false;
-      hasMeasureBar = false;
-      hasDoubleBarLine = false;
+      type = noteTypeClicked.HASDELETE;
    }
 
     @FXML
    private void handleQuarterRestButton(MouseEvent me){
       restImage = "quarter-rest-hi.png";
-      deleteFunction = false;
-      hasQuarterNote=false;
-      hasHalfNote = false;
-      hasEighthNote = false;
-      spaceClicked = false;
-      lineClicked = false;
-      hasQuarterRest = true;
-      hasEighthRest = false;
-      hasMeasureBar = false;
-      hasDoubleBarLine = false;
+      type = noteTypeClicked.HASQUARTERREST;
 
    }
 
@@ -309,7 +244,7 @@ public class CompositionController implements Initializable {
    private void handleClickStaff(MouseEvent me){
        spaceClicked = false;
       lineClicked = false;
-       if(hasQuarterRest == true || hasEighthRest == true){
+       if(type == noteTypeClicked.HASQUARTERREST || type == noteTypeClicked.HASEIGHTHREST){
            handleClickStaffForRests(me);
        } else{
        Line clickedLine = null;
@@ -348,7 +283,7 @@ public class CompositionController implements Initializable {
        }
 
 
-       if(hasQuarterNote == true||  hasHalfNote == true||hasEighthNote == true || hasMeasureBar == true|| hasDoubleBarLine ==true || hasEighthRest == true || hasQuarterRest == true) {
+       if(type == noteTypeClicked.HASQUARTERNOTE || type == noteTypeClicked.HASHALFNOTE || type == noteTypeClicked.HASEIGHTHNOTE || type == noteTypeClicked.HASMEASUREBAR || type == noteTypeClicked.HASDOUBLEBARLINE || type == noteTypeClicked.HASEIGHTHREST || type == noteTypeClicked.HASQUARTERREST) {
            if((spaceClicked == true) || (lineClicked == true)){
            ImageView newNote = new ImageView(getClass().getResource(noteImage).toString());
            newNote.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
@@ -422,33 +357,33 @@ public class CompositionController implements Initializable {
            newNote.setFitWidth(41);
            newNote.setFitHeight(57);
            screen.getChildren().add(newNote);
-           if(hasQuarterNote == true){
+           if(type == noteTypeClicked.HASQUARTERNOTE){
                QuarterCount q = new QuarterCount(newNote.getX(), newNote.getY());
                q.setImageView(newNote);
-               int detectedStaff = (int) Math.floor((q.getY() -25)/127);
+               int detectedStaff = (int) Math.floor((q.getY())/127);
                charactersonStaff.get(detectedStaff).add(q);
-           } else if(hasHalfNote == true){
+           } else if(type == noteTypeClicked.HASHALFNOTE){
                 HalfCount h = new HalfCount(newNote.getX(), newNote.getY());
                h.setImageView(newNote);
-               int detectedStaff = (int) Math.floor((h.getY() -25)/127);
+               int detectedStaff = (int) Math.floor((h.getY())/127);
                charactersonStaff.get(detectedStaff).add(h);
-           } else if(hasEighthNote == true){
+           } else if(type == noteTypeClicked.HASEIGHTHNOTE){
                newNote.setY(mouseY-48);
                 EighthCount e = new EighthCount(newNote.getX(), newNote.getY());
                e.setImageView(newNote);
-               int detectedStaff = (int) ((e.getY()- 25)/127);
+               int detectedStaff = (int) ((e.getY())/127);
                    (charactersonStaff.get(detectedStaff)).add(e);
-           } else if(hasMeasureBar == true){
+           } else if(type == noteTypeClicked.HASMEASUREBAR){
                newNote.setX(mouseX-175);
                newNote.setY(mouseY-160); 
                newNote.setFitWidth(350);
                newNote.setFitHeight(320);
                MeasureBar m = new MeasureBar(newNote.getX(), newNote.getY());
                m.setImageView(newNote);
-               int detectedStaff = (int) Math.floor((m.getY() -25)/127);
+               int detectedStaff = (int) Math.floor((m.getY())/127);
                charactersonStaff.get(detectedStaff).add(m);
            }
-           else if (hasDoubleBarLine == true){
+           else if (type == noteTypeClicked.HASDOUBLEBARLINE){
                newNote.setX(mouseX-10);
                newNote.setY(mouseY - 40);
                newNote.setFitWidth(25);
@@ -457,7 +392,7 @@ public class CompositionController implements Initializable {
                d.setImageView(newNote);
                int detectedStaff = (int) Math.floor((d.getY() -25)/127);
                charactersonStaff.get(detectedStaff).add(d);
-           }else if(hasEighthRest == true||hasQuarterRest == true){
+           }else if(type == noteTypeClicked.HASEIGHTHREST || type == noteTypeClicked.HASQUARTERREST){
                handleClickStaffForRests(me);
            }
 
@@ -477,7 +412,7 @@ public class CompositionController implements Initializable {
            double mouseX = me.getSceneX();
            double mouseY = me.getSceneY();
 
-           if(hasQuarterRest == true || hasEighthRest == true){
+          // if(type == noteTypeClicked.HASQUARTERREST || type == noteTypeClicked.HASEIGHTHREST){
            ImageView newRest = new ImageView(getClass().getResource(restImage).toString());
            newRest.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
                @Override
@@ -498,12 +433,7 @@ public class CompositionController implements Initializable {
                    }
                };
            });
-
-
-
-
-
-               if(hasEighthRest == true){
+            if(type == noteTypeClicked.HASEIGHTHREST){
                    newRest.setFitWidth(20);
                    newRest.setFitHeight(25);
                    screen.getChildren().add(newRest);
@@ -513,7 +443,7 @@ public class CompositionController implements Initializable {
                    erc.setImageView(newRest);
                    int detectedStaff = (int) Math.floor((erc.getY() -25)/127);
                    charactersonStaff.get(detectedStaff).add(erc);
-               } else if(hasQuarterRest == true){
+               } else if(type == noteTypeClicked.HASQUARTERREST){
                    newRest.setFitWidth(20);
                    newRest.setFitHeight(55);
                     screen.getChildren().add(newRest);
@@ -526,7 +456,7 @@ public class CompositionController implements Initializable {
                }
 
 
-       }
+    //   }
    }
    @FXML
    private double screenHeight;
@@ -598,7 +528,7 @@ public class CompositionController implements Initializable {
                @Override
                public void handle(MouseEvent me) {
                    Line clickedLine = (Line) me.getTarget();
-                   if(clickedLine == l && (hasQuarterNote == true|| hasHalfNote == true||hasEighthNote == true || hasQuarterRest == true || hasEighthRest == true)){
+                   if(clickedLine == l && (type == noteTypeClicked.HASQUARTERNOTE || type == noteTypeClicked.HASHALFNOTE || type == noteTypeClicked.HASEIGHTHNOTE || type == noteTypeClicked.HASQUARTERREST || type == noteTypeClicked.HASEIGHTHREST || type == noteTypeClicked.HASMEASUREBAR || type == noteTypeClicked.HASDOUBLEBARLINE)){
                        handleClickStaff(me);
                    }
                };
@@ -611,7 +541,7 @@ public class CompositionController implements Initializable {
                @Override
                public void handle(MouseEvent me) {
                    Pane clickedPane = (Pane) me.getTarget();
-                   if(clickedPane == p && (hasQuarterNote == true|| hasHalfNote == true||hasEighthNote == true || hasQuarterRest == true || hasEighthRest == true)){
+                   if(clickedPane == p && (type == noteTypeClicked.HASQUARTERNOTE|| type == noteTypeClicked.HASHALFNOTE || type == noteTypeClicked.HASEIGHTHNOTE || type == noteTypeClicked.HASQUARTERREST || type == noteTypeClicked.HASEIGHTHREST || type == noteTypeClicked.HASMEASUREBAR || type == noteTypeClicked.HASDOUBLEBARLINE)){
                        handleClickStaff(me);
                    }
                };
@@ -669,8 +599,7 @@ public class CompositionController implements Initializable {
         for(ArrayList<MusicalCharacter> musicList : charactersonStaff){
             for(MusicalCharacter i: musicList){
             ImageView newNote = null;
-            if(i.getClass() == QuarterCount.class || i.getClass() == HalfCount.class || i.getClass() == EighthCount.class || i.getClass() == MeasureBar.class || i.getClass() == DoubleBarLine.class){
-                   if(i.getClass() == QuarterCount.class){
+                   if(type == noteTypeClicked.HASQUARTERNOTE){
                        newNote = new ImageView(getClass().getResource("quarternote.png").toString());
                        newNote.setFitWidth(41);
                        newNote.setFitHeight(57);
@@ -679,7 +608,7 @@ public class CompositionController implements Initializable {
                        newNote.setY(i.getY());
                        QuarterCount quc = new QuarterCount(newNote.getX(), newNote.getY());
                        quc.setImageView(newNote);
-                   } else if(i.getClass() == HalfCount.class){
+                   } else if(type == noteTypeClicked.HASHALFNOTE){
                        newNote = new ImageView(getClass().getResource("halfnote.png").toString());
                        newNote.setFitWidth(41);
                        newNote.setFitHeight(57);
@@ -688,7 +617,7 @@ public class CompositionController implements Initializable {
                        screen.getChildren().add(newNote);
                        HalfCount hfc = new HalfCount(newNote.getX(), newNote.getY());
                        hfc.setImageView(newNote);
-                   } else if(i.getClass() == EighthCount.class){
+                   } else if(type == noteTypeClicked.HASEIGHTHNOTE){
                        newNote = new ImageView(getClass().getResource("eighthnote.png").toString());
                        screen.getChildren().add(newNote);
                        newNote.setX(i.getX());
@@ -697,7 +626,7 @@ public class CompositionController implements Initializable {
                        newNote.setFitHeight(57);
                        EighthCount etc = new EighthCount(newNote.getX(), newNote.getY());
                        etc.setImageView(newNote);
-                   } else if (i.getClass() == MeasureBar.class){
+                   } else if (type == noteTypeClicked.HASMEASUREBAR){
                        newNote = new ImageView(getClass().getResource("measure bar.png").toString());
                        screen.getChildren().add(newNote);
                        newNote.setX(i.getX());
@@ -707,7 +636,7 @@ public class CompositionController implements Initializable {
                        MeasureBar mb = new MeasureBar(newNote.getX(), newNote.getY());
                        mb.setImageView(newNote);
                    } 
-                   else if(i.getClass() == DoubleBarLine.class){
+                   else if(type == noteTypeClicked.HASDOUBLEBARLINE){
                        newNote = new ImageView(getClass().getResource("doubleBarLine.png").toString());
                        screen.getChildren().add(newNote);
                        newNote.setX(i.getX());
@@ -716,10 +645,7 @@ public class CompositionController implements Initializable {
                        newNote.setFitHeight(160);
                        DoubleBarLine d = new DoubleBarLine(newNote.getX(), newNote.getY());
                        d.setImageView(newNote);
-                   }
-
-           }else if (i.getClass() == EighthRestCount.class || i.getClass() == QuarterRestCount.class){
-                   if(i.getClass() == EighthRestCount.class){
+                   }else if(type == noteTypeClicked.HASEIGHTHREST){
                        newNote = new ImageView(getClass().getResource("eighthRest.png").toString());
                        newNote.setFitWidth(20);
                        newNote.setFitHeight(25);
@@ -729,7 +655,7 @@ public class CompositionController implements Initializable {
                        EighthRestCount erc = new EighthRestCount(newNote.getX(), newNote.getY());
                        erc.setImageView(newNote);
 
-                   } else if (i.getClass() == QuarterRestCount.class){
+                   } else if (type == noteTypeClicked.HASQUARTERREST){
                        newNote = new ImageView(getClass().getResource("quarter-rest-hi.png").toString());
                        newNote.setFitWidth(20);
                        newNote.setFitHeight(50);
@@ -740,12 +666,12 @@ public class CompositionController implements Initializable {
                        qrc.setImageView(newNote);
                        int detectedStaff = (int) Math.floor((qrc.getY() -25)/127);
                    }
-
-            }
             newNote.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-                       @Override
+              
+            
+                     @Override
                public void handle(MouseEvent me) {
-                   if(deleteFunction == true){
+                   if(type == noteTypeClicked.HASDELETE){
                        ImageView clickedView = (ImageView) me.getTarget();
                        for(ArrayList<MusicalCharacter> musicList : charactersonStaff){
                             for (MusicalCharacter musicNote : musicList) {
@@ -800,7 +726,7 @@ public class CompositionController implements Initializable {
                    handleNewNotesOnNewStaff(l3); 
                    handleNewNotesOnNewStaff(l4);
                    handleNewNotesOnNewStaff(l5);
-             }
+           }
 
         in.close();
         fileIn.close();
@@ -821,8 +747,8 @@ public class CompositionController implements Initializable {
 
 
 
-
    }
+
    public void play() throws InvalidMidiDataException, MidiUnavailableException{
 	for(ArrayList<MusicalCharacter> musicLine: charactersonStaff){
 		for(MusicalCharacter note : musicLine){
@@ -830,10 +756,11 @@ public class CompositionController implements Initializable {
 			double Dposition = l2.getStartY()-44;
 			double Eposition = ((lineFStartY+lineFEndY)/2) -46;
 			double Fposition = ((lineGStartY+lineGEndY)/2)-46;
-			double Gposition = ((lineGStartY+lineGEndY)/2)-46;
+			double Gposition = l4.getStartY()-44;
 			double Aposition =  ((lineBStartY+lineBEndY)/2)-46;
 			double Bposition = l3.getStartY()-44;
-			if(note.getClass() == QuarterCount.class || note.getClass() == HalfCount.class || note.getClass() == EighthCount.class){
+                        double highFposition = l1.getStartY()-44;
+			if(type == noteTypeClicked.HASQUARTERNOTE || type == noteTypeClicked.HASHALFNOTE || type == noteTypeClicked.HASEIGHTHNOTE){
 				if(note.getY() == Cposition){
 					ShortMessage myMsg = new ShortMessage();
 					 myMsg.setMessage(ShortMessage.NOTE_ON, 4, 60, 93); 
@@ -841,33 +768,37 @@ public class CompositionController implements Initializable {
        					 synthRcvr.send(myMsg, -1);
 				 } else if(note.getY() == Dposition){
 					ShortMessage myMsg = new ShortMessage();
-					 myMsg.setMessage(ShortMessage.NOTE_ON, 4, 61, 93); 
+					 myMsg.setMessage(ShortMessage.NOTE_ON, 4, 62, 93); 
         					Synthesizer synth = MidiSystem.getSynthesizer();
        	 				synthRcvr.send(myMsg, -1);
 				 } else if(note.getY() == Eposition){
 					ShortMessage myMsg = new ShortMessage();
- 					myMsg.setMessage(ShortMessage.NOTE_ON, 4, 62, 93); 
+ 					myMsg.setMessage(ShortMessage.NOTE_ON, 4, 64, 93); 
         					Synthesizer synth = MidiSystem.getSynthesizer();
        	 					synthRcvr.send(myMsg, -1);
-				} else if(note.getY() == Fposition){
-                                    
+				} else if(note.getY() == highFposition){
+                                        ShortMessage myMsg = new ShortMessage();
+ 					myMsg.setMessage(ShortMessage.NOTE_ON, 4, 65, 93); 
+        					Synthesizer synth = MidiSystem.getSynthesizer();
+       	 					synthRcvr.send(myMsg, -1);
+                                }else if(note.getY() == Fposition){
 					ShortMessage myMsg = new ShortMessage();
- 						myMsg.setMessage(ShortMessage.NOTE_ON, 4, 63, 93); 
+ 						myMsg.setMessage(ShortMessage.NOTE_ON, 4, 53, 93); 
        					 	Synthesizer synth = MidiSystem.getSynthesizer();
        	 					synthRcvr.send(myMsg, -1);
 				 } else if(note.getY() == Gposition){
 					ShortMessage myMsg = new ShortMessage();
- 						myMsg.setMessage(ShortMessage.NOTE_ON, 4, 64, 93); 
+ 						myMsg.setMessage(ShortMessage.NOTE_ON, 4, 55, 93); 
        	 					Synthesizer synth = MidiSystem.getSynthesizer();
        	 					synthRcvr.send(myMsg, -1);
 				 } else if(note.getY() == Aposition){
                                                 ShortMessage myMsg = new ShortMessage();
- 						myMsg.setMessage(ShortMessage.NOTE_ON, 4, 61, 93); 
+ 						myMsg.setMessage(ShortMessage.NOTE_ON, 4, 57, 93); 
        	 					Synthesizer synth = MidiSystem.getSynthesizer();
        	 					synthRcvr.send(myMsg, -1);
 				 }else if(note.getY() == Bposition){
 					ShortMessage myMsg = new ShortMessage();
- 						myMsg.setMessage(ShortMessage.NOTE_ON, 4, 61, 93); 
+ 						myMsg.setMessage(ShortMessage.NOTE_ON, 4, 59, 93); 
        					Synthesizer synth = MidiSystem.getSynthesizer();
        	 					synthRcvr.send(myMsg, -1);
 				 }
@@ -888,12 +819,6 @@ public class CompositionController implements Initializable {
    public void initialize(URL url, ResourceBundle rb){
        // TODO
        staffNumber = 0;
-       hasQuarterNote=false;
-       deleteFunction = false;
-       spaceClicked = false;
-       lineClicked = false;
-       hasQuarterRest = false;
-       hasEighthRest = false;
        lineStartX = -50;
        lineStartY = 0;
        lineEndX = 650;

@@ -10,7 +10,17 @@ package noteit;
  * @author adengoolsbee
  */
 public enum noteTypeClicked {
-    HASQUARTERNOTE, HASHALFNOTE, HASEIGHTHNOTE, HASQUARTERREST, HASMEASUREBAR, HASEIGHTHREST, HASDELETE, HASDOUBLEBARLINE
+    HASQUARTERNOTE("hasQuarterNote"), HASHALFNOTE("hasHalfNote"), HASEIGHTHNOTE("hasEighthNote"), HASQUARTERREST("hasQuarterRest"), HASMEASUREBAR("hasMeasureBar"), HASEIGHTHREST("hasEighthRest"), HASDELETE("hasDelete"), HASDOUBLEBARLINE("hasDoubleBarLine");
+    private String nameAsString;
+    
+    private noteTypeClicked(String nameAsString){
+        this.nameAsString = nameAsString;
+    }
+    @Override
+    public String toString(){
+        return this.nameAsString;
+    }
+
 }
 
 
