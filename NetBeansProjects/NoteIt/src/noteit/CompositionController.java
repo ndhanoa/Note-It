@@ -1,8 +1,4 @@
-/*
-* To change this license header, choose License Headers in Project Properties.
-* To change this template file, choose Tools | Templates
-* and open the template in the editor.
-*/
+
 package noteit;
 
 import java.awt.Desktop;
@@ -290,7 +286,7 @@ public class CompositionController implements Initializable {
                        ImageView clickedView = (ImageView) me.getTarget();
                        for (ArrayList<MusicalCharacter> musicArray: charactersonStaff) {
                            for(MusicalCharacter note: musicArray){
-                           int detectedStaff = (int) Math.floor((note.getY() -25)/127);
+                           int detectedStaff = (int) Math.floor(note.getY()/116);
                            ImageView thisImage = note.getImageView();
                            if (thisImage == clickedView) {
     //                           images.remove(thisImage);
@@ -356,18 +352,18 @@ public class CompositionController implements Initializable {
            if(type == noteTypeClicked.HASQUARTERNOTE){
                QuarterCount q = new QuarterCount(newNote.getX(), newNote.getY());
                q.setImageView(newNote);
-               int detectedStaff = (int) Math.floor((q.getY() -25)/127);
+               int detectedStaff = (int) Math.floor((q.getY())/117);
                charactersonStaff.get(detectedStaff).add(q);
            } else if(type == noteTypeClicked.HASHALFNOTE){
                 HalfCount h = new HalfCount(newNote.getX(), newNote.getY());
                h.setImageView(newNote);
-               int detectedStaff = (int) Math.floor((h.getY() -25)/127);
+               int detectedStaff = (int) Math.floor((h.getY())/117);
                charactersonStaff.get(detectedStaff).add(h);
            } else if(type == noteTypeClicked.HASEIGHTHNOTE){
-               newNote.setY(mouseY-48);
+               newNote.setY(newNote.getY()-5);
                 EighthCount e = new EighthCount(newNote.getX(), newNote.getY());
                e.setImageView(newNote);
-               int detectedStaff = (int) ((e.getY()- 25)/127);
+               int detectedStaff = (int) ((e.getY())/117);
                    (charactersonStaff.get(detectedStaff)).add(e);
            } else if(type == noteTypeClicked.HASMEASUREBAR){
                newNote.setX(mouseX-175);
@@ -376,19 +372,20 @@ public class CompositionController implements Initializable {
                newNote.setFitHeight(320);
                MeasureBar m = new MeasureBar(newNote.getX(), newNote.getY());
                m.setImageView(newNote);
-               int detectedStaff = (int) Math.floor((m.getY())/127);
+               int detectedStaff = (int) Math.floor((m.getY()+50)/116);
                charactersonStaff.get(detectedStaff).add(m);
-               newNote.setY((lineBStartY+lineBEndY)/2-170);
+               newNote.setY((newStaffCount*117)-115);
            }
            else if (type == noteTypeClicked.HASDOUBLEBARLINE){
                newNote.setX(mouseX-10);
-               newNote.setY(mouseY - 40);
+               //newNote.setY(mouseY - 40);
                newNote.setFitWidth(25);
                newNote.setFitHeight(80);
                DoubleBarLine d = new DoubleBarLine(newNote.getX(), newNote.getY());
                d.setImageView(newNote);
-               int detectedStaff = (int) Math.floor((d.getY() -25)/127);
+               int detectedStaff = (int) Math.floor((d.getY()+50)/117);
                charactersonStaff.get(detectedStaff).add(d);
+               newNote.setY((newStaffCount*117)+5);
            }else if(type == noteTypeClicked.HASEIGHTHREST ||type == noteTypeClicked.HASQUARTERREST){
                handleClickStaffForRests(me);
            }
@@ -436,7 +433,7 @@ public class CompositionController implements Initializable {
                        for (ArrayList<MusicalCharacter> musicList: charactersonStaff) {
                            for(MusicalCharacter note: musicList){
                            ImageView thisImage = note.getImageView();
-                           int detectedStaff = (int) Math.floor((note.getY() -25)/127);
+                           int detectedStaff = (int) Math.floor((note.getY())/117);
                            if (thisImage == clickedView) {
   //                             images2.remove(thisImage);
                                staff.getChildren().remove(thisImage);
@@ -845,72 +842,64 @@ public class CompositionController implements Initializable {
         System.out.println("Composition not found");
         c.printStackTrace();
         return;
-
-
-
      }
-   
-
-
-
-
 
    }
    public void play() throws InvalidMidiDataException, MidiUnavailableException{
 	for(ArrayList<MusicalCharacter> musicLine: charactersonStaff){
-		for(MusicalCharacter note : musicLine){
-			double Cposition = ((lineDStartY+lineDEndY)/2)-46;
-			double Dposition = l2.getStartY()-44;
-			double Eposition = ((lineFStartY+lineFEndY)/2) -46;
-			double Fposition = ((lineGStartY+lineGEndY)/2)-46;
-			double Gposition = l4.getStartY()-44;
-			double Aposition =  ((lineBStartY+lineBEndY)/2)-46;
-			double Bposition = l3.getStartY()-44;
-                        double highFposition = l1.getStartY()-44;
-			if(type == noteTypeClicked.HASQUARTERNOTE || type == noteTypeClicked.HASHALFNOTE || type == noteTypeClicked.HASEIGHTHNOTE){
-				if(note.getY() == Cposition){
-					ShortMessage myMsg = new ShortMessage();
-					 myMsg.setMessage(ShortMessage.NOTE_ON, 4, 60, 93); 
-        				Synthesizer synth = MidiSystem.getSynthesizer();
-       					 synthRcvr.send(myMsg, -1);
-				 } else if(note.getY() == Dposition){
-					ShortMessage myMsg = new ShortMessage();
-					 myMsg.setMessage(ShortMessage.NOTE_ON, 4, 62, 93); 
-        					Synthesizer synth = MidiSystem.getSynthesizer();
-       	 				synthRcvr.send(myMsg, -1);
-				 } else if(note.getY() == Eposition){
-					ShortMessage myMsg = new ShortMessage();
- 					myMsg.setMessage(ShortMessage.NOTE_ON, 4, 64, 93); 
-        					Synthesizer synth = MidiSystem.getSynthesizer();
-       	 					synthRcvr.send(myMsg, -1);
-				} else if(note.getY() == highFposition){
-                                        ShortMessage myMsg = new ShortMessage();
- 					myMsg.setMessage(ShortMessage.NOTE_ON, 4, 65, 93); 
-        					Synthesizer synth = MidiSystem.getSynthesizer();
-       	 					synthRcvr.send(myMsg, -1);
-                                }else if(note.getY() == Fposition){
-					ShortMessage myMsg = new ShortMessage();
- 						myMsg.setMessage(ShortMessage.NOTE_ON, 4, 53, 93); 
-       					 	Synthesizer synth = MidiSystem.getSynthesizer();
-       	 					synthRcvr.send(myMsg, -1);
-				 } else if(note.getY() == Gposition){
-					ShortMessage myMsg = new ShortMessage();
- 						myMsg.setMessage(ShortMessage.NOTE_ON, 4, 55, 93); 
-       	 					Synthesizer synth = MidiSystem.getSynthesizer();
-       	 					synthRcvr.send(myMsg, -1);
-				 } else if(note.getY() == Aposition){
-                                                ShortMessage myMsg = new ShortMessage();
- 						myMsg.setMessage(ShortMessage.NOTE_ON, 4, 57, 93); 
-       	 					Synthesizer synth = MidiSystem.getSynthesizer();
-       	 					synthRcvr.send(myMsg, -1);
-				 }else if(note.getY() == Bposition){
-					ShortMessage myMsg = new ShortMessage();
- 						myMsg.setMessage(ShortMessage.NOTE_ON, 4, 59, 93); 
-       					Synthesizer synth = MidiSystem.getSynthesizer();
-       	 					synthRcvr.send(myMsg, -1);
-				 }
-			}
-		}
+        for(MusicalCharacter note : musicLine){
+        double Cposition = ((lineDStartY+lineDEndY)/2)-80;
+        double Dposition = l2.getStartY();
+        double Eposition = ((lineFStartY+lineFEndY)/2) -80;
+        double Fposition = ((lineGStartY+lineGEndY)/2)-80;
+        double Gposition = l4.getStartY();
+        double Aposition =  ((lineBStartY+lineBEndY)/2)-80;
+        double Bposition = l3.getStartY();
+        double highFposition = l1.getStartY();
+        if(type == noteTypeClicked.HASQUARTERNOTE || type == noteTypeClicked.HASHALFNOTE || type == noteTypeClicked.HASEIGHTHNOTE){
+                if(note.getY() == Cposition){
+                        ShortMessage myMsg = new ShortMessage();
+                         myMsg.setMessage(ShortMessage.NOTE_ON, 4, 60, 93); 
+                        Synthesizer synth = MidiSystem.getSynthesizer();
+                         synthRcvr.send(myMsg, -1);
+                 } else if(note.getY() == Dposition){
+                        ShortMessage myMsg = new ShortMessage();
+                         myMsg.setMessage(ShortMessage.NOTE_ON, 4, 62, 93); 
+                                Synthesizer synth = MidiSystem.getSynthesizer();
+                        synthRcvr.send(myMsg, -1);
+                 } else if(note.getY() == Eposition){
+                        ShortMessage myMsg = new ShortMessage();
+                        myMsg.setMessage(ShortMessage.NOTE_ON, 4, 64, 93); 
+                                Synthesizer synth = MidiSystem.getSynthesizer();
+                                synthRcvr.send(myMsg, -1);
+                } else if(note.getY() == highFposition){
+                        ShortMessage myMsg = new ShortMessage();
+                        myMsg.setMessage(ShortMessage.NOTE_ON, 4, 65, 93); 
+                                Synthesizer synth = MidiSystem.getSynthesizer();
+                                synthRcvr.send(myMsg, -1);
+                }else if(note.getY() == Fposition){
+                        ShortMessage myMsg = new ShortMessage();
+                                myMsg.setMessage(ShortMessage.NOTE_ON, 4, 53, 93); 
+                                Synthesizer synth = MidiSystem.getSynthesizer();
+                                synthRcvr.send(myMsg, -1);
+                 } else if(note.getY() == Gposition){
+                        ShortMessage myMsg = new ShortMessage();
+                                myMsg.setMessage(ShortMessage.NOTE_ON, 4, 55, 93); 
+                                Synthesizer synth = MidiSystem.getSynthesizer();
+                                synthRcvr.send(myMsg, -1);
+                 } else if(note.getY() == Aposition){
+                                ShortMessage myMsg = new ShortMessage();
+                                myMsg.setMessage(ShortMessage.NOTE_ON, 4, 57, 93); 
+                                Synthesizer synth = MidiSystem.getSynthesizer();
+                                synthRcvr.send(myMsg, -1);
+                 }else if(note.getY() == Bposition){
+                        ShortMessage myMsg = new ShortMessage();
+                                myMsg.setMessage(ShortMessage.NOTE_ON, 4, 59, 93); 
+                        Synthesizer synth = MidiSystem.getSynthesizer();
+                                synthRcvr.send(myMsg, -1);
+                         }
+                }
+        }
 	}
 
 }
@@ -967,3 +956,4 @@ public class CompositionController implements Initializable {
    }      
 
 }
+
