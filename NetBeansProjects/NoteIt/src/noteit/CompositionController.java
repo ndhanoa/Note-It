@@ -321,26 +321,31 @@ public class CompositionController implements Initializable {
        } else if(me.getSource().getClass() == Pane.class) {
            staff = (Pane) me.getTarget();
        }
+      /* for(double i = 0; i <=newStaffCount;i++){
+            if(118+ ((i-1)*90)<mouseY&& mouseY>(118+(i*90))){
+                staffNumber= i;
+       }
+      */ 
 
        //staffNumber = newStaffCount;
        //if(mouseY < 118){
          //  staffNumber = 0;
        //} 
 
-       lineFStartY= 49 + (120 * staffNumber); 
+       lineFStartY= 49 + (120 * newStaffCount); 
        lineDStartY=lineFStartY + 18;
        lineBStartY=lineDStartY + 18;
        lineGStartY=lineBStartY + 18;
        lineEStartY=lineGStartY + 18;
 
 
-       lineFEndY = 57 + (120*staffNumber);
+       lineFEndY = 57 + (120*newStaffCount);
        lineDEndY = lineFEndY+18;
        lineBEndY = lineDEndY+18;
        lineGEndY = lineBEndY+18;
        lineEEndY = lineGEndY+18;
 
-       if(me.getSource().getClass()==Pane.class&& (mouseY>lineFStartY && mouseY<lineFEndY)||(mouseY>lineDStartY && mouseY<lineDEndY)||(mouseY>lineBStartY && mouseY<lineBEndY)||(mouseY>lineGStartY && mouseY<lineGEndY)||(mouseY>lineEStartY && mouseY<lineEEndY)){
+       if((mouseY>lineFStartY && mouseY<lineFEndY)||(mouseY>lineDStartY && mouseY<lineDEndY)||(mouseY>lineBStartY && mouseY<lineBEndY)||(mouseY>lineGStartY && mouseY<lineGEndY)||(mouseY>lineEStartY && mouseY<lineEEndY)){
            spaceClicked = true;
        }
        if(((mouseY>=l1.getStartY()-5 && mouseY<=l1.getStartY()+5)||(mouseY>=l2.getStartY()-5 && mouseY<=l2.getStartY()+5)||(mouseY>=l3.getStartY()-5 && mouseY<=l3.getStartY()+5)||(mouseY>=l4.getStartY()-5 &&mouseY<=l4.getStartY()+5))||(mouseY>=l5.getStartY()-5&&mouseY<=l5.getStartY()+5)){
@@ -440,13 +445,14 @@ public class CompositionController implements Initializable {
                    (charactersonStaff.get(detectedStaff)).add(e);
            } else if(hasMeasureBar == true){
                newNote.setX(mouseX-175);
-               newNote.setY(mouseY-160); 
+               //newNote.setY(mouseY-160); 
                newNote.setFitWidth(350);
                newNote.setFitHeight(320);
                MeasureBar m = new MeasureBar(newNote.getX(), newNote.getY());
                m.setImageView(newNote);
-               int detectedStaff = (int) Math.floor((m.getY() -25)/127);
+               int detectedStaff = (int) Math.floor((m.getY())/127);
                charactersonStaff.get(detectedStaff).add(m);
+               newNote.setY((lineBStartY+lineBEndY)/2-170);
            }
            else if (hasDoubleBarLine == true){
                newNote.setX(mouseX-10);
@@ -888,6 +894,7 @@ public class CompositionController implements Initializable {
    public void initialize(URL url, ResourceBundle rb){
        // TODO
        staffNumber = 0;
+       newStaffCount=1;
        hasQuarterNote=false;
        deleteFunction = false;
        spaceClicked = false;
@@ -920,7 +927,16 @@ public class CompositionController implements Initializable {
        l3.setStrokeWidth(5);
        l4.setStrokeWidth(5);
        l5.setStrokeWidth(5);
+       Pane p = new Pane();
        charactersonStaff.add(new ArrayList<MusicalCharacter>());
+       p.setPrefSize(screen.getWidth(), 120);
+       p.setLayoutX(-1);
+       double yposition = (10 * newStaffCount); //152
+       p.setLayoutY(yposition);
+       screen.getChildren().add(p);
+       handleClickPane(p);
+       
+       
    }      
 
 }
