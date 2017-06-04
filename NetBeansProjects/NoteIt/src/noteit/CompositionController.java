@@ -512,9 +512,15 @@ public class CompositionController implements Initializable {
                    }
                };
            });
-
-            if(lineClicked == true){
-                   newRest.setX(mouseX-17);
+           /*double restY; 
+           
+           if(lineClicked == true && hasQuarterRest == true){
+               restY = l3.getStartY()-60;
+           } else if(spaceClicked == true && hasQuarterRest == true){
+               restY = 
+           }*/
+            if(lineClicked == true  && hasQuarterRest == true){
+                   newRest.setX(mouseX-13);
 
                        if(mouseY>l1.getStartY()-5 && mouseY<l1.getStartY()+5){
                            newRest.setY(l3.getStartY()-60);
@@ -532,7 +538,67 @@ public class CompositionController implements Initializable {
                            newRest.setY(l3.getStartY()-60);
                        }
             }
+            if(spaceClicked == true && hasQuarterRest == true){
+                   newRest.setX(mouseX-13);
+                   if(mouseY>lineFStartY && mouseY< lineFEndY){
+                       newRest.setY(((lineBStartY+lineBEndY)/2)-70);
+                   }
+                   else if(mouseY>lineDStartY && mouseY<lineDEndY){
+                       newRest.setY(((lineBStartY+lineBEndY)/2)-70);
+                   }
+                   else if(mouseY> lineBStartY && mouseY<lineBEndY){
+                       newRest.setY(((lineBStartY+lineBEndY)/2)-70);
+                   }
+                   else if(mouseY>lineGStartY && mouseY<lineGEndY){
+                       newRest.setY(((lineBStartY+lineBEndY)/2)-70);
+                   }
+                   else if(mouseY>lineEStartY && mouseY<lineEEndY){
+                       newRest.setY(((lineBStartY+lineBEndY)/2)-70);
+                   }
 
+
+               }
+            
+            
+            if(lineClicked == true  && hasEighthRest == true){
+                   newRest.setX(mouseX-17);
+
+                       if(mouseY>l1.getStartY()-5 && mouseY<l1.getStartY()+5){
+                           newRest.setY(l3.getStartY()-48);
+                       }
+                       else if(mouseY>l2.getStartY()-5 && mouseY<l2.getStartY()+5){
+                           newRest.setY(l3.getStartY()-48);
+                       }
+                        else if(mouseY>l3.getStartY()-5 && mouseY<l3.getStartY()+5){
+                           newRest.setY(l3.getStartY()-48);
+                       }
+                       else if(mouseY>l4.getStartY()-5 && mouseY<l4.getStartY()+5){
+                           newRest.setY(l3.getStartY()-48);
+                       }
+                        else if(mouseY>l5.getStartY()-5 && mouseY<l5.getStartY()+5){
+                           newRest.setY(l3.getStartY()-48);
+                       }
+            }
+               if(spaceClicked == true && hasEighthRest == true){
+                   newRest.setX(mouseX-13);
+                   if(mouseY>lineFStartY && mouseY< lineFEndY){
+                       newRest.setY(((lineBStartY+lineBEndY)/2)-57);
+                   }
+                   else if(mouseY>lineDStartY && mouseY<lineDEndY){
+                       newRest.setY(((lineBStartY+lineBEndY)/2)-57);
+                   }
+                   else if(mouseY> lineBStartY && mouseY<lineBEndY){
+                       newRest.setY(((lineBStartY+lineBEndY)/2)-57);
+                   }
+                   else if(mouseY>lineGStartY && mouseY<lineGEndY){
+                       newRest.setY(((lineBStartY+lineBEndY)/2)-57);
+                   }
+                   else if(mouseY>lineEStartY && mouseY<lineEEndY){
+                       newRest.setY(((lineBStartY+lineBEndY)/2)-57);
+                   }
+
+
+               }
 
 
                if(hasEighthRest == true){
