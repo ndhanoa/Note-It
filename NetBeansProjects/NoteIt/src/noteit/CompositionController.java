@@ -356,18 +356,18 @@ public class CompositionController implements Initializable {
            if(type == noteTypeClicked.HASQUARTERNOTE){
                QuarterCount q = new QuarterCount(newNote.getX(), newNote.getY());
                q.setImageView(newNote);
-               int detectedStaff = (int) Math.floor((q.getY() -25)/127);
+               int detectedStaff = (int) Math.floor((q.getY())/127);
                charactersonStaff.get(detectedStaff).add(q);
            } else if(type == noteTypeClicked.HASHALFNOTE){
                 HalfCount h = new HalfCount(newNote.getX(), newNote.getY());
                h.setImageView(newNote);
-               int detectedStaff = (int) Math.floor((h.getY() -25)/127);
+               int detectedStaff = (int) Math.floor((h.getY())/127);
                charactersonStaff.get(detectedStaff).add(h);
            } else if(type == noteTypeClicked.HASEIGHTHNOTE){
                newNote.setY(mouseY-48);
                 EighthCount e = new EighthCount(newNote.getX(), newNote.getY());
                e.setImageView(newNote);
-               int detectedStaff = (int) ((e.getY()- 25)/127);
+               int detectedStaff = (int) ((e.getY())/127);
                    (charactersonStaff.get(detectedStaff)).add(e);
            } else if(type == noteTypeClicked.HASMEASUREBAR){
                newNote.setX(mouseX-175);
@@ -387,7 +387,7 @@ public class CompositionController implements Initializable {
                newNote.setFitHeight(80);
                DoubleBarLine d = new DoubleBarLine(newNote.getX(), newNote.getY());
                d.setImageView(newNote);
-               int detectedStaff = (int) Math.floor((d.getY() -25)/127);
+               int detectedStaff = (int) Math.floor((d.getY())/127);
                charactersonStaff.get(detectedStaff).add(d);
            }else if(type == noteTypeClicked.HASEIGHTHREST ||type == noteTypeClicked.HASQUARTERREST){
                handleClickStaffForRests(me);
@@ -859,14 +859,14 @@ public class CompositionController implements Initializable {
    public void play() throws InvalidMidiDataException, MidiUnavailableException{
 	for(ArrayList<MusicalCharacter> musicLine: charactersonStaff){
 		for(MusicalCharacter note : musicLine){
-			double Cposition = ((lineDStartY+lineDEndY)/2)-46;
-			double Dposition = l2.getStartY()-44;
-			double Eposition = ((lineFStartY+lineFEndY)/2) -46;
-			double Fposition = ((lineGStartY+lineGEndY)/2)-46;
-			double Gposition = l4.getStartY()-44;
-			double Aposition =  ((lineBStartY+lineBEndY)/2)-46;
-			double Bposition = l3.getStartY()-44;
-                        double highFposition = l1.getStartY()-44;
+			double Cposition = ((lineDStartY+lineDEndY)/2)-80;
+			double Dposition = l2.getStartY();
+			double Eposition = ((lineFStartY+lineFEndY)/2) -80;
+			double Fposition = ((lineGStartY+lineGEndY)/2)-80;
+			double Gposition = l4.getStartY();
+			double Aposition =  ((lineBStartY+lineBEndY)/2)-80;
+			double Bposition = l3.getStartY();
+                        double highFposition = l1.getStartY();
 			if(type == noteTypeClicked.HASQUARTERNOTE || type == noteTypeClicked.HASHALFNOTE || type == noteTypeClicked.HASEIGHTHNOTE){
 				if(note.getY() == Cposition){
 					ShortMessage myMsg = new ShortMessage();
