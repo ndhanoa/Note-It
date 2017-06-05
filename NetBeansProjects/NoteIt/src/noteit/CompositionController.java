@@ -372,9 +372,9 @@ public class CompositionController implements Initializable {
                    (charactersonStaff.get(detectedStaff)).add(e);
            } else if(type == noteTypeClicked.HASMEASUREBAR){
                newNote.setX(mouseX-175);
-               //newNote.setY(mouseY-160); 
+               newNote.setY(l3.getStartY() - 175); 
                newNote.setFitWidth(350);
-               newNote.setFitHeight(320);
+               newNote.setFitHeight(285);
                MeasureBar m = new MeasureBar(newNote.getX(), newNote.getY());
                m.setImageView(newNote);
                int detectedStaff = (int) Math.floor((m.getY())/127);
@@ -383,9 +383,9 @@ public class CompositionController implements Initializable {
            }
            else if (type == noteTypeClicked.HASDOUBLEBARLINE){
                newNote.setX(mouseX-10);
-               newNote.setY(mouseY - 40);
+               newNote.setY(l3.getStartY() - 72);
                newNote.setFitWidth(25);
-               newNote.setFitHeight(80);
+               newNote.setFitHeight(73);
                DoubleBarLine d = new DoubleBarLine(newNote.getX(), newNote.getY());
                d.setImageView(newNote);
                int detectedStaff = (int) Math.floor((d.getY())/127);
