@@ -17,6 +17,7 @@ import static java.lang.Math.abs;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.Timer;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -856,7 +857,7 @@ public class CompositionController implements Initializable {
 
 
    }
-   public void play() throws InvalidMidiDataException, MidiUnavailableException{
+   public void play() throws InvalidMidiDataException, MidiUnavailableException, InterruptedException{
 	for(ArrayList<MusicalCharacter> musicLine: charactersonStaff){
 		for(MusicalCharacter note : musicLine){
 			double Cposition = ((lineDStartY+lineDEndY)/2)-80;
@@ -867,47 +868,63 @@ public class CompositionController implements Initializable {
 			double Aposition =  ((lineBStartY+lineBEndY)/2)-80;
 			double Bposition = l3.getStartY();
                         double highFposition = l1.getStartY();
+                        double timing = note.getCount();
+                        if(timing == 0.5){
+                            timing = 125;
+                        } else if(timing == 1){
+                            timing = 250;
+                        } else if(timing == 2){
+                            timing = 500;
+                        }
 			if(type == noteTypeClicked.HASQUARTERNOTE || type == noteTypeClicked.HASHALFNOTE || type == noteTypeClicked.HASEIGHTHNOTE){
 				if(note.getY() == Cposition){
 					ShortMessage myMsg = new ShortMessage();
 					 myMsg.setMessage(ShortMessage.NOTE_ON, 4, 60, 93); 
         				Synthesizer synth = MidiSystem.getSynthesizer();
        					 synthRcvr.send(myMsg, -1);
+                                         Thread.sleep((long) timing);
 				 } else if(note.getY() == Dposition){
 					ShortMessage myMsg = new ShortMessage();
 					 myMsg.setMessage(ShortMessage.NOTE_ON, 4, 62, 93); 
         					Synthesizer synth = MidiSystem.getSynthesizer();
        	 				synthRcvr.send(myMsg, -1);
+                                        Thread.sleep((long) timing);
 				 } else if(note.getY() == Eposition){
 					ShortMessage myMsg = new ShortMessage();
  					myMsg.setMessage(ShortMessage.NOTE_ON, 4, 64, 93); 
         					Synthesizer synth = MidiSystem.getSynthesizer();
        	 					synthRcvr.send(myMsg, -1);
+                                                Thread.sleep((long) timing);
 				} else if(note.getY() == highFposition){
                                         ShortMessage myMsg = new ShortMessage();
  					myMsg.setMessage(ShortMessage.NOTE_ON, 4, 65, 93); 
         					Synthesizer synth = MidiSystem.getSynthesizer();
        	 					synthRcvr.send(myMsg, -1);
+                                                Thread.sleep((long) timing);
                                 }else if(note.getY() == Fposition){
 					ShortMessage myMsg = new ShortMessage();
  						myMsg.setMessage(ShortMessage.NOTE_ON, 4, 53, 93); 
        					 	Synthesizer synth = MidiSystem.getSynthesizer();
        	 					synthRcvr.send(myMsg, -1);
+                                                Thread.sleep((long) timing);
 				 } else if(note.getY() == Gposition){
 					ShortMessage myMsg = new ShortMessage();
  						myMsg.setMessage(ShortMessage.NOTE_ON, 4, 55, 93); 
        	 					Synthesizer synth = MidiSystem.getSynthesizer();
        	 					synthRcvr.send(myMsg, -1);
+                                                Thread.sleep((long) timing);
 				 } else if(note.getY() == Aposition){
                                                 ShortMessage myMsg = new ShortMessage();
  						myMsg.setMessage(ShortMessage.NOTE_ON, 4, 57, 93); 
        	 					Synthesizer synth = MidiSystem.getSynthesizer();
        	 					synthRcvr.send(myMsg, -1);
+                                                Thread.sleep((long) timing);
 				 }else if(note.getY() == Bposition){
 					ShortMessage myMsg = new ShortMessage();
  						myMsg.setMessage(ShortMessage.NOTE_ON, 4, 59, 93); 
        					Synthesizer synth = MidiSystem.getSynthesizer();
        	 					synthRcvr.send(myMsg, -1);
+                                                Thread.sleep((long) timing);
 				 }
 			}
 		}
