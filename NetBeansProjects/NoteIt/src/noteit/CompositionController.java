@@ -683,6 +683,20 @@ public class CompositionController implements Initializable {
    }
    @FXML
    private void load(MouseEvent change){
+       
+       lineFStartY= 49 + (120 * newStaffCount); 
+       lineDStartY=lineFStartY + 18;
+       lineBStartY=lineDStartY + 18;
+       lineGStartY=lineBStartY + 18;
+       lineEStartY=lineGStartY + 18;
+
+
+       lineFEndY = 57 + (120*newStaffCount);
+       lineDEndY = lineFEndY+18;
+       lineBEndY = lineDEndY+18;
+       lineGEndY = lineBEndY+18;
+       lineEEndY = lineGEndY+18;
+       
        int extraStaffs = 0;
        ArrayList<ArrayList<MusicalCharacter>> savedCharacters = new ArrayList<ArrayList<MusicalCharacter>>();
        fc = new FileChooser();
@@ -715,7 +729,7 @@ public class CompositionController implements Initializable {
                        double y = i.getY() - 70;
                        newNote.setX(x);
                        newNote.setY(y);
-                       QuarterCount quc = new QuarterCount(newNote.getX(), newNote.getY());
+                       QuarterCount quc = new QuarterCount(newNote.getX(), newNote.getY() + 70);
                        quc.setImageView(newNote);
                    } else if(i.getClass() == HalfCount.class){
                        newNote = new ImageView(getClass().getResource("halfnote.png").toString());
@@ -724,7 +738,7 @@ public class CompositionController implements Initializable {
                        newNote.setX(i.getX());
                        newNote.setY(i.getY() - 70);
                        p.getChildren().add(newNote);
-                       HalfCount hfc = new HalfCount(newNote.getX(), newNote.getY());
+                       HalfCount hfc = new HalfCount(newNote.getX(), newNote.getY() + 70);
                        hfc.setImageView(newNote);
                    } else if(i.getClass() == EighthCount.class){
                        newNote = new ImageView(getClass().getResource("eighthnote.png").toString());
@@ -733,7 +747,7 @@ public class CompositionController implements Initializable {
                        newNote.setFitWidth(41);
                        newNote.setFitHeight(57);
                         p.getChildren().add(newNote);
-                       EighthCount etc = new EighthCount(newNote.getX(), newNote.getY());
+                       EighthCount etc = new EighthCount(newNote.getX(), newNote.getY() + 70);
                        etc.setImageView(newNote);
                    } else if (i.getClass() == MeasureBar.class){
                        newNote = new ImageView(getClass().getResource("measure bar.png").toString());
@@ -881,7 +895,7 @@ public class CompositionController implements Initializable {
                         } else if(timing == 2){
                             timing = 500;
                         }
-			if(type == noteTypeClicked.HASQUARTERNOTE || type == noteTypeClicked.HASHALFNOTE || type == noteTypeClicked.HASEIGHTHNOTE){
+			if(note.getClass() == QuarterCount.class || note.getClass() == HalfCount.class || note.getClass() == EighthCount.class){
 				if(note.getY() == Cposition){
 					ShortMessage myMsg = new ShortMessage();
 					 myMsg.setMessage(ShortMessage.NOTE_ON, 4, 60, 93); 
