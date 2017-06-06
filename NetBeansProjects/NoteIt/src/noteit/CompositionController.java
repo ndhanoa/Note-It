@@ -447,13 +447,7 @@ public class CompositionController implements Initializable {
                    }
                };
            });
-           /*double restY; 
-           
-           if(lineClicked == true && hasQuarterRest == true){
-               restY = l3.getStartY()-60;
-           } else if(spaceClicked == true && hasQuarterRest == true){
-               restY = 
-           }*/
+          
             if(lineClicked == true  && type == noteTypeClicked.HASQUARTERREST){
                    newRest.setX(mouseX-13);
 
@@ -699,6 +693,14 @@ public class CompositionController implements Initializable {
         ObjectInputStream in = new ObjectInputStream(fileIn);
         savedCharacters = (ArrayList<ArrayList<MusicalCharacter>>) in.readObject();
         charactersonStaff = savedCharacters;
+        Pane p = new Pane();
+       charactersonStaff.add(new ArrayList<MusicalCharacter>());
+       p.setPrefSize(screen.getWidth(), 120);
+       p.setLayoutX(-1);
+       double yposition = 25; 
+       p.setLayoutY(yposition);
+       staff.getChildren().add(p);
+       //handleClickPane(p);
         for(ArrayList<MusicalCharacter> musicList : charactersonStaff){
             for(MusicalCharacter i: musicList){
             ImageView newNote = null;
@@ -707,9 +709,11 @@ public class CompositionController implements Initializable {
                        newNote = new ImageView(getClass().getResource("quarternote.png").toString());
                        newNote.setFitWidth(41);
                        newNote.setFitHeight(57);
-                       screen.getChildren().add(newNote);
-                       newNote.setX(i.getX());
-                       newNote.setY(i.getY());
+                       staff.getChildren().add(newNote);
+                       double x = i.getX();
+                       double y = i.getY();
+                       newNote.setX(x);
+                       newNote.setY(y);
                        QuarterCount quc = new QuarterCount(newNote.getX(), newNote.getY());
                        quc.setImageView(newNote);
                    } else if(i.getClass() == HalfCount.class){
@@ -718,12 +722,12 @@ public class CompositionController implements Initializable {
                        newNote.setFitHeight(57);
                        newNote.setX(i.getX());
                        newNote.setY(i.getY());
-                       screen.getChildren().add(newNote);
+                       staff.getChildren().add(newNote);
                        HalfCount hfc = new HalfCount(newNote.getX(), newNote.getY());
                        hfc.setImageView(newNote);
                    } else if(i.getClass() == EighthCount.class){
                        newNote = new ImageView(getClass().getResource("eighthnote.png").toString());
-                       screen.getChildren().add(newNote);
+                       staff.getChildren().add(newNote);
                        newNote.setX(i.getX());
                        newNote.setY(i.getY());
                        newNote.setFitWidth(41);
@@ -732,7 +736,7 @@ public class CompositionController implements Initializable {
                        etc.setImageView(newNote);
                    } else if (i.getClass() == MeasureBar.class){
                        newNote = new ImageView(getClass().getResource("measure bar.png").toString());
-                       screen.getChildren().add(newNote);
+                       staff.getChildren().add(newNote);
                        newNote.setX(i.getX());
                        newNote.setY(i.getY());
                        newNote.setFitWidth(350);
@@ -742,7 +746,7 @@ public class CompositionController implements Initializable {
                    } 
                    else if(i.getClass() == DoubleBarLine.class){
                        newNote = new ImageView(getClass().getResource("doubleBarLine.png").toString());
-                       screen.getChildren().add(newNote);
+                       staff.getChildren().add(newNote);
                        newNote.setX(i.getX());
                        newNote.setY(i.getY());
                        newNote.setFitWidth(100);
@@ -756,7 +760,7 @@ public class CompositionController implements Initializable {
                        newNote = new ImageView(getClass().getResource("eighthRest.png").toString());
                        newNote.setFitWidth(20);
                        newNote.setFitHeight(25);
-                       screen.getChildren().add(newNote);
+                       staff.getChildren().add(newNote);
                        newNote.setX(i.getX());
                        newNote.setY(i.getY());
                        EighthRestCount erc = new EighthRestCount(newNote.getX(), newNote.getY());
@@ -766,7 +770,7 @@ public class CompositionController implements Initializable {
                        newNote = new ImageView(getClass().getResource("quarter-rest-hi.png").toString());
                        newNote.setFitWidth(20);
                        newNote.setFitHeight(50);
-                       screen.getChildren().add(newNote);
+                       staff.getChildren().add(newNote);
                        newNote.setX(i.getX());
                        newNote.setY(i.getY());
                        QuarterRestCount qrc = new QuarterRestCount(newNote.getX(), newNote.getY());
