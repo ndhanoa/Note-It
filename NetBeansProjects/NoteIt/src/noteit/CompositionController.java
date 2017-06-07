@@ -9,20 +9,15 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import static java.lang.Math.abs;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.ResourceBundle;
-import java.util.Timer;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
@@ -42,67 +37,10 @@ public class CompositionController implements Initializable {
    private AnchorPane screen;
 
    @FXML
-   private Label label;
-
-   /*@FXML
-   private Line lineF;
-
-   @FXML
-   private Line lineD;
-
-   @FXML
-   private Line lineB;
-
-   @FXML
-   private Line lineG;
-
-   @FXML
-   private Line lineE;
-
-   */
-   @FXML
-   private Button quarternote;
-
-   @FXML
-   private Button measureBarButton;
-
-   @FXML
    private String noteImage;
    private String restImage;
 
-   @FXML
-   private Button save;
-
-   @FXML
-   private Button load;
-
-   @FXML
-   private ImageView newQuarterNote;
-
-   @FXML 
-   private ImageView newHalfNote;
-
-   @FXML
-   private Button halfNote;
-
-   @FXML
-   private Button eighthNote;
-
-   @FXML
-   private Button measureButton;
-
-   @FXML private ImageView newEighthNote;
-
-
-   @FXML 
-   private ImageView quarterNoteForStaff;
-
-
-   @FXML
-   private Button quarterRestButton;
-   
-   @FXML
-   private Button playButton;
+ 
 
    private Desktop desktop = Desktop.getDesktop();
 
@@ -120,19 +58,6 @@ public class CompositionController implements Initializable {
    private Stage stage;
 
    noteTypeClicked type;
-   
-   private Boolean lineClickedNewStaff;
-
-   private Boolean spaceClickedNewStaff;
-
-   @FXML
-   private Button delete;
-   
-   
-
-   @FXML private Button doubleBarLine;
-
-   @FXML private ImageView newDoubleBarLine;
    
    private Synthesizer synth;
    
@@ -185,12 +110,6 @@ public class CompositionController implements Initializable {
        noteImage = "measure bar.png";
        type = noteTypeClicked.HASMEASUREBAR;
    }
-
-
-   @FXML
-
-   private double imageX;
-   private double imageY;
 
    private ArrayList<ImageView> images = new ArrayList<ImageView>();
    private ArrayList<ImageView> images2 = new ArrayList<ImageView>();
@@ -248,11 +167,6 @@ public class CompositionController implements Initializable {
    private Double lineBEndY;
    private Double lineGEndY;
    private Double lineEEndY;
-   
-   
-  
-   
-   
 
    private int detectedStaff;
 
@@ -265,6 +179,16 @@ public class CompositionController implements Initializable {
    private void handleClickStaff(MouseEvent me){
        spaceClicked = false;
        lineClicked = false;
+       if(type == noteTypeClicked.HASQUARTERREST || type == noteTypeClicked.HASEIGHTHREST){
+           handleClickStaffForRests(me);
+       } else{
+       
+       double mouseX = me.getSceneX();
+       double mouseY = me.getSceneY();
+       if(me.getSource().getClass() == Pane.class) {
+           staff = (Pane) me.getTarget();
+       }
+       detectedStaff = (int) Math.floor(mouseY/120);
        spaceFStartY= 49 + (120 * (double)detectedStaff); 
        spaceDStartY=spaceFStartY + 18;
        spaceBStartY=spaceDStartY + 18;
@@ -289,20 +213,7 @@ public class CompositionController implements Initializable {
        lineBEndY = lineDEndY+18;
        lineGEndY = lineBEndY+18;
        lineEEndY = lineGEndY+18;
-       if(type == noteTypeClicked.HASQUARTERREST || type == noteTypeClicked.HASEIGHTHREST){
-           handleClickStaffForRests(me);
-       } else{
-       Line clickedLine = null;
-       
-       double mouseX = me.getSceneX();
-       double mouseY = me.getSceneY();
-       if(me.getTarget().getClass() == Line.class){
-           clickedLine = (Line) me.getTarget();
-       } else if(me.getSource().getClass() == Pane.class) {
-           staff = (Pane) me.getTarget();
-       }
 
-       detectedStaff = (int) Math.floor(mouseY/120);
         
        if((mouseY>spaceFStartY && mouseY<spaceFEndY)||(mouseY>spaceDStartY && mouseY<spaceDEndY)||(mouseY>spaceBStartY && mouseY<spaceBEndY)||(mouseY>spaceGStartY && mouseY<spaceGEndY)||(mouseY>spaceEStartY && mouseY<spaceEEndY)){
            spaceClicked = true;
@@ -325,7 +236,6 @@ public class CompositionController implements Initializable {
                            for(MusicalCharacter note: musicArray){
                            ImageView thisImage = note.getImageView();
                            if (thisImage == clickedView) {
-    //                           images.remove(thisImage);
                                staff.getChildren().remove(thisImage);
                                charactersonStaff.get(detectedStaff).remove(note);
                            }
@@ -334,8 +244,9 @@ public class CompositionController implements Initializable {
                    }
                };
            });
-
-               if(spaceClicked == true){
+           
+           
+           if(spaceClicked == true){
                    newNote.setX(mouseX-17);
                    if(mouseY>spaceFStartY && mouseY< spaceFEndY){
                        newNote.setY(((spaceFStartY+spaceFEndY)/2)-80);
@@ -356,7 +267,7 @@ public class CompositionController implements Initializable {
 
                }
 
-               if(lineClicked == true){
+              else if(lineClicked == true){
                    newNote.setX(mouseX-17);
 
                        if(mouseY>lineFStartY && mouseY<lineFEndY){
@@ -389,9 +300,9 @@ public class CompositionController implements Initializable {
                charactersonStaff.get(detectedStaff).add(h);
            } else if(type == noteTypeClicked.HASEIGHTHNOTE){
                newNote.setY(newNote.getY()-5);
-                EighthCount e = new EighthCount(newNote.getX(), newNote.getY());
+                EighthCount e = new EighthCount(newNote.getX(), newNote.getY()+85);
                e.setImageView(newNote);
-                   (charactersonStaff.get(detectedStaff)).add(e);
+               (charactersonStaff.get(detectedStaff)).add(e);
            } else if(type == noteTypeClicked.HASMEASUREBAR){
                newNote.setX(mouseX-175); 
                newNote.setFitWidth(350);
@@ -421,8 +332,6 @@ public class CompositionController implements Initializable {
 }
 
 
-   @FXML
-   private ImageView newRest;
    @FXML
    private void handleClickStaffForRests(MouseEvent me){
            Line clickedLine = null;
@@ -491,8 +400,6 @@ public class CompositionController implements Initializable {
        }
    }
    @FXML
-   private double screenHeight;
-   private Window window;
    private double lineStartX;
    private double lineEndX;
    private double lineStartY;
@@ -799,15 +706,8 @@ public class CompositionController implements Initializable {
    }
    public void play() throws InvalidMidiDataException, MidiUnavailableException, InterruptedException{
 	for(ArrayList<MusicalCharacter> musicLine: charactersonStaff){
+            musicLine.sort(Comparator.comparingDouble(MusicalCharacter::getX));
 		for(MusicalCharacter note : musicLine){
-			double Cposition = ((spaceDStartY+spaceDEndY)/2)-80;
-			double Dposition = l2.getStartY();
-			double Eposition = ((spaceFStartY+spaceFEndY)/2) -80;
-			double Fposition = ((spaceGStartY+spaceGEndY)/2)-80;
-			double Gposition = l4.getStartY();
-			double Aposition =  ((spaceBStartY+spaceBEndY)/2)-80;
-			double Bposition = l3.getStartY();
-                        double highFposition = l1.getStartY();
                         double timing = note.getCount();
                         if(timing == 0.5){
                             timing = 125;
@@ -866,7 +766,9 @@ public class CompositionController implements Initializable {
        	 					synthRcvr.send(myMsg, -1);
                                                 Thread.sleep((long) timing);
 				 }
-			}
+			} else if(note.getClass() == QuarterRestCount.class || note.getClass() == EighthRestCount.class){
+                                Thread.sleep((long) timing);
+                        }
 		}
 	}
 
@@ -882,16 +784,12 @@ public class CompositionController implements Initializable {
 
    @Override
    public void initialize(URL url, ResourceBundle rb){
-       // TODO
-       staffNumber = 0;
-       newStaffCount=1;
        spaceClicked = false;
        lineClicked = false;
        lineStartX = -50;
        lineStartY = 0;
        lineEndX = 650;
        lineEndY = 0;
-       newStaffCount = 0;
        l1 = new Line(lineStartX, 43.5 , lineEndX, 43.5 );
        lineCount = 0;
        firstLineY = 43.5;
