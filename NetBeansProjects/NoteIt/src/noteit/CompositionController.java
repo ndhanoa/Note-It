@@ -204,26 +204,44 @@ public class CompositionController implements Initializable {
    private boolean lineClicked;
 
    @FXML
+   private Double spaceFStartY;
+
+   private Double spaceDStartY;
+
+   private Double spaceBStartY;
+
+   private Double spaceGStartY;
+
+   private Double spaceEStartY;
+
+   private Double spaceFEndY;
+
+   private Double spaceDEndY;
+
+   private Double spaceBEndY;
+
+   private Double spaceGEndY;
+
+   private Double spaceEEndY;
+   
    private Double lineFStartY;
-
-   private Double lineDStartY;
-
+   
+   private Double lineDStartY;  
    private Double lineBStartY;
-
    private Double lineGStartY;
-
    private Double lineEStartY;
-
    private Double lineFEndY;
-
    private Double lineDEndY;
-
    private Double lineBEndY;
-
    private Double lineGEndY;
-
    private Double lineEEndY;
+   
+   
+  
+   
+   
 
+   private int detectedStaff;
 
 
    private double staffNumber;
@@ -233,7 +251,31 @@ public class CompositionController implements Initializable {
    @FXML
    private void handleClickStaff(MouseEvent me){
        spaceClicked = false;
-      lineClicked = false;
+       lineClicked = false;
+       spaceFStartY= 49 + (120 * (double)detectedStaff); 
+       spaceDStartY=spaceFStartY + 18;
+       spaceBStartY=spaceDStartY + 18;
+       spaceGStartY=spaceBStartY + 18;
+       spaceEStartY=spaceGStartY + 18;
+
+
+       spaceFEndY = 57 + (120*(double)detectedStaff);
+       spaceDEndY = spaceFEndY+18;
+       spaceBEndY = spaceDEndY+18;
+       spaceGEndY = spaceBEndY+18;
+       spaceEEndY = spaceGEndY+18;
+       
+       lineFStartY = 38.5 + (120*(double)detectedStaff);
+       lineDStartY = lineFStartY +18;
+       lineBStartY = lineDStartY +18;
+       lineGStartY = lineBStartY +18;
+       lineEStartY = lineGStartY +18;
+       
+       lineFEndY = 48.5 + (120 * (double)detectedStaff);
+       lineDEndY = lineFEndY+18;
+       lineBEndY = lineDEndY+18;
+       lineGEndY = lineBEndY+18;
+       lineEEndY = lineGEndY+18;
        if(type == noteTypeClicked.HASQUARTERREST || type == noteTypeClicked.HASEIGHTHREST){
            handleClickStaffForRests(me);
        } else{
@@ -246,31 +288,13 @@ public class CompositionController implements Initializable {
        } else if(me.getSource().getClass() == Pane.class) {
            staff = (Pane) me.getTarget();
        }
-      /* for(double i = 0; i <=newStaffCount;i++){
-            if(118+ ((i-1)*90)<mouseY&& mouseY>(118+(i*90))){
-                staffNumber= i;
-       }
-      */ 
 
-    
-
-       lineFStartY= 49 + (120 * newStaffCount); 
-       lineDStartY=lineFStartY + 18;
-       lineBStartY=lineDStartY + 18;
-       lineGStartY=lineBStartY + 18;
-       lineEStartY=lineGStartY + 18;
-
-
-       lineFEndY = 57 + (120*newStaffCount);
-       lineDEndY = lineFEndY+18;
-       lineBEndY = lineDEndY+18;
-       lineGEndY = lineBEndY+18;
-       lineEEndY = lineGEndY+18;
-
-       if((mouseY>lineFStartY && mouseY<lineFEndY)||(mouseY>lineDStartY && mouseY<lineDEndY)||(mouseY>lineBStartY && mouseY<lineBEndY)||(mouseY>lineGStartY && mouseY<lineGEndY)||(mouseY>lineEStartY && mouseY<lineEEndY)){
+       detectedStaff = (int) Math.floor(mouseY/120);
+        
+       if((mouseY>spaceFStartY && mouseY<spaceFEndY)||(mouseY>spaceDStartY && mouseY<spaceDEndY)||(mouseY>spaceBStartY && mouseY<spaceBEndY)||(mouseY>spaceGStartY && mouseY<spaceGEndY)||(mouseY>spaceEStartY && mouseY<spaceEEndY)){
            spaceClicked = true;
        }
-       if(((mouseY>=l1.getStartY()-5 && mouseY<=l1.getStartY()+5)||(mouseY>=l2.getStartY()-5 && mouseY<=l2.getStartY()+5)||(mouseY>=l3.getStartY()-5 && mouseY<=l3.getStartY()+5)||(mouseY>=l4.getStartY()-5 &&mouseY<=l4.getStartY()+5))||(mouseY>=l5.getStartY()-5&&mouseY<=l5.getStartY()+5)){
+       if(((mouseY>=lineFStartY && mouseY<=lineFEndY)||(mouseY>=lineDStartY && mouseY<=lineDEndY)||(mouseY>=lineBStartY && mouseY<=lineBEndY)||(mouseY>=lineGStartY &&mouseY<=lineGEndY))||(mouseY>=lineEStartY&&mouseY<=lineEEndY)){
            lineClicked = true;
        }
 
@@ -286,7 +310,6 @@ public class CompositionController implements Initializable {
                        ImageView clickedView = (ImageView) me.getTarget();
                        for (ArrayList<MusicalCharacter> musicArray: charactersonStaff) {
                            for(MusicalCharacter note: musicArray){
-                           int detectedStaff = (int) Math.floor(note.getY()/116);
                            ImageView thisImage = note.getImageView();
                            if (thisImage == clickedView) {
     //                           images.remove(thisImage);
@@ -299,28 +322,22 @@ public class CompositionController implements Initializable {
                };
            });
 
-
-               //if(spaceClicked == true||lineClicked == true){
-                 //  newNote.setX(mouseX - 17);
-                   //newNote.setY(mouseY - 44);
-         // } 
-
                if(spaceClicked == true){
                    newNote.setX(mouseX-17);
-                   if(mouseY>lineFStartY && mouseY< lineFEndY){
-                       newNote.setY(((lineFStartY+lineFEndY)/2)-80);
+                   if(mouseY>spaceFStartY && mouseY< spaceFEndY){
+                       newNote.setY(((spaceFStartY+spaceFEndY)/2)-80);
                    }
-                   else if(mouseY>lineDStartY && mouseY<lineDEndY){
-                       newNote.setY(((lineDStartY+lineDEndY)/2)-80);
+                   else if(mouseY>spaceDStartY && mouseY<spaceDEndY){
+                       newNote.setY(((spaceDStartY+spaceDEndY)/2)-80);
                    }
-                   else if(mouseY> lineBStartY && mouseY<lineBEndY){
-                       newNote.setY(((lineBStartY+lineBEndY)/2)-80);
+                   else if(mouseY> spaceBStartY && mouseY<spaceBEndY){
+                       newNote.setY(((spaceBStartY+spaceBEndY)/2)-80);
                    }
-                   else if(mouseY>lineGStartY && mouseY<lineGEndY){
-                       newNote.setY(((lineGStartY+lineGEndY)/2)-80);
+                   else if(mouseY>spaceGStartY && mouseY<spaceGEndY){
+                       newNote.setY(((spaceGStartY+spaceGEndY)/2)-80);
                    }
-                   else if(mouseY>lineEStartY && mouseY<lineEEndY){
-                       newNote.setY(((lineEStartY+lineEEndY)/2)-80);
+                   else if(mouseY>spaceEStartY && mouseY<spaceEEndY){
+                       newNote.setY(((spaceEStartY+spaceEEndY)/2)-80);
                    }
 
 
@@ -329,20 +346,20 @@ public class CompositionController implements Initializable {
                if(lineClicked == true){
                    newNote.setX(mouseX-17);
 
-                       if(mouseY>l1.getStartY()-5 && mouseY<l1.getStartY()+5){
-                           newNote.setY(l1.getStartY()-80);
+                       if(mouseY>lineFStartY && mouseY<lineFEndY){
+                           newNote.setY(((lineFStartY+lineFEndY)/2)-80);
                        }
-                       else if(mouseY>l2.getStartY()-5 && mouseY<l2.getStartY()+5){
-                           newNote.setY(l2.getStartY()-80);
+                       else if(mouseY>lineDStartY && mouseY<lineDEndY){
+                           newNote.setY(((lineDStartY+lineDEndY)/2)-80);
                        }
-                        else if(mouseY>l3.getStartY()-5 && mouseY<l3.getStartY()+5){
-                           newNote.setY(l3.getStartY()-80);
+                        else if(mouseY>lineBStartY && mouseY<lineBEndY){
+                           newNote.setY(((lineBStartY+lineBEndY)/2)-80);
                        }
-                       else if(mouseY>l4.getStartY()-5 && mouseY<l4.getStartY()+5){
-                           newNote.setY(l4.getStartY()-80);
+                       else if(mouseY>lineGStartY && mouseY<lineGEndY){
+                           newNote.setY(((lineGStartY+lineGEndY)/2)-80);
                        }
-                        else if(mouseY>l5.getStartY()-5 && mouseY<l5.getStartY()+5){
-                           newNote.setY(l5.getStartY()-80);
+                        else if(mouseY>lineEStartY && mouseY<lineEEndY){
+                           newNote.setY(((lineEStartY+lineEEndY)/2)-80);
                        }
                }
 
@@ -352,40 +369,33 @@ public class CompositionController implements Initializable {
            if(type == noteTypeClicked.HASQUARTERNOTE){
                QuarterCount q = new QuarterCount(newNote.getX(), newNote.getY());
                q.setImageView(newNote);
-               int detectedStaff = (int) Math.floor((q.getY())/117);
                charactersonStaff.get(detectedStaff).add(q);
            } else if(type == noteTypeClicked.HASHALFNOTE){
                 HalfCount h = new HalfCount(newNote.getX(), newNote.getY());
                h.setImageView(newNote);
-               int detectedStaff = (int) Math.floor((h.getY())/117);
                charactersonStaff.get(detectedStaff).add(h);
            } else if(type == noteTypeClicked.HASEIGHTHNOTE){
                newNote.setY(newNote.getY()-5);
                 EighthCount e = new EighthCount(newNote.getX(), newNote.getY());
                e.setImageView(newNote);
-               int detectedStaff = (int) ((e.getY())/117);
                    (charactersonStaff.get(detectedStaff)).add(e);
            } else if(type == noteTypeClicked.HASMEASUREBAR){
-               newNote.setX(mouseX-175);
-               //newNote.setY(mouseY-160); 
+               newNote.setX(mouseX-175); 
                newNote.setFitWidth(350);
                newNote.setFitHeight(320);
                MeasureBar m = new MeasureBar(newNote.getX(), newNote.getY());
                m.setImageView(newNote);
-               int detectedStaff = (int) Math.floor((m.getY()+50)/116);
                charactersonStaff.get(detectedStaff).add(m);
-               newNote.setY((newStaffCount*117)-115);
+               newNote.setY((detectedStaff*117)-115);
            }
            else if (type == noteTypeClicked.HASDOUBLEBARLINE){
                newNote.setX(mouseX-10);
-               //newNote.setY(mouseY - 40);
                newNote.setFitWidth(25);
                newNote.setFitHeight(80);
                DoubleBarLine d = new DoubleBarLine(newNote.getX(), newNote.getY());
                d.setImageView(newNote);
-               int detectedStaff = (int) Math.floor((d.getY()+50)/117);
                charactersonStaff.get(detectedStaff).add(d);
-               newNote.setY((newStaffCount*117)+5);
+               newNote.setY((detectedStaff*117)+5);
            }else if(type == noteTypeClicked.HASEIGHTHREST ||type == noteTypeClicked.HASQUARTERREST){
                handleClickStaffForRests(me);
            }
@@ -405,23 +415,13 @@ public class CompositionController implements Initializable {
            Line clickedLine = null;
            double mouseX = me.getSceneX();
            double mouseY = me.getSceneY();
-           lineFStartY= 49 + (120 * newStaffCount); 
-            lineDStartY=lineFStartY + 18;
-            lineBStartY=lineDStartY + 18;
-            lineGStartY=lineBStartY + 18;
-            lineEStartY=lineGStartY + 18;
+           detectedStaff = (int) Math.floor(mouseY/120);
 
-
-            lineFEndY = 57 + (120*newStaffCount);
-            lineDEndY = lineFEndY+18;
-            lineBEndY = lineDEndY+18;
-            lineGEndY = lineBEndY+18;
-            lineEEndY = lineGEndY+18;
-            if(me.getSource().getClass()==Pane.class&& (mouseY>lineFStartY && mouseY<lineFEndY)||(mouseY>lineDStartY && mouseY<lineDEndY)||(mouseY>lineBStartY && mouseY<lineBEndY)||(mouseY>lineGStartY && mouseY<lineGEndY)||(mouseY>lineEStartY && mouseY<lineEEndY)){
-           spaceClicked = true;
+            if(me.getSource().getClass()==Pane.class&& (mouseY>spaceFStartY && mouseY<spaceFEndY)||(mouseY>spaceDStartY && mouseY<spaceDEndY)||(mouseY>spaceBStartY && mouseY<spaceBEndY)||(mouseY>spaceGStartY && mouseY<spaceGEndY)||(mouseY>spaceEStartY && mouseY<spaceEEndY)){
+                spaceClicked = true;
             }
-            if(((mouseY>=l1.getStartY()-5 && mouseY<=l1.getStartY()+5)||(mouseY>=l2.getStartY()-5 && mouseY<=l2.getStartY()+5)||(mouseY>=l3.getStartY()-5 && mouseY<=l3.getStartY()+5)||(mouseY>=l4.getStartY()-5 &&mouseY<=l4.getStartY()+5))||(mouseY>=l5.getStartY()-5&&mouseY<=l5.getStartY()+5)){
-           lineClicked = true;
+            if(((mouseY>=lineFStartY && mouseY<=lineFEndY)||(mouseY>=lineDStartY && mouseY<=lineDEndY)||(mouseY>=lineBStartY && mouseY<=lineBEndY)||(mouseY>=lineGStartY &&mouseY<=lineGEndY))||(mouseY>=lineEStartY&&mouseY<=lineEEndY)){
+                lineClicked = true;
             }
            if((type == noteTypeClicked.HASEIGHTHREST ||type == noteTypeClicked.HASQUARTERREST) && (lineClicked == true || spaceClicked == true)){
            ImageView newRest = new ImageView(getClass().getResource(restImage).toString());
@@ -433,9 +433,8 @@ public class CompositionController implements Initializable {
                        for (ArrayList<MusicalCharacter> musicList: charactersonStaff) {
                            for(MusicalCharacter note: musicList){
                            ImageView thisImage = note.getImageView();
-                           int detectedStaff = (int) Math.floor((note.getY())/117);
+                           detectedStaff = (int) Math.floor((note.getY())/117);
                            if (thisImage == clickedView) {
-  //                             images2.remove(thisImage);
                                staff.getChildren().remove(thisImage);
                                 charactersonStaff.get(detectedStaff).remove(note);
                            }
@@ -444,114 +443,34 @@ public class CompositionController implements Initializable {
                    }
                };
            });
-           /*double restY; 
-           
-           if(lineClicked == true && hasQuarterRest == true){
-               restY = l3.getStartY()-60;
-           } else if(spaceClicked == true && hasQuarterRest == true){
-               restY = 
-           }*/
-            if(lineClicked == true  && type == noteTypeClicked.HASQUARTERREST){
-                   newRest.setX(mouseX-13);
 
-                       if(mouseY>l1.getStartY()-5 && mouseY<l1.getStartY()+5){
-                           newRest.setY(l3.getStartY()-60);
-                       }
-                       else if(mouseY>l2.getStartY()-5 && mouseY<l2.getStartY()+5){
-                           newRest.setY(l3.getStartY()-60);
-                       }
-                        else if(mouseY>l3.getStartY()-5 && mouseY<l3.getStartY()+5){
-                           newRest.setY(l3.getStartY()-60);
-                       }
-                       else if(mouseY>l4.getStartY()-5 && mouseY<l4.getStartY()+5){
-                           newRest.setY(l3.getStartY()-60);
-                       }
-                        else if(mouseY>l5.getStartY()-5 && mouseY<l5.getStartY()+5){
-                           newRest.setY(l3.getStartY()-60);
-                       }
+            if((lineClicked == true||spaceClicked == true)  && type == noteTypeClicked.HASQUARTERREST){
+                   newRest.setX(mouseX-13);
+                   newRest.setY((detectedStaff*120)+20);
             }
-            if(spaceClicked == true && type == noteTypeClicked.HASQUARTERREST){
-                   newRest.setX(mouseX-13);
-                   if(mouseY>lineFStartY && mouseY< lineFEndY){
-                       newRest.setY(((lineBStartY+lineBEndY)/2)-70);
-                   }
-                   else if(mouseY>lineDStartY && mouseY<lineDEndY){
-                       newRest.setY(((lineBStartY+lineBEndY)/2)-70);
-                   }
-                   else if(mouseY> lineBStartY && mouseY<lineBEndY){
-                       newRest.setY(((lineBStartY+lineBEndY)/2)-70);
-                   }
-                   else if(mouseY>lineGStartY && mouseY<lineGEndY){
-                       newRest.setY(((lineBStartY+lineBEndY)/2)-70);
-                   }
-                   else if(mouseY>lineEStartY && mouseY<lineEEndY){
-                       newRest.setY(((lineBStartY+lineBEndY)/2)-70);
-                   }
-
-
-               }
             
             
             if(lineClicked == true  && type == noteTypeClicked.HASEIGHTHREST){
                    newRest.setX(mouseX-17);
-
-                       if(mouseY>l1.getStartY()-5 && mouseY<l1.getStartY()+5){
-                           newRest.setY(l3.getStartY()-48);
-                       }
-                       else if(mouseY>l2.getStartY()-5 && mouseY<l2.getStartY()+5){
-                           newRest.setY(l3.getStartY()-48);
-                       }
-                        else if(mouseY>l3.getStartY()-5 && mouseY<l3.getStartY()+5){
-                           newRest.setY(l3.getStartY()-48);
-                       }
-                       else if(mouseY>l4.getStartY()-5 && mouseY<l4.getStartY()+5){
-                           newRest.setY(l3.getStartY()-48);
-                       }
-                        else if(mouseY>l5.getStartY()-5 && mouseY<l5.getStartY()+5){
-                           newRest.setY(l3.getStartY()-48);
-                       }
+                   newRest.setY((detectedStaff*120)+30);
+                      
             }
-               if(spaceClicked == true && type == noteTypeClicked.HASEIGHTHREST){
-                   newRest.setX(mouseX-13);
-                   if(mouseY>lineFStartY && mouseY< lineFEndY){
-                       newRest.setY(((lineBStartY+lineBEndY)/2)-57);
-                   }
-                   else if(mouseY>lineDStartY && mouseY<lineDEndY){
-                       newRest.setY(((lineBStartY+lineBEndY)/2)-57);
-                   }
-                   else if(mouseY> lineBStartY && mouseY<lineBEndY){
-                       newRest.setY(((lineBStartY+lineBEndY)/2)-57);
-                   }
-                   else if(mouseY>lineGStartY && mouseY<lineGEndY){
-                       newRest.setY(((lineBStartY+lineBEndY)/2)-57);
-                   }
-                   else if(mouseY>lineEStartY && mouseY<lineEEndY){
-                       newRest.setY(((lineBStartY+lineBEndY)/2)-57);
-                   }
-
-
-               }
+               
 
 
                if(type == noteTypeClicked.HASEIGHTHREST){
                    newRest.setFitWidth(20);
                    newRest.setFitHeight(25);
                    staff.getChildren().add(newRest);
-                    //newRest.setX(mouseX - 11);
-                    //newRest.setY(mouseY-45);
                    EighthRestCount erc = new EighthRestCount(newRest.getX(), newRest.getY());
                    erc.setImageView(newRest);
-                   int detectedStaff = (int) Math.floor((erc.getY() -25)/127);
                    charactersonStaff.get(detectedStaff).add(erc);
                } else if(type == noteTypeClicked.HASQUARTERREST){
                    newRest.setFitWidth(20);
                    newRest.setFitHeight(55);
                     staff.getChildren().add(newRest);
-                   //newRest.setX(mouseX - 11);
-                   //newRest.setY(mouseY-60);
                    QuarterRestCount qrc = new QuarterRestCount(newRest.getX(), newRest.getY());
                    qrc.setImageView(newRest);
-                   int detectedStaff = (int) Math.floor((qrc.getY() -25)/127);
                    charactersonStaff.get(detectedStaff).add(qrc);
                }
 
@@ -648,20 +567,10 @@ public class CompositionController implements Initializable {
           });
 
    }
-  /* @FXML 
-   private void handleNewSpaceNotes(AnchorPane p){
-       p.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-               @Override
-               public void handle(MouseEvent me) {
-                   AnchorPane clickedScreen = (AnchorPane) me.getTarget();
-               if(clickedScreen == screen && (hasQuarterNote == true|| hasHalfNote == true||hasEighthNote == true || hasQuarterRest == true || hasEighthRest == true)){
-                       handleClickStaff(me);
-               }
-               };
-          });
 
-   }
-*/             
+
+   
+            
    @FXML
    private void save(MouseEvent change) throws FileNotFoundException, IOException{
 
@@ -768,7 +677,7 @@ public class CompositionController implements Initializable {
                        newNote.setY(i.getY());
                        QuarterRestCount qrc = new QuarterRestCount(newNote.getX(), newNote.getY());
                        qrc.setImageView(newNote);
-                       int detectedStaff = (int) Math.floor((qrc.getY() -25)/127);
+                       detectedStaff = (int) Math.floor((qrc.getY() -25)/127);
                    }
 
             }
@@ -781,7 +690,6 @@ public class CompositionController implements Initializable {
                             for (MusicalCharacter musicNote : musicList) {
                            ImageView thisImage = musicNote.getImageView();
                            if (thisImage == clickedView) {
-  //                             images2.remove(thisImage);
                                screen.getChildren().remove(thisImage);
                                restsArray.remove(musicNote);
                            }
@@ -848,12 +756,12 @@ public class CompositionController implements Initializable {
    public void play() throws InvalidMidiDataException, MidiUnavailableException{
 	for(ArrayList<MusicalCharacter> musicLine: charactersonStaff){
 		for(MusicalCharacter note : musicLine){
-			double Cposition = ((lineDStartY+lineDEndY)/2)-80;
+			double Cposition = ((spaceDStartY+spaceDEndY)/2)-80;
 			double Dposition = l2.getStartY();
-			double Eposition = ((lineFStartY+lineFEndY)/2) -80;
-			double Fposition = ((lineGStartY+lineGEndY)/2)-80;
+			double Eposition = ((spaceFStartY+spaceFEndY)/2) -80;
+			double Fposition = ((spaceGStartY+spaceGEndY)/2)-80;
 			double Gposition = l4.getStartY();
-			double Aposition =  ((lineBStartY+lineBEndY)/2)-80;
+			double Aposition =  ((spaceBStartY+spaceBEndY)/2)-80;
 			double Bposition = l3.getStartY();
                         double highFposition = l1.getStartY();
 			if(type == noteTypeClicked.HASQUARTERNOTE || type == noteTypeClicked.HASHALFNOTE || type == noteTypeClicked.HASEIGHTHNOTE){
