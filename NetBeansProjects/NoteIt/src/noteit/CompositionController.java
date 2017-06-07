@@ -286,9 +286,9 @@ public class CompositionController implements Initializable {
                charactersonStaff.get(detectedStaff).add(h);
            } else if(type == noteTypeClicked.HASEIGHTHNOTE){
                newNote.setY(newNote.getY()-5);
-                EighthCount e = new EighthCount(newNote.getX(), newNote.getY());
+                EighthCount e = new EighthCount(newNote.getX(), newNote.getY()+85);
                e.setImageView(newNote);
-                   (charactersonStaff.get(detectedStaff)).add(e);
+               (charactersonStaff.get(detectedStaff)).add(e);
            } else if(type == noteTypeClicked.HASMEASUREBAR){
                newNote.setX(mouseX-175); 
                newNote.setFitWidth(350);
