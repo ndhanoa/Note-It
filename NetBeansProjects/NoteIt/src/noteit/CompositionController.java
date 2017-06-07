@@ -896,49 +896,49 @@ public class CompositionController implements Initializable {
                             timing = 500;
                         }
 			if(note.getClass() == QuarterCount.class || note.getClass() == HalfCount.class || note.getClass() == EighthCount.class){
-				if(note.getY() == Cposition){
+				if((note.getY()-71) % 120 == 0){
 					ShortMessage myMsg = new ShortMessage();
 					 myMsg.setMessage(ShortMessage.NOTE_ON, 4, 60, 93); 
         				Synthesizer synth = MidiSystem.getSynthesizer();
        					 synthRcvr.send(myMsg, -1);
                                          Thread.sleep((long) timing);
-				 } else if(note.getY() == Dposition){
+				 } else if((note.getY()-61.5) % 120 == 0){
 					ShortMessage myMsg = new ShortMessage();
 					 myMsg.setMessage(ShortMessage.NOTE_ON, 4, 62, 93); 
         					Synthesizer synth = MidiSystem.getSynthesizer();
        	 				synthRcvr.send(myMsg, -1);
                                         Thread.sleep((long) timing);
-				 } else if(note.getY() == Eposition){
+				 } else if((note.getY()-53) % 120 == 0){
 					ShortMessage myMsg = new ShortMessage();
  					myMsg.setMessage(ShortMessage.NOTE_ON, 4, 64, 93); 
         					Synthesizer synth = MidiSystem.getSynthesizer();
        	 					synthRcvr.send(myMsg, -1);
                                                 Thread.sleep((long) timing);
-				} else if(note.getY() == highFposition){
+				} else if((note.getY()-43.5) % 120 == 0){
                                         ShortMessage myMsg = new ShortMessage();
  					myMsg.setMessage(ShortMessage.NOTE_ON, 4, 65, 93); 
         					Synthesizer synth = MidiSystem.getSynthesizer();
        	 					synthRcvr.send(myMsg, -1);
                                                 Thread.sleep((long) timing);
-                                }else if(note.getY() == Fposition){
+                                }else if((note.getY()-107) % 120 == 0){
 					ShortMessage myMsg = new ShortMessage();
  						myMsg.setMessage(ShortMessage.NOTE_ON, 4, 53, 93); 
        					 	Synthesizer synth = MidiSystem.getSynthesizer();
        	 					synthRcvr.send(myMsg, -1);
                                                 Thread.sleep((long) timing);
-				 } else if(note.getY() == Gposition){
+				 } else if((note.getY()-97.5) % 120 == 0){
 					ShortMessage myMsg = new ShortMessage();
  						myMsg.setMessage(ShortMessage.NOTE_ON, 4, 55, 93); 
        	 					Synthesizer synth = MidiSystem.getSynthesizer();
        	 					synthRcvr.send(myMsg, -1);
                                                 Thread.sleep((long) timing);
-				 } else if(note.getY() == Aposition){
+				 } else if((note.getY()-89) % 120 == 0){
                                                 ShortMessage myMsg = new ShortMessage();
  						myMsg.setMessage(ShortMessage.NOTE_ON, 4, 57, 93); 
        	 					Synthesizer synth = MidiSystem.getSynthesizer();
        	 					synthRcvr.send(myMsg, -1);
                                                 Thread.sleep((long) timing);
-				 }else if(note.getY() == Bposition){
+				 }else if((note.getY()-79.5) % 120 == 0){
 					ShortMessage myMsg = new ShortMessage();
  						myMsg.setMessage(ShortMessage.NOTE_ON, 4, 59, 93); 
        					Synthesizer synth = MidiSystem.getSynthesizer();
