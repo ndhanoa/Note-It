@@ -31,6 +31,10 @@ public class MusicalCharacter implements Serializable {
         this.y = y;
     }
     
+      public double compare(MusicalCharacter p1, MusicalCharacter p2) {
+            return p1.getX() - p2.getX(); // Ascending
+        }
+    
     
     public double getX(){
         return x;

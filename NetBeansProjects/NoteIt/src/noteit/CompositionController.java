@@ -12,6 +12,7 @@ import java.io.ObjectOutputStream;
 import static java.lang.Math.abs;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.ResourceBundle;
 import java.util.Timer;
 import javafx.event.ActionEvent;
@@ -781,6 +782,7 @@ public class CompositionController implements Initializable {
    }
    public void play() throws InvalidMidiDataException, MidiUnavailableException, InterruptedException{
 	for(ArrayList<MusicalCharacter> musicLine: charactersonStaff){
+            musicLine.sort(Comparator.comparingDouble(MusicalCharacter::getX));
 		for(MusicalCharacter note : musicLine){
 			double Cposition = ((spaceDStartY+spaceDEndY)/2)-80;
 			double Dposition = l2.getStartY();
@@ -848,7 +850,9 @@ public class CompositionController implements Initializable {
        	 					synthRcvr.send(myMsg, -1);
                                                 Thread.sleep((long) timing);
 				 }
-			}
+			} else if(note.getClass() == QuarterRestCount.class || note.getClass() == EighthRestCount.class){
+                                Thread.sleep((long) timing);
+                        }
 		}
 	}
 
