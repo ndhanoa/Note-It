@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 
-<AnchorPane id="AnchorPane" fx:id="screen" onMouseClicked="#handleClickStaff" prefHeight="313.0" prefWidth="586.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="noteit.CompositionController">
+<AnchorPane id="AnchorPane" fx:id="screen" prefHeight="313.0" prefWidth="586.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="noteit.CompositionController">
    <children>
       
       <Button fx:id="playButton" focusTraversable="false" layoutX="403.0" layoutY="243.0" mnemonicParsing="false" onMouseClicked="#play" prefHeight="50.0" prefWidth="50.0" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="133.0">

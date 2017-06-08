@@ -62,8 +62,10 @@ public class CompositionController implements Initializable {
    private Synthesizer synth;
    
    private Receiver synthRcvr;
+   
+   private int staffNumber;
 
-
+   private int extraStaffs;
    @FXML
    private void handleClickDoubleBarLine(MouseEvent me){
        noteImage = "doubleBarLine.png";
@@ -479,7 +481,6 @@ public class CompositionController implements Initializable {
             
    @FXML
    private void save(MouseEvent change) throws FileNotFoundException, IOException{
-
         fc = new FileChooser();
         fc.setTitle("Open text file");
         fc.setInitialDirectory(new File(System.getProperty("user.home")));
@@ -498,7 +499,7 @@ public class CompositionController implements Initializable {
        }
 
    }
-   @FXML
+  @FXML
    private void load(MouseEvent change){
        
        lineFStartY= 49 + (120 * newStaffCount); 
@@ -621,7 +622,8 @@ public class CompositionController implements Initializable {
                             for (MusicalCharacter musicNote : musicList) {
                            ImageView thisImage = musicNote.getImageView();
                            if (thisImage == clickedView) {
-                               screen.getChildren().remove(thisImage);
+  //                             images2.remove(thisImage);
+                               p.getChildren().remove(thisImage);
                                restsArray.remove(musicNote);
                            }
                          }
@@ -681,8 +683,11 @@ public class CompositionController implements Initializable {
         System.out.println("Composition not found");
         c.printStackTrace();
         return;
-     }
 
+
+
+     }
+   
    }
    public void play() throws InvalidMidiDataException, MidiUnavailableException, InterruptedException{
 	for(ArrayList<MusicalCharacter> musicLine: charactersonStaff){
@@ -751,7 +756,7 @@ public class CompositionController implements Initializable {
                         }
 		}
 	}
-
+        
 }
 
    public void init(Stage stage) throws InvalidMidiDataException, MidiUnavailableException{
