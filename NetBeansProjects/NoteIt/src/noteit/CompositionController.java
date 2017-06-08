@@ -68,18 +68,24 @@ public class CompositionController implements Initializable {
    private int extraStaffs;
    @FXML
    private void handleClickDoubleBarLine(MouseEvent me){
+       spaceClicked = false;
+      lineClicked = false;
        noteImage = "doubleBarLine.png";
        type = noteTypeClicked.HASDOUBLEBARLINE;
    }
 
    @FXML
    private void handleClickQuarterNote(MouseEvent me) {
+       spaceClicked = false;
+      lineClicked = false;
        type = noteTypeClicked.HASQUARTERNOTE;
        noteImage = "quarternote.png";
    }
 
    @FXML
    private void handleClickHalfNote(MouseEvent me){
+       spaceClicked = false;
+      lineClicked = false;
        noteImage = "halfnote.png";
        type = noteTypeClicked.HASHALFNOTE;
    }
@@ -87,16 +93,22 @@ public class CompositionController implements Initializable {
 
 
    @FXML private void handleClickEighthNote(MouseEvent me){
+       spaceClicked = false;
+      lineClicked = false;
        noteImage = "eighthnote.png";
        type= noteTypeClicked.HASEIGHTHNOTE;
    }
 
    @FXML private void handleClickEighthRest(MouseEvent me){
+       spaceClicked = false;
+      lineClicked = false;
        restImage = "eighthRest.png";
        type = noteTypeClicked.HASEIGHTHREST;
    }
 
    @FXML private void handleClickBar(MouseEvent me){
+       spaceClicked = false;
+      lineClicked = false;
        noteImage = "measure bar.png";
        type = noteTypeClicked.HASMEASUREBAR;
    }
@@ -159,6 +171,7 @@ public class CompositionController implements Initializable {
    private Double lineEEndY;
 
    private int detectedStaff;
+
 
    private Pane staff = null;
 
@@ -499,7 +512,9 @@ public class CompositionController implements Initializable {
        }
 
    }
-  @FXML
+   @FXML
+   private int windowHeight;
+   @FXML
    private void load(MouseEvent change){
        
        lineFStartY= 49 + (120 * newStaffCount); 
@@ -631,21 +646,25 @@ public class CompositionController implements Initializable {
                    }
                };
                    });
-            if(i.getY() > 142){
-            int staffNumber = ((int) ((i.getY() - 142)/72) + 1);
+           //blob = i.getY();
+           /* if(blob > 142){
+            int staffNumber = ((int) ((i.getY() - 120)/72) + 1);
            if(staffNumber > extraStaffs){
                extraStaffs = staffNumber;
                }
             }
+            }*/
             }
-
          }
-
+            double height = ((Stage)screen.getScene().getWindow()).getHeight();
+            ((Stage)screen.getScene().getWindow()).setHeight(height + 120);
+            windowHeight = (int)screen.getScene().getWindow().getHeight();
+            staffNumber = (windowHeight - 200)/120;
+            extraStaffs = staffNumber + 1;
            for(int v = 0; v < extraStaffs; v++){
                    newStaffCount++;
                    lineCount = 0;
-                   double height = ((Stage)screen.getScene().getWindow()).getHeight();
-                   ((Stage)screen.getScene().getWindow()).setHeight(height + 120);
+                   
                    l1 = new Line(lineStartX + 50, 43.5 + (newStaffCount * 120), lineEndX + 50, 43.5 + (newStaffCount * 120));
                    firstLineY = 43.5 + (newStaffCount * 120);
                    lineCount ++;
